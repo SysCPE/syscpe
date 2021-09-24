@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "start": "ts-node-dev src/index.ts"
+    "start-dev": "ts-node-dev src/index.ts"
   },
   "dependencies": {
     "koa": "^2.13.3"
