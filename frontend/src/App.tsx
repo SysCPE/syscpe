@@ -1,23 +1,21 @@
-import React from 'react';
-import logo from './logo.svg';
+import { Button, Typography } from '@material-ui/core';
+import { useState } from 'react';
 
 function App() {
+  const [hide, setHide] = useState(false);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <div>
+      <div>{!hide && <Typography variant="h6">SysCPE</Typography>}</div>
+      <div>
+        <Button
+          color="primary"
+          variant="contained"
+          onClick={() => setHide(true)}
         >
-          Learn React
-        </a>
-      </header>
+          Hide
+        </Button>
+      </div>
     </div>
   );
 }
