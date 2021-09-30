@@ -1,4 +1,5 @@
 import { Button, Typography } from '@material-ui/core';
+import APP_NAME from 'config/app_name';
 import { useState } from 'react';
 
 function App() {
@@ -6,7 +7,7 @@ function App() {
 
   return (
     <div>
-      <div>{!hide && <Typography variant="h6">SysCPE</Typography>}</div>
+      <div>{!hide && <Typography variant="h6">{APP_NAME}</Typography>}</div>
       <div>
         <Button
           color="primary"
