@@ -69,6 +69,5 @@
     "eslint-plugin-unused-imports": "^1.1.5",
     "prettier": "^2.4.1",
     "prettier-plugin-organize-imports": "^2.3.4"
-  },
-  "test" : "jest -c jest.config.js --watch"
+  }
 }
