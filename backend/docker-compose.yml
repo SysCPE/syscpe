@@ -10,6 +10,8 @@ services:
       - ./:/app
     depends_on: 
       - db
+    environment:
+      - DB_CONNECTION_STRING: postgres://postgres:password@db:5432/postgres
   db:
     image: postgres:latest
     ports: 
