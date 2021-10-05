@@ -3,7 +3,8 @@
     "start-dev": "ts-node-dev src/index.ts"
   },
   "dependencies": {
-    "koa": "^2.13.3"
+    "koa": "^2.13.3",
+    "sequelize": "^6.6.5"
   },
   "devDependencies": {
     "@types/koa": "^2.13.4",
