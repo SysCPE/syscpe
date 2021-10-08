@@ -1,7 +1,7 @@
 import { Grid } from '@material-ui/core';
 import Header from 'components/Header';
 import Routes from 'config/routes';
-import LoginPage from 'pages/LoginPage';
+import LoginPage from 'pages/login/LoginPage';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 function App() {

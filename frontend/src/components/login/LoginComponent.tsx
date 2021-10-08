@@ -5,14 +5,16 @@ import {
   TextField,
   Typography,
 } from '@material-ui/core';
+import ErrorText from 'components/typography/ErrorText';
 import APP_NAME from 'config/app_name';
 import { FC, Fragment, useState } from 'react';
 
 type Props = {
+  error: string;
   loading: boolean;
   submit: (email: string, password: string) => void;
 };
-const LoginComponent: FC<Props> = ({ loading, submit }) => {
+const LoginComponent: FC<Props> = ({ error, loading, submit }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -66,6 +68,10 @@ const LoginComponent: FC<Props> = ({ loading, submit }) => {
           >
             Entrar
           </Button>
+        </Grid>
+
+        <Grid item container sx={{ marginTop: 3 }} justifyContent="flex-end">
+          <ErrorText error={error} />
         </Grid>
       </Grid>
     </Grid>
