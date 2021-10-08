@@ -1,5 +1,7 @@
 {
   "scripts": {
+    "build": "tsc --project ./",
+    "start": "npm run build && node build/src/index.js",
     "start-dev": "ts-node-dev src/index.ts"
   },
   "dependencies": {
@@ -12,6 +14,7 @@
     "@types/koa": "^2.13.4",
     "@types/node": "^16.10.2",
     "@types/validator": "^13.6.3",
+    "ts-node": "^9.1.1",
     "ts-node-dev": "^1.1.8",
     "typescript": "^4.4.3"
   }
