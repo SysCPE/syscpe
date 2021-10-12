@@ -8,5 +8,6 @@ RUN npm install -g npm
 RUN npm install -D
 
 COPY . .
+EXPOSE 3000
 
 CMD [ "npm", 'run', 'start']
