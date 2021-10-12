@@ -7,7 +7,6 @@ COPY package*.json ./
 RUN npm install -g npm
 RUN npm install -D
 
-COPY . .
-EXPOSE 3000
+COPY ./build .
 
-CMD [ "npm", 'run', 'start']
+CMD [ "node", "src/index.js"]
