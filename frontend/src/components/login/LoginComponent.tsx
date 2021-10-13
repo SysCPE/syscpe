@@ -49,7 +49,7 @@ const LoginComponent: FC<Props> = ({ error, loading, submit }) => {
         <Grid item container sx={{ marginTop: 2 }}>
           <TextField
             id="password-input"
-            label="Password"
+            label="Senha"
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}

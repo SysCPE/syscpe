@@ -8,7 +8,7 @@ describe('LoginComponent', () => {
     render(<LoginComponent error="" loading={false} submit={submit} />);
 
     userEvent.type(screen.getByLabelText('Email'), 'email');
-    userEvent.type(screen.getByLabelText('Password'), 'password');
+    userEvent.type(screen.getByLabelText('Senha'), 'password');
     userEvent.click(screen.getByText('Entrar'));
 
     expect(submit).toBeCalledWith('email', 'password');
