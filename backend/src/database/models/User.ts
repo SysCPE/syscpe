@@ -9,9 +9,9 @@ interface UserAttributes {
 interface UserCreationAttributes extends Optional<UserAttributes, 'id'> {};
 
 class User extends Model<UserAttributes, UserCreationAttributes> implements UserAttributes {
-    id: number;
-    username: string;
-    passwordHash: string;
+    public id!: number;
+    public username!: string;
+    public passwordHash!: string;
 }
 
 export default (sequelize: Sequelize) => {
