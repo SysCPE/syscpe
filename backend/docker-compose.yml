@@ -11,6 +11,7 @@ services:
     depends_on: 
       - db
     environment:
+      # <dialect>://<user>:<user_password>@<dabase_name>:<port>/<database_password>
       - DB_CONNECTION_STRING: postgres://postgres:password@db:5432/postgres
   db:
     image: postgres:latest
