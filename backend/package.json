@@ -8,11 +8,13 @@
     "koa": "^2.13.3",
     "pg": "^8.7.1",
     "pg-hstore": "^2.3.4",
-    "sequelize": "^6.6.5"
+    "sequelize": "^6.6.5",
+    "umzug": "^2.3.0"
   },
   "devDependencies": {
     "@types/koa": "^2.13.4",
     "@types/node": "^16.10.2",
+    "@types/umzug": "^2.3.2",
     "@types/validator": "^13.6.3",
     "ts-node": "^9.1.1",
     "ts-node-dev": "^1.1.8",
