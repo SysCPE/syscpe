@@ -1,23 +1,11 @@
 import koa from 'koa';
+import path from 'path';
 import { Sequelize } from 'sequelize';
+import Umzug from 'umzug';
 
-function testDatabase() {
-  const sequelize = new Sequelize(
-    (process.env.DB_CONNECTION_STRING as string) || ''
-  );
-
-  sequelize
-    .authenticate()
-    .then(() => console.log('Connection has been established successfully.'))
-    .catch((error) =>
-      console.error('Unable to connect to the database:', error)
-    );
-}
-
-const boostrap = () => {
+const boostrap = async ({ CONNECT_TO_DB = false }) => {
   const app = new koa();
-
-  if (process.env.DB_CONNECTION_STRING) testDatabase();
+  const db = CONNECT_TO_DB ? await connectDatabase() : null;
 
   app.use(async (ctx) => {
     console.log(ctx);
@@ -25,6 +13,28 @@ const boostrap = () => {
   });
 
   return app;
+};
+
+const connectDatabase = async (): Promise<Sequelize> => {
+  const sequelize = new Sequelize(
+    (process.env.DB_CONNECTION_STRING as string) || ''
+  );
+
+  const umzug = new Umzug({
+    migrations: {
+      path: path.join(__dirname, 'database/migrations'),
+      params: [sequelize.getQueryInterface()],
+    },
+    storage: 'sequelize',
+    storageOptions: {
+      sequelize: sequelize,
+    },
+    logging: console.log,
+  });
+
+  await umzug.up();
+
+  return sequelize;
 };
 
 export default boostrap;
