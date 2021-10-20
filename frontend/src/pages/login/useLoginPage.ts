@@ -1,9 +1,12 @@
 import LoginForm from 'domain/authentication/entities/LoginForm';
+import InvalidCredentials from 'domain/authentication/errors/InvalidCredentials';
 import useAuthentication from 'providers/authentication/useAuthentication';
+import useLogger from 'providers/logger/useLogger';
 import { useState } from 'react';
 import useSubmit from 'utils/useSubmit';
 
 const useLoginPage = () => {
+  const { logError } = useLogger();
   const { loginEmailPassword } = useAuthentication();
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -19,7 +22,14 @@ const useLoginPage = () => {
     },
     () => {},
     (error) => {
-      console.log(error);
+      switch (error.constructor) {
+        case InvalidCredentials:
+          return setErrorMessage('Email ou senha inválidos');
+
+        default:
+          setErrorMessage('O login falhou\nTente novamente');
+          logError(error);
+      }
     }
   );
 
