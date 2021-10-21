@@ -1,23 +1,27 @@
-import { Button, Typography } from '@material-ui/core';
-import APP_NAME from 'config/app_name';
-import { useState } from 'react';
+import { Grid } from '@material-ui/core';
+import Header from 'components/Header';
+import Routes from 'config/routes';
+import LoginPage from 'pages/login/LoginPage';
+import AuthenticationProvider from 'providers/authentication/AuthenticationProvider';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 function App() {
-  const [hide, setHide] = useState(false);
-
   return (
-    <div>
-      <div>{!hide && <Typography variant="h6">{APP_NAME}</Typography>}</div>
-      <div>
-        <Button
-          color="primary"
-          variant="contained"
-          onClick={() => setHide(true)}
-        >
-          Hide
-        </Button>
-      </div>
-    </div>
+    <AuthenticationProvider>
+      <BrowserRouter>
+        <Header></Header>
+
+        <Grid container justifyContent="center">
+          <Grid item xs={12} sm={10} md={6}>
+            <Switch>
+              <Route path={Routes.LOGIN}>
+                <LoginPage></LoginPage>
+              </Route>
+            </Switch>
+          </Grid>
+        </Grid>
+      </BrowserRouter>
+    </AuthenticationProvider>
   );
 }
 
