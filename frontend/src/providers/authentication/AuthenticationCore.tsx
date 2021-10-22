@@ -3,12 +3,14 @@ import { FC } from 'react';
 import AuthenticationContext from './AuthenticationContext';
 
 type Props = {
+  loading?: boolean;
   authenticated?: boolean;
   userEmail?: string;
   logout?: () => void;
 };
 const AuthenticationCore: FC<Props> = ({
   children,
+  loading = false,
   authenticated = false,
   userEmail = '',
   logout = () => {},
@@ -20,6 +22,7 @@ const AuthenticationCore: FC<Props> = ({
   return (
     <AuthenticationContext.Provider
       value={{
+        loading,
         authenticated,
         email: userEmail,
         loginEmailPassword,

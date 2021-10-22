@@ -16,10 +16,11 @@ const AuthenticationAuth0Provider: FC = ({ children }) => {
 };
 
 const AuthenticationAuth0Core: FC = ({ children }) => {
-  const { isAuthenticated, user, logout } = useAuth0();
+  const { isLoading, isAuthenticated, user, logout } = useAuth0();
 
   return (
     <AuthenticationCore
+      loading={isLoading}
       authenticated={isAuthenticated}
       userEmail={user?.email}
       logout={() => logout({ returnTo: window.location.origin })}
