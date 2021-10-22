@@ -1,10 +1,15 @@
-import { AppBar, Button, Grid, Toolbar, Typography } from '@material-ui/core';
+import { AppBar, Grid, Toolbar, Typography } from '@material-ui/core';
 import { Box } from '@material-ui/system';
 import APP_NAME from 'config/app_name';
 import Routes from 'config/routes';
+import useAuthentication from 'providers/authentication/useAuthentication';
 import { Link } from 'react-router-dom';
+import LoginButton from './button/LoginButton';
+import ProfileButton from './button/ProfileButton';
 
 const Header = () => {
+  const { authenticated } = useAuthentication();
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" color="secondary">
@@ -20,14 +25,8 @@ const Header = () => {
                 </Link>
               </Typography>
 
-              <Button>
-                <Link
-                  to={Routes.LOGIN}
-                  style={{ color: 'inherit', textDecoration: 'none' }}
-                >
-                  Login
-                </Link>
-              </Button>
+              {!authenticated && <LoginButton />}
+              {authenticated && <ProfileButton />}
             </Toolbar>
           </Grid>
         </Grid>

@@ -2,11 +2,10 @@ import { useContext } from 'react';
 import AuthenticationContext from './AuthenticationContext';
 
 const useAuthentication = () => {
-  const { authenticated, loginEmailPassword } = useContext(
-    AuthenticationContext
-  );
+  const { loading, authenticated, email, loginEmailPassword, logout } =
+    useContext(AuthenticationContext);
 
-  return { authenticated, loginEmailPassword };
+  return { loading, authenticated, email, loginEmailPassword, logout };
 };
 
 export default useAuthentication;

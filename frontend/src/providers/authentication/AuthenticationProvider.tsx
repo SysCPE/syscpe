@@ -1,24 +1,13 @@
-import loginUseCase from 'domain/authentication/usecases/login_usecase';
-import { FC, useState } from 'react';
-import AuthenticationContext from './AuthenticationContext';
+import { TEST } from 'config/environment';
+import { FC } from 'react';
+import AuthenticationAuth0Provider from './providers/AuthenticationAuth0Provider';
+import AuthenticationTestProvider from './providers/AuthenticationTestProvider';
 
 const AuthenticationProvider: FC = ({ children }) => {
-  const [authenticated, setAuthenticated] = useState(false);
+  if (TEST)
+    return <AuthenticationTestProvider>{children}</AuthenticationTestProvider>;
 
-  const loginEmailPassword = async (email: string, password: string) => {
-    await loginUseCase(email, password);
-  };
-
-  return (
-    <AuthenticationContext.Provider
-      value={{
-        authenticated,
-        loginEmailPassword,
-      }}
-    >
-      {children}
-    </AuthenticationContext.Provider>
-  );
+  return <AuthenticationAuth0Provider>{children}</AuthenticationAuth0Provider>;
 };
 
 export default AuthenticationProvider;
