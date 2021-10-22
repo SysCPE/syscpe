@@ -1,24 +1,40 @@
-import { Button, Typography } from '@material-ui/core';
-import APP_NAME from 'config/app_name';
-import { useState } from 'react';
+import { Grid } from '@material-ui/core';
+import Header from 'components/Header';
+import Routes from 'config/routes';
+import LoadingPage from 'pages/LoadingPage';
+import LoginPage from 'pages/login/LoginPage';
+import AuthenticationProvider from 'providers/authentication/AuthenticationProvider';
+import useAuthentication from 'providers/authentication/useAuthentication';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 function App() {
-  const [hide, setHide] = useState(false);
-
   return (
-    <div>
-      <div>{!hide && <Typography variant="h6">{APP_NAME}</Typography>}</div>
-      <div>
-        <Button
-          color="primary"
-          variant="contained"
-          onClick={() => setHide(true)}
-        >
-          Hide
-        </Button>
-      </div>
-    </div>
+    <AuthenticationProvider>
+      <BrowserRouter>
+        <Header></Header>
+
+        <Grid container justifyContent="center">
+          <Grid item xs={12} sm={10} md={6}>
+            <AppBody />
+          </Grid>
+        </Grid>
+      </BrowserRouter>
+    </AuthenticationProvider>
   );
 }
+
+const AppBody = () => {
+  const { loading } = useAuthentication();
+
+  if (loading) return <LoadingPage />;
+
+  return (
+    <Switch>
+      <Route path={Routes.LOGIN}>
+        <LoginPage />
+      </Route>
+    </Switch>
+  );
+};
 
 export default App;

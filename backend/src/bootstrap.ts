@@ -3,14 +3,9 @@ import path from 'path';
 import { Sequelize } from 'sequelize';
 import Umzug from 'umzug';
 
-const boostrap = async ({ CONNECT_TO_DB = false }) => {
+const bootstrap = async ({ CONNECT_TO_DB = false }) => {
   const app = new koa();
   const db = CONNECT_TO_DB ? await connectDatabase() : null;
-
-  app.use(async (ctx) => {
-    console.log(ctx);
-    ctx.response.body = 'Hello';
-  });
 
   return app;
 };
@@ -37,4 +32,4 @@ const connectDatabase = async (): Promise<Sequelize> => {
   return sequelize;
 };
 
-export default boostrap;
+export default bootstrap;
