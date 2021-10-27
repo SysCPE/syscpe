@@ -9,6 +9,7 @@ import { FC } from 'react';
 
 const AuthenticationAuth0Provider: FC = ({ children }) => {
   return (
+    // TODO: restrict token scopes to include only email
     <Auth0Provider
       domain={AUTH0_DOMAIN}
       clientId={AUTH0_CLIENT_ID}
@@ -21,7 +22,10 @@ const AuthenticationAuth0Provider: FC = ({ children }) => {
 };
 
 const AuthenticationAuth0Core: FC = ({ children }) => {
-  const { isLoading, isAuthenticated, user, logout } = useAuth0();
+  const { isLoading, isAuthenticated, user, logout, getAccessTokenSilently } =
+    useAuth0();
+
+  getAccessTokenSilently().then((token) => console.log(token));
 
   return (
     <AuthenticationCore

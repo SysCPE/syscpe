@@ -6,6 +6,7 @@
   },
   "dependencies": {
     "@koa/router": "^10.1.1",
+    "axios": "^0.24.0",
     "jwks-rsa": "^2.0.5",
     "koa": "^2.13.3",
     "koa-body": "^4.2.0",
