@@ -1,2 +1,2 @@
 # syscpe
-Administrative system for CPE EACH USP
+Administrative system for CPE EACH USP.
