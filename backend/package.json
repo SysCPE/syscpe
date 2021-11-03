@@ -1,7 +1,7 @@
 {
   "scripts": {
     "build": "tsc --project ./",
-    "start": "npm run build && node build/src/index.js",
+    "start": "node build/src/index.js",
     "start-dev": "ts-node-dev src/index.ts"
   },
   "dependencies": {
