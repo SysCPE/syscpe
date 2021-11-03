@@ -5,7 +5,8 @@ import {
   AUTH0_DOMAIN,
 } from 'config/auth0';
 import AuthenticationCore from 'providers/authentication/AuthenticationCore';
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
+import configureAxios from 'services/configureAxios';
 
 const AuthenticationAuth0Provider: FC = ({ children }) => {
   return (
@@ -25,7 +26,10 @@ const AuthenticationAuth0Core: FC = ({ children }) => {
   const { isLoading, isAuthenticated, user, logout, getAccessTokenSilently } =
     useAuth0();
 
-  getAccessTokenSilently().then((token) => console.log(token));
+  useEffect(() => {
+    if (isAuthenticated) configureAxios(getAccessTokenSilently);
+    else configureAxios();
+  }, [isAuthenticated, getAccessTokenSilently]);
 
   return (
     <AuthenticationCore

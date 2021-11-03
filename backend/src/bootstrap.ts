@@ -1,24 +1,26 @@
-import koa from 'koa';
-import path from 'path';
-import Umzug from 'umzug';
-import bodyParser from 'koa-body';
-import { Sequelize } from 'sequelize';
-
-import Api from './api';
+import cors from '@koa/cors';
 import Router from '@koa/router';
-
+import koa from 'koa';
+import bodyParser from 'koa-body';
+import path from 'path';
+import { Sequelize } from 'sequelize';
+import Umzug from 'umzug';
+import Api from './api';
 
 const bootstrap = async ({ CONNECT_TO_DB = false }) => {
-  const db = CONNECT_TO_DB ? await connectDatabase() : null;  
-  
+  const db = CONNECT_TO_DB ? await connectDatabase() : null;
+
   const router = new Router();
   router.use(Api.routes()).use(Api.allowedMethods());
 
   const app = new koa();
   app.use(bodyParser());
+  app.use(cors());
   app.use(router.routes());
 
-  app.on('error', (err) => { console.log(err) });
+  app.on('error', (err) => {
+    console.log(err);
+  });
 
   return app;
 };
