@@ -11,7 +11,7 @@ const HomePage: FC = () => {
             console.log(await verifyTokenUseCase());
           }}
         >
-          CLICK ME
+          Check authentication
         </Button>
       </p>
     </div>
