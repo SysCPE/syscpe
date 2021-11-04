@@ -15,7 +15,7 @@ const bootstrap = async ({ CONNECT_TO_DB = false }) => {
 
   const app = new koa();
   app.use(bodyParser());
-  app.use(cors());
+  app.use(cors({origin: '*'}));
   app.use(router.routes());
 
   app.on('error', (err) => {
