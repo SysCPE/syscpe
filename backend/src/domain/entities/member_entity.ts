@@ -6,7 +6,7 @@ type MemberEntity = {
   CPF?: string;
 
   socialName?: string;
-  genre?: string;
+  gender?: string;
   birthday?: Date;
   phone?: string;
 };
