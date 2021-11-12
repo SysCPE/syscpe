@@ -8,7 +8,7 @@ describe('CreateAdminMembersFromCSVFiles', () => {
   each([[[]], [[mock<AdminMemberEntity>(), mock<AdminMemberEntity>()]]]).it(
     'should run create admin members from csv file usecase',
     async (mockAdminMembers: AdminMemberEntity[]) => {
-      const mockFile = mock<Blob>();
+      const mockFile = mock<Buffer>();
       const mockMemberRepository = mock<MembersRepository>();
       const usecase = new CreateAdminMembersFromCSVFile(mockMemberRepository);
 

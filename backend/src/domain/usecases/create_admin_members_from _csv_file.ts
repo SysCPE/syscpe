@@ -8,7 +8,7 @@ class CreateAdminMembersFromCSVFile {
     this.membersRepository = membersRepository;
   }
 
-  async run(file: Blob): Promise<AdminMemberEntity[]> {
+  async run(file: Buffer): Promise<AdminMemberEntity[]> {
     const adminMembers =
       await this.membersRepository.readAdminMembersFromCSVFile(file);
 
