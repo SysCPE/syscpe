@@ -4,11 +4,10 @@ WORKDIR /app
 
 COPY package*.json ./
 
-RUN npm install -g npm
 RUN npm install -D
 
 COPY . .
 
-EXPOSE 3000
+RUN npm run build
 
-CMD ["npm", "run", "start-dev"]
+ENTRYPOINT [ "node", "build/src/migrations/run_migration.js"]
