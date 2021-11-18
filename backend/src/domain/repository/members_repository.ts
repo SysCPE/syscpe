@@ -4,7 +4,7 @@ type MembersRepository = {
   readAdminMembersFromCSVFile: (file: Buffer) => Promise<AdminMemberEntity[]>;
   saveAdminMember: (
     adminMember: AdminMemberEntity
-  ) => Promise<AdminMemberEntity>;
+  ) => Promise<AdminMemberEntity | null>;
 };
 
 export default MembersRepository;

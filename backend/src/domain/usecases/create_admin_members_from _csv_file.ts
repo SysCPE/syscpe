@@ -12,11 +12,18 @@ class CreateAdminMembersFromCSVFile {
     const adminMembers =
       await this.membersRepository.readAdminMembersFromCSVFile(file);
 
-    return await Promise.all(
-      adminMembers.map((adminMember) =>
-        this.membersRepository.saveAdminMember(adminMember)
-      )
-    );
+    const createdAdminMembers: AdminMemberEntity[] = [];
+
+    for (const adminMember of adminMembers) {
+      const createdAdminMember = await this.membersRepository.saveAdminMember(
+        adminMember
+      );
+
+      if (createdAdminMember !== null)
+        createdAdminMembers.push(createdAdminMember);
+    }
+
+    return createdAdminMembers;
   }
 }
 
