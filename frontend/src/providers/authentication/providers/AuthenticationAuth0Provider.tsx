@@ -3,9 +3,11 @@ import {
   AUTH0_API_AUDIENCE,
   AUTH0_CLIENT_ID,
   AUTH0_DOMAIN,
+  AUTH0_REDIRECT_URI,
 } from 'config/auth0';
 import AuthenticationCore from 'providers/authentication/AuthenticationCore';
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
+import configureAxios from 'services/configureAxios';
 
 const AuthenticationAuth0Provider: FC = ({ children }) => {
   return (
@@ -14,7 +16,7 @@ const AuthenticationAuth0Provider: FC = ({ children }) => {
       domain={AUTH0_DOMAIN}
       clientId={AUTH0_CLIENT_ID}
       audience={AUTH0_API_AUDIENCE}
-      redirectUri={window.location.origin}
+      redirectUri={AUTH0_REDIRECT_URI}
     >
       <AuthenticationAuth0Core>{children}</AuthenticationAuth0Core>
     </Auth0Provider>
@@ -22,10 +24,22 @@ const AuthenticationAuth0Provider: FC = ({ children }) => {
 };
 
 const AuthenticationAuth0Core: FC = ({ children }) => {
-  const { isLoading, isAuthenticated, user, logout, getAccessTokenSilently } =
-    useAuth0();
+  const {
+    isLoading,
+    isAuthenticated,
+    user,
+    logout,
+    getAccessTokenSilently,
+    loginWithRedirect,
+  } = useAuth0();
 
-  getAccessTokenSilently().then((token) => console.log(token));
+  useEffect(() => {
+    if (isAuthenticated) configureAxios(getAccessTokenSilently);
+    else configureAxios();
+  }, [isAuthenticated, getAccessTokenSilently]);
+
+  const _loginWithRedirect = () =>
+    loginWithRedirect({ redirectUri: AUTH0_REDIRECT_URI });
 
   return (
     <AuthenticationCore
@@ -33,6 +47,7 @@ const AuthenticationAuth0Core: FC = ({ children }) => {
       authenticated={isAuthenticated}
       userEmail={user?.email}
       logout={() => logout({ returnTo: window.location.origin })}
+      loginWithRedirect={_loginWithRedirect}
     >
       {children}
     </AuthenticationCore>

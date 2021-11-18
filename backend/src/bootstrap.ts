@@ -1,3 +1,4 @@
+import cors from '@koa/cors';
 import Router from '@koa/router';
 import initModels from 'database';
 import koa from 'koa';
@@ -11,6 +12,7 @@ const bootstrap = async () => {
 
   const app = new koa();
 
+  app.use(cors({ origin: '*' }));
   app.use(router.routes());
 
   app.on('error', (err) => {
