@@ -6,7 +6,7 @@ const uploadUsers = async (ctx: Context) => {
   const usecase = new CreateAdminMembersFromCSVFile(ServicesMembersRepository);
   const adminUsers = await usecase.run(ctx.file.buffer);
 
-  ctx.response.body = `${adminUsers.length} users created`;
+  ctx.response.body = { created_users: adminUsers.length };
 };
 
 export default uploadUsers;
