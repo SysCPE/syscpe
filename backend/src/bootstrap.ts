@@ -12,7 +12,7 @@ const bootstrap = async () => {
 
   const app = new koa();
 
-  app.use(cors({ origin: '*' }));
+  app.use(cors({ origin: '*', allowHeaders: '*' }));
   app.use(router.routes());
 
   app.on('error', (err) => {
