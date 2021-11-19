@@ -21,4 +21,8 @@ services:
     environment: 
       POSTGRES_PASSWORD: password
     volumes:
-      - ./local_data:/var/lib/postgresql/data
+      - syscpe_db:/var/lib/postgresql/data
+
+volumes:
+  syscpe_db:
+    external: true
