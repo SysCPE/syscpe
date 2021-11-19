@@ -5,7 +5,7 @@ services:
       context: .
       dockerfile: Dockerfile.dev
     ports: 
-      - "4201:4201"
+      - "4000:4000"
     volumes: 
       - .:/app
     depends_on: 
