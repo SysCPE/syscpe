@@ -13,6 +13,8 @@ interface MemberAttributes {
   gender?: string;
   birthday?: Date;
   phone?: string;
+
+  isActive?: boolean;
 }
 
 interface MemberCreationAttributes extends Optional<MemberAttributes, 'id'> {}
@@ -80,6 +82,11 @@ class Member
           type: DataTypes.STRING,
           allowNull: true,
         },
+        isActive: {
+          type: DataTypes.BOOLEAN,
+          allowNull: false,
+          defaultValue: true,
+        }
       },
       {
         sequelize,
