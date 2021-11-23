@@ -1,6 +1,6 @@
 import Router from '@koa/router';
-import { checkJwt, getUserInfo } from './middlewares';
 import MembersRouter from './members';
+import { checkJwt, getUserInfo } from './middlewares';
 
 const router = new Router();
 

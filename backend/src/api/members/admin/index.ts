@@ -1,7 +1,7 @@
+import multer from '@koa/multer';
+import Router from '@koa/router';
 import getAllAdminMembers from './get_all_admin_members';
 import uploadUsers from './upload_users';
-import Router from '@koa/router';
-import multer from '@koa/multer';
 
 const upload = multer();
 

@@ -5,7 +5,7 @@ import Member from 'database/models/Member';
 import sequelize from 'database/sequelize';
 import AdminMemberEntity from 'domain/entities/admin_member_entity';
 import MembersRepository from 'domain/repository/members_repository';
-import { UniqueConstraintError } from 'sequelize';
+import { ValidationError } from 'sequelize';
 
 const ServicesMembersRepository: MembersRepository = {
   readAdminMembersFromCSVFile: async (file: Buffer) => {
@@ -50,48 +50,16 @@ const ServicesMembersRepository: MembersRepository = {
 
         return adminMember;
       });
-    } catch (error: any) {
-      const wasEmailKeyViolated = Object.keys(error.fields || {}).includes(
-        'email'
-      );
-
-      if (error instanceof UniqueConstraintError && wasEmailKeyViolated)
-        return null;
+    } catch (error) {
+      if (error instanceof ValidationError) return null;
 
       throw error;
     }
   },
 
   getAllAdminMembers: async (): Promise<AdminMemberEntity[]> => {
-    const result = await Member.findAll({
-      include: [
-        {
-          association: Member.associations.adminMember,
-          where: { isActive: true },
-        },
-      ],
-    });
-
-    return result.map(__mapAdminMemberModelToEntity);
+    throw new Error('Function not implemented.');
   },
-};
-
-const __mapAdminMemberModelToEntity = (member: Member): AdminMemberEntity => {
-  return {
-    email: member.email,
-    name: member.name,
-    RG: member.RG,
-    CPF: member.CPF,
-    gender: member.gender,
-    birthday: member.birthday,
-    pronoun: member.adminMember?.pronoun,
-    phone: member.phone,
-    eachCourse: member.adminMember?.eachCourse,
-    semester: member.adminMember?.semester,
-    period: member.adminMember?.period,
-    isActive: member.adminMember?.isActive,
-    socialName: member.socialName,
-  };
 };
 
 const __mapAdminMemberJSONToEntity = (adminMember: any): AdminMemberEntity => {
