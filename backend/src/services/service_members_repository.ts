@@ -13,6 +13,7 @@ const ServicesMembersRepository: MembersRepository = {
 
     return adminMembersJSON.map(__mapAdminMemberJSONToEntity);
   },
+
   saveAdminMember: async (adminMember: AdminMemberEntity) => {
     try {
       return await sequelize.transaction(async (transaction) => {
@@ -49,11 +50,16 @@ const ServicesMembersRepository: MembersRepository = {
         return adminMember;
       });
     } catch (error) {
-      if (error instanceof ValidationError) return null;
+      if (error instanceof ValidationError)
+        return null;
 
       throw error;
     }
   },
+
+  getAllAdminMembers: async (): Promise<AdminMemberEntity[]> => {
+    throw new Error('Function not implemented.');
+  }
 };
 
 const __mapAdminMemberJSONToEntity = (adminMember: any): AdminMemberEntity => {
