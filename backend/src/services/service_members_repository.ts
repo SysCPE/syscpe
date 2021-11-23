@@ -58,7 +58,8 @@ const ServicesMembersRepository: MembersRepository = {
   },
 
   getAllAdminMembers: async (): Promise<AdminMemberEntity[]> => {
-    throw new Error('Function not implemented.');
+    const result = await Member.findAll();
+    return result as AdminMemberEntity[];
   },
 };
 
