@@ -5,17 +5,24 @@ services:
       context: .
       dockerfile: Dockerfile.dev
     ports: 
-      - "4201:4201"
+      - "4000:4000"
     volumes: 
-      - ./:/app
+      - .:/app
     depends_on: 
       - db
     environment:
-      # <dialect>://<user>:<user_password>@<database_address>:<port>/<database_name>
       DB_CONNECTION_STRING: "postgres://postgres:password@db:5432/postgres"
+    stdin_open: true
+    tty: true   
   db:
     image: postgres:latest
     ports: 
       - "5432:5432" 
     environment: 
       POSTGRES_PASSWORD: password
+    volumes:
+      - syscpe_db:/var/lib/postgresql/data
+
+volumes:
+  syscpe_db:
+    external: true

@@ -1,20 +1,22 @@
-import { Button } from '@material-ui/core';
-import verifyTokenUseCase from 'domain/token/verify_token_usecase';
+import AdminPanel from 'components/admin_panel/AdminPanel';
+import Page from 'pages/Page';
+import useAuthentication from 'providers/authentication/useAuthentication';
 import { FC } from 'react';
 
 const HomePage: FC = () => {
+  const { authenticated } = useAuthentication();
+
+  if (!authenticated)
+    return (
+      <Page>
+        <div>Please login</div>
+      </Page>
+    );
+
   return (
-    <div>
-      <p>
-        <Button
-          onClick={async () => {
-            console.log(await verifyTokenUseCase());
-          }}
-        >
-          CLICK ME
-        </Button>
-      </p>
-    </div>
+    <Page>
+      <AdminPanel />
+    </Page>
   );
 };
 

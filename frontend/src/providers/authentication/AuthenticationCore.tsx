@@ -7,6 +7,7 @@ type Props = {
   authenticated?: boolean;
   userEmail?: string;
   logout?: () => void;
+  loginWithRedirect?: () => Promise<void>;
 };
 const AuthenticationCore: FC<Props> = ({
   children,
@@ -14,6 +15,7 @@ const AuthenticationCore: FC<Props> = ({
   authenticated = false,
   userEmail = '',
   logout = () => {},
+  loginWithRedirect = async () => {},
 }) => {
   const loginEmailPassword = async (email: string, password: string) => {
     await loginUseCase(email, password);
@@ -27,6 +29,7 @@ const AuthenticationCore: FC<Props> = ({
         email: userEmail,
         loginEmailPassword,
         logout,
+        loginWithRedirect,
       }}
     >
       {children}
