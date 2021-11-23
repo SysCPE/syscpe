@@ -34,6 +34,8 @@ class Member
   birthday?: Date;
   phone?: string;
 
+  isActive?: boolean;
+
   static initialize(sequelize: Sequelize) {
     this.init(
       {
