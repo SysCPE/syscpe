@@ -3,13 +3,14 @@ import { DataTypes, Model, Optional, Sequelize } from 'sequelize';
 interface AdminMemberAttributes {
   id: number;
 
-  pronoum?: string;
+  pronoun?: string;
 
   eachCourse?: string;
   semester?: number;
   period?: number;
 
   memberId: number;
+  isActive?: boolean;
 }
 
 interface AdminMemberCreationAttributes
@@ -21,13 +22,15 @@ class AdminMember
 {
   id!: number;
 
-  pronoum?: string;
+  pronoun?: string;
 
   eachCourse?: string;
   semester?: number;
   period?: number;
 
   memberId!: number;
+
+  isActive?: boolean;
 
   public static initialize(sequelize: Sequelize) {
     this.init(
@@ -37,7 +40,7 @@ class AdminMember
           autoIncrement: true,
           primaryKey: true,
         },
-        pronoum: {
+        pronoun: {
           type: DataTypes.STRING,
           allowNull: true,
         },
@@ -56,6 +59,11 @@ class AdminMember
         memberId: {
           type: DataTypes.INTEGER,
           allowNull: false,
+        },
+        isActive: {
+          type: DataTypes.BOOLEAN,
+          allowNull: false,
+          defaultValue: true,
         },
       },
       {

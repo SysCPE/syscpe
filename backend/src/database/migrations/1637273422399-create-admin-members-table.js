@@ -8,7 +8,7 @@ export default {
         autoIncrement: true,
         primaryKey: true,
       },
-      pronoum: {
+      pronoun: {
         type: DataTypes.STRING,
         allowNull: true,
       },

@@ -13,7 +13,7 @@ const initModels = () => {
   AdminMember.initialize(sequelize);
 
   Member.hasOne(IdCPE, { foreignKey: 'memberId' });
-  AdminMember.belongsTo(Member, { foreignKey: 'memberId' });
+  Member.hasOne(AdminMember, { foreignKey: 'memberId', as: 'adminMember' });
 };
 
 export default initModels;
