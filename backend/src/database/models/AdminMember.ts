@@ -3,7 +3,7 @@ import { DataTypes, Model, Optional, Sequelize } from 'sequelize';
 interface AdminMemberAttributes {
   id: number;
 
-  pronoum?: string;
+  pronoun?: string;
 
   eachCourse?: string;
   semester?: number;
@@ -21,7 +21,7 @@ class AdminMember
 {
   id!: number;
 
-  pronoum?: string;
+  pronoun?: string;
 
   eachCourse?: string;
   semester?: number;
@@ -37,7 +37,7 @@ class AdminMember
           autoIncrement: true,
           primaryKey: true,
         },
-        pronoum: {
+        pronoun: {
           type: DataTypes.STRING,
           allowNull: true,
         },
