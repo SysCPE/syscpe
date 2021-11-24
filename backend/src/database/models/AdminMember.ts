@@ -10,7 +10,7 @@ interface AdminMemberAttributes {
   period?: number;
 
   memberId: number;
-  isActive: boolean;
+  isActive?: boolean;
 }
 
 interface AdminMemberCreationAttributes
@@ -30,7 +30,7 @@ class AdminMember
 
   memberId!: number;
 
-  isActive!: boolean;
+  isActive?: boolean;
 
   public static initialize(sequelize: Sequelize) {
     this.init(
