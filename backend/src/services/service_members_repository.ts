@@ -61,8 +61,8 @@ const ServicesMembersRepository: MembersRepository = {
     const result = await Member.findAll({
       include: [{
         association: Member.associations.adminMember,
+        where: { isActive: true },
       }],
-      where: { isActive: true }
     });
     
     return result.map(__mapAdminMemberModelToEntity);
