@@ -63,6 +63,22 @@ const ServicesMembersRepository: MembersRepository = {
   },
 };
 
+const __mapAdminMemberModelToEntity = (member: Member): AdminMemberEntity => {
+  return {
+    email: member.email,
+    name: member.name,
+    RG: member.RG,
+    CPF: member.CPF,
+    gender: member.gender,
+    birthday: member.birthday,
+    pronoun: member.adminMember?.pronoun,
+    phone: member.phone,
+    eachCourse: member.adminMember?.eachCourse,
+    semester: member.adminMember?.semester,
+    period: member.adminMember?.period,
+  };
+};
+
 const __mapAdminMemberJSONToEntity = (adminMember: any): AdminMemberEntity => {
   const _parseDate = (date: string) => {
     if (!date) return undefined;
