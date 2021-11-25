@@ -2,7 +2,7 @@ import { Association, DataTypes, Model, Optional, Sequelize } from 'sequelize';
 import AdminMember from './AdminMember';
 
 interface MemberAttributes {
-  id: number;
+  idCPE: number;
   email: string;
   name: string;
 
@@ -17,13 +17,13 @@ interface MemberAttributes {
   isActive?: boolean;
 }
 
-interface MemberCreationAttributes extends Optional<MemberAttributes, 'id'> {}
+interface MemberCreationAttributes extends Optional<MemberAttributes, 'idCPE'> {}
 
 class Member
   extends Model<MemberAttributes, MemberCreationAttributes>
   implements MemberAttributes
 {
-  id!: number;
+  idCPE!: number;
   email!: string;
   name!: string;
 
@@ -46,7 +46,7 @@ class Member
   static initialize(sequelize: Sequelize) {
     this.init(
       {
-        id: {
+        idCPE: {
           type: DataTypes.INTEGER,
           autoIncrement: true,
           primaryKey: true,

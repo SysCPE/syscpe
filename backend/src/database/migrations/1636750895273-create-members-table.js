@@ -3,7 +3,7 @@ const { DataTypes } = require('sequelize');
 export default {
   up: (queryInterface) => {
     return queryInterface.createTable('Members', {
-      id: {
+      idCPE: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true,

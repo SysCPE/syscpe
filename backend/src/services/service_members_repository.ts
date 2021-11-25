@@ -1,7 +1,6 @@
 import csv from 'csvtojson';
 import { sequelize } from 'database';
 import AdminMember from 'database/models/AdminMember';
-import IdCPE from 'database/models/IdCPE';
 import Member from 'database/models/Member';
 import AdminMemberEntity from 'domain/entities/admin_member_entity';
 import MembersRepository from 'domain/repository/members_repository';
@@ -33,17 +32,12 @@ const ServicesMembersRepository: MembersRepository = {
 
         await AdminMember.create(
           {
-            memberId: memberModel.id,
+            memberId: memberModel.idCPE,
             eachCourse: adminMember.eachCourse,
             period: adminMember.period,
             pronoun: adminMember.pronoum,
             semester: adminMember.semester,
           },
-          { transaction }
-        );
-
-        await IdCPE.create(
-          { memberId: memberModel.id, idCPE: memberModel.id },
           { transaction }
         );
 
