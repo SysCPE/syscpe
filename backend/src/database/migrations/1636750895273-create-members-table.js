@@ -3,8 +3,8 @@ const Sequelize = require('sequelize');
 module.exports = {
   up: (queryInterface) => {
     return queryInterface.createTable('Members', {
-      id: {
-        type: Sequelize.INTEGER,
+      idCPE: {
+        type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true,
       },
