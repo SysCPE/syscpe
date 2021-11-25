@@ -14,7 +14,7 @@ interface MemberAttributes {
   birthday?: Date;
   phone?: string;
 
-  isActive?: boolean;
+  adminMember?: AdminMember;
 }
 
 interface MemberCreationAttributes extends Optional<MemberAttributes, 'idCPE'> {}
@@ -36,8 +36,6 @@ class Member
   phone?: string;
 
   adminMember?: AdminMember;
-
-  isActive?: boolean;
 
   public static associations: {
     adminMember: Association<Member, AdminMember>;
