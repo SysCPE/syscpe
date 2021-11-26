@@ -53,14 +53,16 @@ class Department
           allowNull: true,
           references: {
             model: AdminMember,
-          }
+          },
+          onDelete: 'SET NULL',
         },
         viceDirectorId: {
           type: DataTypes.NUMBER,
           allowNull: true,
           references: {
             model: AdminMember,
-          }
+          },
+          onDelete: 'SET NULL',
         }
       },
       {

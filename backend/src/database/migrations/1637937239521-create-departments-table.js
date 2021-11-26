@@ -23,7 +23,9 @@ export default {
         references: {
           // FIXME: how to properly include Model instead of string?
           model: 'AdminMembers',
-        }
+          key: 'memberId',
+        },
+        onDelete: 'SET NULL',
       },
       viceDirectorId: {
         type: DataTypes.INTEGER,
@@ -31,7 +33,9 @@ export default {
         references: {
           // FIXME: how to properly include Model instead of string?
           model: 'AdminMembers',
-        }
+          key: 'memberId',
+        },
+        onDelete: 'SET NULL',
       },
     });
   },
