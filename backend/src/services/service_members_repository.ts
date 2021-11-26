@@ -1,8 +1,8 @@
 import csv from 'csvtojson';
-import { sequelize } from 'database';
 import AdminMember from 'database/models/AdminMember';
 import IdCPE from 'database/models/IdCPE';
 import Member from 'database/models/Member';
+import sequelize from 'database/sequelize';
 import AdminMemberEntity from 'domain/entities/admin_member_entity';
 import MembersRepository from 'domain/repository/members_repository';
 import { ValidationError } from 'sequelize';

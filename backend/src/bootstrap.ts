@@ -1,8 +1,8 @@
 import cors from '@koa/cors';
 import Router from '@koa/router';
-import initModels from 'database';
 import koa from 'koa';
 import Api from './api';
+import initModels from './database';
 
 const bootstrap = async () => {
   initModels();

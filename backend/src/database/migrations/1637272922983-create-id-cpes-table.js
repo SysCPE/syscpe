@@ -1,32 +1,32 @@
-const { DataTypes } = require('sequelize');
+const Sequelize = require('sequelize');
 
-export default {
+module.exports = {
   up: (queryInterface) => {
     return queryInterface.createTable('IdCPEs', {
       id: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
         autoIncrement: true,
         primaryKey: true,
       },
       idCPE: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
         allowNull: false,
         unique: true,
       },
       memberId: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
         allowNull: false,
-        reference: {
+        references: {
           model: 'Members',
           key: 'id',
         },
       },
       createdAt: {
-        type: DataTypes.DATE,
+        type: Sequelize.DATE,
         allowNull: false,
       },
       updatedAt: {
-        type: DataTypes.DATE,
+        type: Sequelize.DATE,
         allowNull: true,
       },
     });
