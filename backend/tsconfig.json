@@ -5,7 +5,7 @@
     "declaration": true,
     "sourceMap": true,
     "outDir": "build",
-    "rootDir": "./",
+    "rootDir": "./src",
     "strict": true,
     "esModuleInterop": true,
     "baseUrl": "./src",
@@ -13,5 +13,21 @@
       "./node_modules/@types",
     ],
     "allowJs": true,
-  }
+    "paths": {
+      "api/*": ["api/*"],
+      "config/*": ["config/*"],
+      "database/*": ["database/*"],
+      "domain/*": ["domain/*"],
+      "services/*": ["services/*"],
+    },
+    "resolveJsonModule": true,
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/database/migrations/*.js",
+  ],
+  "exclude": [
+    "node_modules", 
+    "./src/tests",
+  ]
 }
