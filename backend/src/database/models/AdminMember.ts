@@ -1,7 +1,8 @@
 import { DataTypes, Model, Optional, Sequelize } from 'sequelize';
+import Member from './Member';
 
 interface AdminMemberAttributes {
-  id: number;
+  memberId: number;
 
   pronoun?: string;
 
@@ -9,19 +10,16 @@ interface AdminMemberAttributes {
   semester?: number;
   period?: number;
 
-  memberId: number;
   isActive?: boolean;
 }
 
 interface AdminMemberCreationAttributes
-  extends Optional<AdminMemberAttributes, 'id'> {}
+  extends AdminMemberAttributes {}
 
 class AdminMember
   extends Model<AdminMemberAttributes, AdminMemberCreationAttributes>
   implements AdminMemberAttributes
 {
-  id!: number;
-
   pronoun?: string;
 
   eachCourse?: string;
@@ -35,10 +33,14 @@ class AdminMember
   public static initialize(sequelize: Sequelize) {
     this.init(
       {
-        id: {
+        memberId: {
           type: DataTypes.INTEGER,
-          autoIncrement: true,
           primaryKey: true,
+          references: {
+            model: Member,
+            key: 'idCPE',
+          },
+          onDelete: 'CASCADE'
         },
         pronoun: {
           type: DataTypes.STRING,
@@ -55,10 +57,6 @@ class AdminMember
         period: {
           type: DataTypes.INTEGER,
           allowNull: true,
-        },
-        memberId: {
-          type: DataTypes.INTEGER,
-          allowNull: false,
         },
         isActive: {
           type: DataTypes.BOOLEAN,
