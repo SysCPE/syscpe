@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "build": "tsc --project tsconfig.json && tsconfig-replace-paths --project tsconfig.json -v",
+    "build": "tsc --project tsconfig.build.json && tsconfig-replace-paths --project tsconfig.build.json -v",
     "start": "NODE_ENV=production npm run build && node build/src/index.js",
     "start-dev": "ts-node-dev -r tsconfig-paths/register --respawn --transpile-only src/index.ts",
     "test": "NODE_ENV=testing jest --maxWorkers=1 --config=jest.config.js",
