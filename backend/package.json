@@ -1,9 +1,10 @@
 {
   "scripts": {
     "build": "tsc --project tsconfig.json && tsconfig-replace-paths --project tsconfig.json -v",
-    "start": "npm run build && node build/src/index.js",
+    "start": "NODE_ENV=production npm run build && node build/src/index.js",
     "start-dev": "ts-node-dev -r tsconfig-paths/register --respawn --transpile-only src/index.ts",
-    "test": "jest"
+    "test": "NODE_ENV=testing jest --maxWorkers=1 --config=jest.config.js",
+    "integration-test": "NODE_ENV=testing jest --maxWorkers=1 --config=jest.integration.config.js"
   },
   "dependencies": {
     "@koa/cors": "^3.1.0",
@@ -27,6 +28,7 @@
     "@types/koa__multer": "^2.0.4",
     "@types/koa__router": "^8.0.8",
     "@types/node": "^16.10.2",
+    "@types/supertest": "^2.0.11",
     "@types/umzug": "^2.3.2",
     "@types/validator": "^13.6.3",
     "jest": "^27.3.1",

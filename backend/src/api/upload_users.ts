@@ -3,6 +3,8 @@ import { Context } from 'koa';
 import ServicesMembersRepository from 'services/service_members_repository';
 
 const uploadUsers = async (ctx: Context) => {
+  if (!ctx.file) ctx.throw(400, 'empty file');
+
   const usecase = new CreateAdminMembersFromCSVFile(ServicesMembersRepository);
   const adminUsers = await usecase.run(ctx.file.buffer);
 

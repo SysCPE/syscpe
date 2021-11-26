@@ -57,18 +57,27 @@ const ServicesMembersRepository: MembersRepository = {
 };
 
 const __mapAdminMemberJSONToEntity = (adminMember: any): AdminMemberEntity => {
+  const _parseDate = (date: string) => {
+    if (!date) return undefined;
+
+    const [day, month, year] = date.split('/');
+
+    return new Date(parseInt(year), parseInt(month), parseInt(day));
+  };
+
   return {
     email: adminMember.email,
     name: adminMember.name,
-    RG: adminMember.rg,
-    CPF: adminMember.cpf,
-    gender: adminMember.gender,
-    birthday: adminMember.birthday,
-    pronoum: adminMember.pronoum,
-    phone: adminMember.phone,
-    eachCourse: adminMember.each_course,
-    semester: parseInt(adminMember.semester),
-    period: parseInt(adminMember.period),
+    RG: adminMember.rg || '',
+    CPF: adminMember.cpf || '',
+    gender: adminMember.gender || '',
+    birthday: _parseDate(adminMember.birthday),
+    pronoum: adminMember.pronoum || '',
+    phone: adminMember.phone || '',
+    socialName: adminMember.socialName || '',
+    eachCourse: adminMember.each_course || '',
+    semester: parseInt(adminMember.semester) || undefined,
+    period: parseInt(adminMember.period) || undefined,
   };
 };
 
