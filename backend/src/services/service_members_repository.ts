@@ -52,30 +52,32 @@ const ServicesMembersRepository: MembersRepository = {
   },
 
   getAllAdminMembers: async (): Promise<AdminMemberEntity[]> => {
-    const result = await Member.findAll({
+    const result = await AdminMember.findAll({
       include: [{
-        association: Member.associations.adminMember,
-        where: { isActive: true },
+        association: AdminMember.associations.member,
       }],
+      where: {
+        isActive: true,
+      }
     });
-    
+
     return result.map(__mapAdminMemberModelToEntity);
   }
 };
 
-const __mapAdminMemberModelToEntity = (member: Member): AdminMemberEntity => {
+const __mapAdminMemberModelToEntity = (adminMember: AdminMember): AdminMemberEntity => {
   return {
-    email: member.email,
-    name: member.name,
-    RG: member.RG,
-    CPF: member.CPF,
-    gender: member.gender,
-    birthday: member.birthday,
-    pronoum: member.adminMember?.pronoun,
-    phone: member.phone,
-    eachCourse: member.adminMember?.eachCourse,
-    semester: member.adminMember?.semester,
-    period: member.adminMember?.period,
+    email: adminMember.member!.email,
+    name: adminMember.member!.name,
+    RG: adminMember.member!.RG,
+    CPF: adminMember.member!.CPF,
+    gender: adminMember.member!.gender,
+    birthday: adminMember.member!.birthday,
+    pronoum: adminMember.pronoun,
+    phone: adminMember.member!.phone,
+    eachCourse: adminMember.eachCourse,
+    semester: adminMember.semester,
+    period: adminMember.period,
   }
 }
 
