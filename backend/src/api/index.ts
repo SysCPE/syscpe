@@ -1,4 +1,5 @@
 import Router from '@koa/router';
+import DepartmentsRouter from './departments';
 import MembersRouter from './members';
 import { checkJwt, getUserInfo } from './middlewares';
 
@@ -9,5 +10,6 @@ router.get('/private', checkJwt, getUserInfo, (ctx) => {
 });
 
 router.use('/members', MembersRouter.routes());
+router.use('/departments', DepartmentsRouter.routes());
 
 export default router;
