@@ -4,16 +4,22 @@ import Member from 'database/models/Member';
 import fs from 'fs';
 import { Server } from 'http';
 import path from 'path';
+import ServicesMembersRepository from 'services/service_members_repository';
 import request from 'supertest';
 import { mockAdminMembers, mockMembers } from './mocks/mock_members';
 
 describe('/upload-users', () => {
   let server: Server;
   const ROUTE = '/upload-users';
+  let mockMembersCSV: Buffer;
 
   beforeAll(async () => {
     const app = await bootstrap();
     server = app.listen(4000);
+
+    mockMembersCSV = fs.readFileSync(
+      path.join(__dirname, 'mocks/mock_members.csv')
+    );
   });
 
   afterAll(() => {
@@ -40,16 +46,20 @@ describe('/upload-users', () => {
       expectedMember.birthday?.getTime()
     );
 
-    const adminMember = (await AdminMember.findOne({
+    const adminMemberModel = (await AdminMember.findOne({
       where: { memberId: memberModel.id },
     }))!;
     const expectedAdminMember = mockAdminMembers[email];
 
-    expect(adminMember).not.toBeNull();
-    expect(adminMember.pronoum).toBe(expectedAdminMember.pronoum);
-    expect(adminMember.eachCourse).toBe(expectedAdminMember.eachCourse);
-    expect(adminMember.semester).toBe(expectedAdminMember.semester);
-    expect(adminMember.period).toBe(expectedAdminMember.period);
+    expect(adminMemberModel).not.toBeNull();
+    expect(adminMemberModel.pronoum).toBe(expectedAdminMember.pronoum);
+    expect(adminMemberModel.eachCourse).toBe(expectedAdminMember.eachCourse);
+    expect(adminMemberModel.semester || undefined).toBe(
+      expectedAdminMember.semester
+    );
+    expect(adminMemberModel.period || undefined).toBe(
+      expectedAdminMember.period
+    );
   };
 
   it('should return bad request if file is empty', async () => {
@@ -60,15 +70,27 @@ describe('/upload-users', () => {
   });
 
   it('should create users in database', async () => {
-    const mockMembersCSV = fs.readFileSync(
-      path.join(__dirname, 'mocks/mock_members.csv')
-    );
     const response = await request(server)
       .post(ROUTE)
       .attach('users', mockMembersCSV, 'mock_members.csv');
 
     expect(response.status).toBe(200);
+    expect(response.body.created_users).toBe(3);
     assertMemberExists('a@gmail.com');
     assertMemberExists('b@gmail.com');
+    assertMemberExists('c@gmail.com');
+  });
+
+  it('should not create users with repeated emails', async () => {
+    await ServicesMembersRepository.saveAdminMember(mockMembers['a@gmail.com']);
+
+    const response = await request(server)
+      .post(ROUTE)
+      .attach('users', mockMembersCSV, 'mock_members.csv');
+
+    expect(response.status).toBe(200);
+    expect(response.body.created_users).toBe(2);
+    assertMemberExists('b@gmail.com');
+    assertMemberExists('c@gmail.com');
   });
 });

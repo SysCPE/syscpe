@@ -5,7 +5,7 @@ import Member from 'database/models/Member';
 import sequelize from 'database/sequelize';
 import AdminMemberEntity from 'domain/entities/admin_member_entity';
 import MembersRepository from 'domain/repository/members_repository';
-import { ValidationError } from 'sequelize';
+import { UniqueConstraintError } from 'sequelize';
 
 const ServicesMembersRepository: MembersRepository = {
   readAdminMembersFromCSVFile: async (file: Buffer) => {
@@ -48,8 +48,13 @@ const ServicesMembersRepository: MembersRepository = {
 
         return adminMember;
       });
-    } catch (error) {
-      if (error instanceof ValidationError) return null;
+    } catch (error: any) {
+      const wasEmailKeyViolated = Object.keys(error.fields || {}).includes(
+        'email'
+      );
+
+      if (error instanceof UniqueConstraintError && wasEmailKeyViolated)
+        return null;
 
       throw error;
     }
