@@ -41,6 +41,7 @@ class Department
         },
         name: {
           type: DataTypes.STRING,
+          unique: true,
           allowNull: false,
         },
         creationDate: {
@@ -67,6 +68,7 @@ class Department
       },
       {
         sequelize,
+        timestamps: false,
       }
     );
   }
