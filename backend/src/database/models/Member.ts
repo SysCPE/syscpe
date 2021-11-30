@@ -1,4 +1,5 @@
-import { DataTypes, Model, Optional, Sequelize } from 'sequelize';
+import { Association, DataTypes, Model, Optional, Sequelize } from 'sequelize';
+import AdminMember from './AdminMember';
 
 interface MemberAttributes {
   id: number;
@@ -31,6 +32,12 @@ class Member
   gender?: string;
   birthday?: Date;
   phone?: string;
+
+  adminMember?: AdminMember;
+
+  public static associations: {
+    adminMember: Association<Member, AdminMember>;
+  };
 
   static initialize(sequelize: Sequelize) {
     this.init(

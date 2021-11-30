@@ -13,6 +13,7 @@ const ServicesMembersRepository: MembersRepository = {
 
     return adminMembersJSON.map(__mapAdminMemberJSONToEntity);
   },
+
   saveAdminMember: async (adminMember: AdminMemberEntity) => {
     try {
       return await sequelize.transaction(async (transaction) => {
@@ -35,7 +36,7 @@ const ServicesMembersRepository: MembersRepository = {
             memberId: memberModel.id,
             eachCourse: adminMember.eachCourse,
             period: adminMember.period,
-            pronoum: adminMember.pronoum,
+            pronoun: adminMember.pronoun,
             semester: adminMember.semester,
           },
           { transaction }
@@ -59,6 +60,35 @@ const ServicesMembersRepository: MembersRepository = {
       throw error;
     }
   },
+
+  getAllAdminMembers: async (): Promise<AdminMemberEntity[]> => {
+    const result = await Member.findAll({
+      include: [
+        {
+          association: Member.associations.adminMember,
+          where: { isActive: true },
+        },
+      ],
+    });
+
+    return result.map(__mapAdminMemberModelToEntity);
+  },
+};
+
+const __mapAdminMemberModelToEntity = (member: Member): AdminMemberEntity => {
+  return {
+    email: member.email,
+    name: member.name,
+    RG: member.RG,
+    CPF: member.CPF,
+    gender: member.gender,
+    birthday: member.birthday,
+    pronoun: member.adminMember?.pronoun,
+    phone: member.phone,
+    eachCourse: member.adminMember?.eachCourse,
+    semester: member.adminMember?.semester,
+    period: member.adminMember?.period,
+  };
 };
 
 const __mapAdminMemberJSONToEntity = (adminMember: any): AdminMemberEntity => {
@@ -77,7 +107,7 @@ const __mapAdminMemberJSONToEntity = (adminMember: any): AdminMemberEntity => {
     CPF: adminMember.cpf || '',
     gender: adminMember.gender || '',
     birthday: _parseDate(adminMember.birthday),
-    pronoum: adminMember.pronoum || '',
+    pronoun: adminMember.pronoun || '',
     phone: adminMember.phone || '',
     socialName: adminMember.socialName || '',
     eachCourse: adminMember.each_course || '',

@@ -10,7 +10,7 @@ import { mockAdminMembers, mockMembers } from './mocks/mock_members';
 
 describe('/upload-users', () => {
   let server: Server;
-  const ROUTE = '/upload-users';
+  const ROUTE = '/members/admin/upload-users';
   let mockMembersCSV: Buffer;
 
   beforeAll(async () => {
@@ -52,7 +52,7 @@ describe('/upload-users', () => {
     const expectedAdminMember = mockAdminMembers[email];
 
     expect(adminMemberModel).not.toBeNull();
-    expect(adminMemberModel.pronoum).toBe(expectedAdminMember.pronoum);
+    expect(adminMemberModel.pronoun).toBe(expectedAdminMember.pronoun);
     expect(adminMemberModel.eachCourse).toBe(expectedAdminMember.eachCourse);
     expect(adminMemberModel.semester || undefined).toBe(
       expectedAdminMember.semester

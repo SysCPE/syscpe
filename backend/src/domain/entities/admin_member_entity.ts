@@ -1,7 +1,7 @@
 import MemberEntity from './member_entity';
 
 type AdminMemberEntity = {
-  pronoum?: string;
+  pronoun?: string;
 
   eachCourse?: string;
   semester?: number;

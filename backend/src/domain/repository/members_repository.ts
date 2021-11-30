@@ -5,6 +5,7 @@ type MembersRepository = {
   saveAdminMember: (
     adminMember: AdminMemberEntity
   ) => Promise<AdminMemberEntity | null>;
+  getAllAdminMembers: () => Promise<AdminMemberEntity[]>;
 };
 
 export default MembersRepository;

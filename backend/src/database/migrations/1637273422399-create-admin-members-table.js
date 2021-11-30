@@ -8,7 +8,7 @@ module.exports = {
         autoIncrement: true,
         primaryKey: true,
       },
-      pronoum: {
+      pronoun: {
         type: Sequelize.STRING,
         allowNull: true,
       },
@@ -31,6 +31,11 @@ module.exports = {
           model: 'Members',
           key: 'id',
         },
+      },
+      isActive: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+        defaultValue: true,
       },
       createdAt: {
         type: Sequelize.DATE,
