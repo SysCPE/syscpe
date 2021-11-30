@@ -8,8 +8,7 @@ export default class CreateDepartment {
         this.departmentRepository = departmentRepository;
     }
 
-    async run(department_name: string): Promise<DepartmentEntity | undefined> {
-        const department = await this.departmentRepository.createDepartment(department_name);
-        return await this.departmentRepository.saveDepartment(department) ? department : undefined;
+    async run(department_name: string): Promise<DepartmentEntity> {
+        return this.departmentRepository.saveDepartment(department_name);
     }
 }
