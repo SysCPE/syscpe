@@ -8,7 +8,7 @@ import ServicesMembersRepository from 'services/service_members_repository';
 import request from 'supertest';
 import { mockAdminMembers, mockMembers } from './mocks/mock_members';
 
-describe('/upload-users', () => {
+describe('/members/admin/upload-users', () => {
   let server: Server;
   const ROUTE = '/members/admin/upload-users';
   let mockMembersCSV: Buffer;

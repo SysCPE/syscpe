@@ -38,6 +38,7 @@ const ServicesMembersRepository: MembersRepository = {
             period: adminMember.period,
             pronoun: adminMember.pronoun,
             semester: adminMember.semester,
+            isActive: adminMember.isActive!,
           },
           { transaction }
         );
@@ -88,6 +89,8 @@ const __mapAdminMemberModelToEntity = (member: Member): AdminMemberEntity => {
     eachCourse: member.adminMember?.eachCourse,
     semester: member.adminMember?.semester,
     period: member.adminMember?.period,
+    isActive: member.adminMember?.isActive,
+    socialName: member.socialName,
   };
 };
 
@@ -113,6 +116,7 @@ const __mapAdminMemberJSONToEntity = (adminMember: any): AdminMemberEntity => {
     eachCourse: adminMember.each_course || '',
     semester: parseInt(adminMember.semester) || undefined,
     period: parseInt(adminMember.period) || undefined,
+    isActive: adminMember.isActive || true,
   };
 };
 
