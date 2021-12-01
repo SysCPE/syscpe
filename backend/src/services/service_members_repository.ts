@@ -1,7 +1,6 @@
 import csv from 'csvtojson';
 import { sequelize } from 'database';
 import AdminMember from 'database/models/AdminMember';
-import IdCPE from 'database/models/IdCPE';
 import Member from 'database/models/Member';
 import AdminMemberEntity from 'domain/entities/admin_member_entity';
 import MembersRepository from 'domain/repository/members_repository';
@@ -33,17 +32,12 @@ const ServicesMembersRepository: MembersRepository = {
 
         await AdminMember.create(
           {
-            memberId: memberModel.id,
+            memberId: memberModel.idCPE,
             eachCourse: adminMember.eachCourse,
             period: adminMember.period,
             pronoun: adminMember.pronoum,
             semester: adminMember.semester,
           },
-          { transaction }
-        );
-
-        await IdCPE.create(
-          { memberId: memberModel.id, idCPE: memberModel.id },
           { transaction }
         );
 
@@ -58,30 +52,32 @@ const ServicesMembersRepository: MembersRepository = {
   },
 
   getAllAdminMembers: async (): Promise<AdminMemberEntity[]> => {
-    const result = await Member.findAll({
+    const result = await AdminMember.findAll({
       include: [{
-        association: Member.associations.adminMember,
-        where: { isActive: true },
+        association: AdminMember.associations.member,
       }],
+      where: {
+        isActive: true,
+      }
     });
-    
+
     return result.map(__mapAdminMemberModelToEntity);
   }
 };
 
-const __mapAdminMemberModelToEntity = (member: Member): AdminMemberEntity => {
+const __mapAdminMemberModelToEntity = (adminMember: AdminMember): AdminMemberEntity => {
   return {
-    email: member.email,
-    name: member.name,
-    RG: member.RG,
-    CPF: member.CPF,
-    gender: member.gender,
-    birthday: member.birthday,
-    pronoum: member.adminMember?.pronoun,
-    phone: member.phone,
-    eachCourse: member.adminMember?.eachCourse,
-    semester: member.adminMember?.semester,
-    period: member.adminMember?.period,
+    email: adminMember.member!.email,
+    name: adminMember.member!.name,
+    RG: adminMember.member!.RG,
+    CPF: adminMember.member!.CPF,
+    gender: adminMember.member!.gender,
+    birthday: adminMember.member!.birthday,
+    pronoum: adminMember.pronoun,
+    phone: adminMember.member!.phone,
+    eachCourse: adminMember.eachCourse,
+    semester: adminMember.semester,
+    period: adminMember.period,
   }
 }
 
