@@ -84,6 +84,7 @@ const __mapAdminMemberModelToEntity = (member: Member): AdminMemberEntity => {
     eachCourse: member.adminMember?.eachCourse,
     semester: member.adminMember?.semester,
     period: member.adminMember?.period,
+    socialName: member.socialName,
   };
 };
 
