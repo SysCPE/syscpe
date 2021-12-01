@@ -1,0 +1,12 @@
+version: "3.9"
+services: 
+  runner: 
+    build: 
+      context: ..
+      dockerfile: deploy/unit-tests-runner.dockerfile
+    environment:
+      DB_USER: test_user
+      DB_DATABASE: test_postgres
+      DB_PASSWORD: test_password
+    stdin_open: true
+    tty: true
