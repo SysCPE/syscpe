@@ -3,10 +3,11 @@ services:
   runner:
     build: 
       context: ..
-      dockerfile: deploy/integration-tests-runner.dockerfile
+      dockerfile: deploy/tests-runner.dockerfile
     environment:
       DB_USER: test_user
       DB_DATABASE: test_postgres
       DB_PASSWORD: test_password
+    entrypoint: [ "npm", "run", "integration-test"]
     stdin_open: true
     tty: true

@@ -1,10 +1,10 @@
 {
   "scripts": {
-    "build": "tsc --project ./",
-    "start": "npm run build && node build/src/index.js",
+    "build": "tsc --project tsconfig.build.json && tsconfig-replace-paths --project tsconfig.build.json -v",
+    "start": "NODE_ENV=production npm run build && node build/src/index.js",
     "start-dev": "ts-node-dev -r tsconfig-paths/register --respawn --transpile-only src/index.ts",
-    "test": "jest",
-    "migrations-dev": "cd src/migrations && /bin/sh run_migrations_local.sh"
+    "test": "NODE_ENV=testing jest --maxWorkers=1 --config=jest.config.js",
+    "integration-test": "NODE_ENV=testing jest --maxWorkers=1 --config=jest.integration.config.js "
   },
   "dependencies": {
     "@koa/cors": "^3.1.0",
@@ -26,15 +26,18 @@
     "@types/koa__cors": "^3.0.3",
     "@types/koa__router": "^8.0.8",
     "@types/node": "^16.10.2",
+    "@types/supertest": "^2.0.11",
     "@types/umzug": "^2.3.2",
     "@types/validator": "^13.6.3",
     "jest": "^27.3.1",
     "jest-each": "^27.3.1",
     "jest-mock-extended": "^2.0.4",
+    "supertest": "^6.1.6",
     "ts-jest": "^27.0.7",
     "ts-node": "^9.1.1",
     "ts-node-dev": "^1.1.8",
     "tsconfig-paths": "^3.11.0",
+    "tsconfig-replace-paths": "^0.0.11",
     "typescript": "^4.4.3"
   }
 }

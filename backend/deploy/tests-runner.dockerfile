@@ -7,5 +7,3 @@ COPY package*.json ./
 RUN npm install -D
 
 COPY . .
-
-ENTRYPOINT [ "npm", "run", "integration-test"]
