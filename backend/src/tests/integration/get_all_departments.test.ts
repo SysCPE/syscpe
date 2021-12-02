@@ -4,18 +4,19 @@ import request from "supertest";
 import ServicesDepartmentRepository from "services/service_department_repository";
 import { mockDepartments } from "./mocks/mock_departments";
 import DepartmentEntity from "domain/entities/department_entity";
+import useServer from "tests/hook/useServer";
 
 describe('GET /departments', () => {
-    let server: Server;
+    const serverFactory = useServer();
     const ROUTE = '/departments';
-
-    beforeAll(async () => {
-        const app = await bootstrap();
-        server = app.listen(4000);
+    let server: Server;
+  
+    beforeAll(() => {
+      server = serverFactory();
     });
-    
+  
     afterAll(() => {
-        server.close();
+      server.close();
     });
 
     const assertDepartmentInList = (
