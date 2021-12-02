@@ -3,10 +3,11 @@ services:
   runner:
     build: 
       context: ..
-      dockerfile: deploy/tests-coverage-runner.dockerfile
+      dockerfile: deploy/tests-runner.dockerfile
     environment:
       DB_USER: test_user
       DB_DATABASE: test_postgres
       DB_PASSWORD: test_password
     stdin_open: true
     tty: true
+    entrypoint: ["npm", "run", "test-coverage"]
