@@ -5,7 +5,9 @@ services:
     ports: 
       - "5432:5432" 
     environment: 
-      POSTGRES_PASSWORD: password
+      POSTGRES_PASSWORD: dev-password
+      POSTGRES_USER: dev-user
+      POSTGRES_DB: dev-postgres
     volumes:
       - syscpe_db:/var/lib/postgresql/data
 

@@ -8,6 +8,4 @@ RUN npm install -D
 
 COPY . .
 
-RUN npm run build
-
-ENTRYPOINT [ "node", "build/src/migrations/run_migration.js"]
+ENTRYPOINT [ "npm", "run", "integration-test"]
