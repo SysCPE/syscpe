@@ -38,10 +38,11 @@ describe('GET /departments', () => {
 
         const response = await request(server).get(ROUTE);
         expect(response.status).toBe(200);
-        
+
         const parsedDepartments: DepartmentEntity[] = response.body.departments.map(
-            (department: DepartmentEntity) => ({
-                ...department,
+            (department: DepartmentEntity): DepartmentEntity => ({
+                name: department.name,
+                creationDate: new Date(department.creationDate),
             })
         );
 
