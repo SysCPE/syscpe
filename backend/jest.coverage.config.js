@@ -2,7 +2,13 @@ module.exports = {
   preset: 'ts-jest',
   testEnvironment: 'node',
   moduleDirectories: ['node_modules', 'src'],
-  setupFilesAfterEnv: ['<rootDir>/src/tests/integration/setup.ts'],
+  collectCoverage: true, 
+  collectCoverageFrom: [
+    '<rootDir>/src/**',
+  ],
+  coveragePathIgnorePatterns: [
+    '<rootDir>/src/tests/',
+  ],
   testPathIgnorePatterns: [
     '<rootDir>/src/tests/integration/setup.ts',
     '<rootDir>/src/tests/integration/mocks/',
@@ -12,4 +18,5 @@ module.exports = {
       isolatedModules: true,
     },
   },
-};
+}; 
+
