@@ -1,4 +1,3 @@
-import bootstrap from 'bootstrap';
 import AdminMember from 'database/models/AdminMember';
 import Member from 'database/models/Member';
 import fs from 'fs';
@@ -6,16 +5,17 @@ import { Server } from 'http';
 import path from 'path';
 import ServicesMembersRepository from 'services/service_members_repository';
 import request from 'supertest';
+import useServer from 'tests/hook/useServer';
 import { mockAdminMembers, mockMembers } from './mocks/mock_members';
 
 describe('/members/admin/upload-users', () => {
-  let server: Server;
+  const serverFactory = useServer();
   const ROUTE = '/members/admin/upload-users';
+  let server: Server;
   let mockMembersCSV: Buffer;
 
-  beforeAll(async () => {
-    const app = await bootstrap();
-    server = app.listen(4000);
+  beforeAll(() => {
+    server = serverFactory();
 
     mockMembersCSV = fs.readFileSync(
       path.join(__dirname, 'mocks/mock_members.csv')
