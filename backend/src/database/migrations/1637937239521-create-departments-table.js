@@ -1,24 +1,24 @@
-const { DataTypes } = require('sequelize');
+const { Sequelize } = require('sequelize');
 
-export default {
+module.exports = {
   up: (queryInterface) => {
     return queryInterface.createTable('Departments', {
       id: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
         autoIncrement: true,
         primaryKey: true,
       },
       name: {
-        type: DataTypes.STRING,
+        type: Sequelize.STRING,
         allowNull: false,
       },
       creationDate: {
-        type: DataTypes.DATEONLY,
-        defaultValue: DataTypes.NOW,
+        type: Sequelize.DATEONLY,
+        defaultValue: Sequelize.NOW,
         allowNull: false,
       },
       directorId: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
         allowNull: true,
         references: {
           // FIXME: how to properly include Model instead of string?
@@ -28,7 +28,7 @@ export default {
         onDelete: 'SET NULL',
       },
       viceDirectorId: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
         allowNull: true,
         references: {
           // FIXME: how to properly include Model instead of string?

@@ -10,4 +10,4 @@ COPY . .
 
 RUN npm run build
 
-ENTRYPOINT [ "node", "build/src/migrations/run_migration.js"]
+ENTRYPOINT ["node", "./build/migrations_runner.js"]
