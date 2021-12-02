@@ -4,7 +4,7 @@ module.exports = {
   up: (queryInterface) => {
     return queryInterface.createTable('AdminMembers', {
       memberId: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
         primaryKey: true,
         references: {
           model: 'Members',

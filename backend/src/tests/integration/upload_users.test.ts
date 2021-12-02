@@ -47,7 +47,7 @@ describe('/members/admin/upload-users', () => {
     );
 
     const adminMemberModel = (await AdminMember.findOne({
-      where: { memberId: memberModel.id },
+      where: { memberId: memberModel.idCPE },
     }))!;
     const expectedAdminMember = mockAdminMembers[email];
 
@@ -66,7 +66,7 @@ describe('/members/admin/upload-users', () => {
     const response = await request(server).post(ROUTE);
 
     expect(response.status).toBe(400);
-    expect(response.text).toBe('empty file');
+    expect(response.text).toBe('Empty file');
   });
 
   it('should create users in database', async () => {

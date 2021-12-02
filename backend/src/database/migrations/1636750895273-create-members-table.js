@@ -4,7 +4,7 @@ module.exports = {
   up: (queryInterface) => {
     return queryInterface.createTable('Members', {
       idCPE: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
         autoIncrement: true,
         primaryKey: true,
       },

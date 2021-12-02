@@ -4,12 +4,18 @@ import { Context } from 'koa';
 import ServicesMembersRepository from 'services/service_members_repository';
 
 const uploadUsers = async (ctx: Context) => {
+  if (!ctx.request.files) ctx.throw(400, 'Empty file');
+
   if (Array.isArray(ctx.request.files?.users)) {
     ctx.throw(400, 'Only one file is allowed');
   }
 
+  // const manyFilesUploaded = Object.keys(ctx.request.files || {}).length > 1;
+  // if (manyFilesUploaded) ctx.throw(400, 'Only one file is allowed');
+
   const usecase = new CreateAdminMembersFromCSVFile(ServicesMembersRepository);
-  const fileBuffer = fs.readFileSync(ctx.request.files?.users.path as string);
+  const usersFile = ctx.request.files?.users;
+  const fileBuffer = fs.readFileSync(usersFile.path);
   const adminUsers = await usecase.run(fileBuffer);
 
   ctx.response.body = { created_users: adminUsers.length };
