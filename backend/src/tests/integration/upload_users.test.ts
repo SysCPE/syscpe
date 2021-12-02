@@ -26,6 +26,10 @@ describe('/members/admin/upload-users', () => {
     server.close();
   });
 
+  const assertAdminMembersEmpty = async () => {
+    expect(await AdminMember.count()).toBe(0);
+  };
+
   const assertMemberExists = async (email: string) => {
     const memberModel = (await Member.findOne({
       where: {
@@ -62,11 +66,23 @@ describe('/members/admin/upload-users', () => {
     );
   };
 
-  it('should return bad request if file is empty', async () => {
+  it('should return bad request when file is empty', async () => {
     const response = await request(server).post(ROUTE);
 
     expect(response.status).toBe(400);
     expect(response.text).toBe('Empty file');
+    await assertAdminMembersEmpty();
+  });
+
+  it('should return bad request when multiple files are sent', async () => {
+    const response = await request(server)
+      .post(ROUTE)
+      .attach('users', mockMembersCSV, 'mock_members.csv')
+      .attach('invalid_field', mockMembersCSV, 'invalid_field.csv');
+
+    expect(response.status).toBe(400);
+    expect(response.text).toBe('Only one file is allowed');
+    await assertAdminMembersEmpty();
   });
 
   it('should create users in database', async () => {
