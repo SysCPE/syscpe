@@ -1,11 +1,7 @@
-import { Sequelize } from 'sequelize';
 import AdminMember from './models/AdminMember';
 import Department from './models/Department';
 import Member from './models/Member';
-
-export const sequelize = new Sequelize(
-  (process.env.DB_CONNECTION_STRING as string) || ''
-);
+import sequelize from './sequelize';
 
 const initModels = () => {
   Member.initialize(sequelize);
