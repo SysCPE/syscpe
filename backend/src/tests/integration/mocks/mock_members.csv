@@ -1,0 +1,4 @@
+email,name,rg,cpf,gender,birthday,pronoun,phone,each_course,semester,period,social_name
+a@gmail.com,acbcde,123456,123456,M,01/01/1999,Ele,11 912341234,,2,6,
+b@gmail.com,fghij,78901,78902,F,02/02/2000,Ela,,Matemática,1,4,
+c@gmail.com,name,1,2,M,,Ele,,,,,social
