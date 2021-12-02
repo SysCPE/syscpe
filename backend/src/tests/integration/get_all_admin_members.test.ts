@@ -1,18 +1,18 @@
-import bootstrap from 'bootstrap';
 import AdminMemberEntity from 'domain/entities/admin_member_entity';
 import { Server } from 'http';
 import each from 'jest-each';
 import ServicesMembersRepository from 'services/service_members_repository';
 import request from 'supertest';
+import useServer from 'tests/hook/useServer';
 import { mockAdminMembers } from './mocks/mock_members';
 
 describe('/members/admin', () => {
-  let server: Server;
+  const serverFactory = useServer();
   const ROUTE = '/members/admin';
+  let server: Server;
 
-  beforeAll(async () => {
-    const app = await bootstrap();
-    server = app.listen(4000);
+  beforeAll(() => {
+    server = serverFactory();
   });
 
   afterAll(() => {
