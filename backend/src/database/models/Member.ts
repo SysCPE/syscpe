@@ -75,7 +75,7 @@ class Member
           allowNull: true,
         },
         birthday: {
-          type: DataTypes.STRING,
+          type: DataTypes.DATE,
           allowNull: true,
         },
         phone: {
