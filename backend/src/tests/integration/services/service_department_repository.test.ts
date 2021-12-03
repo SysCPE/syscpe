@@ -1,8 +1,8 @@
 import ServicesDepartmentRepository from "services/service_department_repository";
-import { mockDepartments } from "./mocks/mock_departments";
+import { mockDepartments } from "../mocks/mock_departments";
 import useDatabase from "tests/hook/useDatabase";
 
-describe('ServucesDepartmentRepository', () => {
+describe('ServicesDepartmentRepository', () => {
     useDatabase();
   
     beforeEach(async () => {

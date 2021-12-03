@@ -3,6 +3,7 @@ import AdminMember from 'database/models/AdminMember';
 import Member from 'database/models/Member';
 import sequelize from 'database/sequelize';
 import AdminMemberEntity from 'domain/entities/admin_member_entity';
+import DepartmentEntity from 'domain/entities/department_entity';
 import AdminMembersRepository from 'domain/repository/admin_members_repository';
 import { ValidationError } from 'sequelize';
 
@@ -45,7 +46,8 @@ const ServicesMembersRepository: AdminMembersRepository = {
         return adminMember;
       });
     } catch (error) {
-      if (error instanceof ValidationError) return null;
+      if (error instanceof ValidationError)
+        return null;
 
       throw error;
     }
@@ -53,18 +55,26 @@ const ServicesMembersRepository: AdminMembersRepository = {
 
   getAllAdminMembers: async (): Promise<AdminMemberEntity[]> => {
     const result = await AdminMember.findAll({
-      include: [
-        {
-          association: AdminMember.associations.member,
-        },
-      ],
-      where: {
-        isActive: true,
-      },
+      include: { association: AdminMember.associations.member },
+      where: { isActive: true },
     });
 
     return result.map(__mapAdminMemberModelToEntity);
   },
+
+  getAdminMember: async function (memberId: number): Promise<AdminMemberEntity | null> {
+    const result = await AdminMember.findOne({
+      where: { memberId: memberId },
+      include: { association: AdminMember.associations.member },
+    });
+
+    if (!result) return null;
+    return __mapAdminMemberModelToEntity(result);
+  },
+  
+  changeAdminMemberDepartment: function (member: AdminMemberEntity, department: DepartmentEntity): Promise<boolean> {
+    throw new Error('Function not implemented.');
+  }
 };
 
 const __mapAdminMemberModelToEntity = (
