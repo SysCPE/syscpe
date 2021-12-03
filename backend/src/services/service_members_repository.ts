@@ -3,10 +3,10 @@ import AdminMember from 'database/models/AdminMember';
 import Member from 'database/models/Member';
 import sequelize from 'database/sequelize';
 import AdminMemberEntity from 'domain/entities/admin_member_entity';
-import MembersRepository from 'domain/repository/members_repository';
+import AdminMembersRepository from 'domain/repository/admin_members_repository';
 import { ValidationError } from 'sequelize';
 
-const ServicesMembersRepository: MembersRepository = {
+const ServicesMembersRepository: AdminMembersRepository = {
   readAdminMembersFromCSVFile: async (file: Buffer) => {
     const adminMembersJSON = await csv().fromString(file.toString());
 

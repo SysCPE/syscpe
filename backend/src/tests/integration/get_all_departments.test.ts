@@ -1,4 +1,3 @@
-import bootstrap from "bootstrap";
 import { Server } from "http";
 import request from "supertest";
 import ServicesDepartmentRepository from "services/service_department_repository";

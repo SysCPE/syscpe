@@ -1,6 +1,6 @@
 import AdminMemberEntity from 'domain/entities/admin_member_entity';
 
-type MembersRepository = {
+type AdminMembersRepository = {
   readAdminMembersFromCSVFile: (file: Buffer) => Promise<AdminMemberEntity[]>;
   saveAdminMember: (
     adminMember: AdminMemberEntity
@@ -8,4 +8,4 @@ type MembersRepository = {
   getAllAdminMembers: () => Promise<AdminMemberEntity[]>;
 };
 
-export default MembersRepository;
+export default AdminMembersRepository;

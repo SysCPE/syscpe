@@ -1,5 +1,5 @@
 import AdminMemberEntity from 'domain/entities/admin_member_entity';
-import MembersRepository from 'domain/repository/members_repository';
+import AdminMembersRepository from 'domain/repository/admin_members_repository';
 import CreateAdminMembersFromCSVFile from 'domain/usecases/create_admin_members_from _csv_file';
 import each from 'jest-each';
 import { mock } from 'jest-mock-extended';
@@ -9,7 +9,7 @@ describe('CreateAdminMembersFromCSVFiles', () => {
     'should run create admin members from csv file usecase',
     async (mockAdminMembers: AdminMemberEntity[]) => {
       const mockFile = mock<Buffer>();
-      const mockMemberRepository = mock<MembersRepository>();
+      const mockMemberRepository = mock<AdminMembersRepository>();
       const usecase = new CreateAdminMembersFromCSVFile(mockMemberRepository);
 
       mockMemberRepository.readAdminMembersFromCSVFile.mockReturnValue(
