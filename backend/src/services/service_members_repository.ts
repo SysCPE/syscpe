@@ -59,7 +59,7 @@ const ServicesMembersRepository: MembersRepository = {
         },
       ],
       where: {
-        isActive: true,
+        isActive: "ACTIVE",
       },
     });
 

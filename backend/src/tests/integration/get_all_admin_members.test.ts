@@ -36,6 +36,7 @@ describe('/members/admin', () => {
     [['a@gmail.com', 'b@gmail.com', 'c@gmail.com']],
   ]).it('should list active members', async (disabledUsers: string[]) => {
     const allUsers = ['a@gmail.com', 'b@gmail.com', 'c@gmail.com'];
+    
     const activeUsers = allUsers.filter(
       (email) => !disabledUsers.includes(email)
     );
@@ -43,10 +44,11 @@ describe('/members/admin', () => {
     for (const userEmail of allUsers)
       await ServicesMembersRepository.saveAdminMember({
         ...mockAdminMembers[userEmail],
-        isActive: activeUsers.includes(userEmail),
+        isActive: activeUsers.includes(userEmail) ? "ACTIVE" : "INACTIVE",
       });
 
     const response = await request(server).get(ROUTE);
+
     const parsedUsers: AdminMemberEntity[] = response.body.users.map(
       (user: AdminMemberEntity) => ({
         ...user,
