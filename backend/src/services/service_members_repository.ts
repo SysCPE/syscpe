@@ -2,7 +2,7 @@ import csv from 'csvtojson';
 import AdminMember from 'database/models/AdminMember';
 import Member from 'database/models/Member';
 import sequelize from 'database/sequelize';
-import AdminMemberEntity from 'domain/entities/admin_member_entity';
+import AdminMemberEntity, { activeEnum } from 'domain/entities/admin_member_entity';
 import MembersRepository from 'domain/repository/members_repository';
 import { ValidationError } from 'sequelize';
 
@@ -37,7 +37,7 @@ const ServicesMembersRepository: MembersRepository = {
             period: adminMember.period,
             pronoun: adminMember.pronoun,
             semester: adminMember.semester,
-            isActive: adminMember.isActive!,
+            isActive: adminMember.isActive,
           },
           { transaction }
         );
@@ -108,7 +108,7 @@ const __mapAdminMemberJSONToEntity = (adminMember: any): AdminMemberEntity => {
     eachCourse: adminMember.each_course || '',
     semester: parseInt(adminMember.semester) || undefined,
     period: parseInt(adminMember.period) || undefined,
-    isActive: adminMember.isActive || true,
+    isActive: adminMember.isActive || "ACTIVE" as activeEnum,
   };
 };
 
