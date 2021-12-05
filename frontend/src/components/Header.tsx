@@ -14,7 +14,7 @@ const Header = () => {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" color="secondary">
         <Grid container justifyContent="center">
-          <Grid item xs={12} sm={10} md={6}>
+          <Grid item xs={12} sm={11} md={10} lg={9}>
             <Toolbar>
               <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                 <Link
