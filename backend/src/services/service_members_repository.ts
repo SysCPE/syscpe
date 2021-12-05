@@ -75,7 +75,6 @@ const ServicesMembersRepository: AdminMembersRepository = {
   },
 
   changeAdminMemberDepartment: function (member: AdminMemberEntity, department: DepartmentEntity): Promise<AdminMemberEntity> {
-
     throw new Error('Function not implemented.');
   },
 };
@@ -110,6 +109,7 @@ const __mapAdminMemberModelToEntity = (
   adminMember: AdminMember
 ): AdminMemberEntity => {
   return {
+    idCPE: adminMember.member!.idCPE,
     email: adminMember.member!.email,
     name: adminMember.member!.name,
     RG: adminMember.member!.RG,
