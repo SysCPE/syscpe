@@ -14,7 +14,7 @@ type AdminMembersRepository = {
 
   getAllAdminMembers: () => Promise<AdminMemberEntity[]>;
 
-  changeAdminMemberDepartment: (member: AdminMemberEntity, department: DepartmentEntity) => Promise<boolean>;
+  changeAdminMemberDepartment: (member: AdminMemberEntity, department: DepartmentEntity) => Promise<AdminMemberEntity>;
 };
 
 export default AdminMembersRepository;

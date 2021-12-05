@@ -1,8 +1,7 @@
-import DepartmentEntity from './department_entity';
 import MemberEntity from './member_entity';
 
 type AdminMemberEntity = {
-  department?: DepartmentEntity;
+  departmentName?: string;  // Should this be a DepartmentEntity?
   
   pronoun?: string;
   eachCourse?: string;

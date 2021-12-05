@@ -63,36 +63,48 @@ const ServicesMembersRepository: AdminMembersRepository = {
   },
 
   getAdminMember: async function (memberId: number): Promise<AdminMemberEntity | null> {
-    const result = await AdminMember.findOne({
-      where: { memberId: memberId },
-      include: {
-        association: AdminMember.associations.member,
-        required: true,
-      },
-    });
-
-    if (!result)
-      return null;
+    const result = await __getAdminMemberModel(memberId);
+    if (!result) return null;
     return __mapAdminMemberModelToEntity(result);
   },
 
   getAdminMemberByEmail: async function (email: string): Promise<AdminMemberEntity | null> {
-    const result = await AdminMember.findOne({
-      include: [{
-        association: AdminMember.associations.member,
-        where: { email: email },
-      }],
-    });
-
-    if (!result)
-      return null;
+    const result = await __getAdminMemberModelByEmail(email);
+    if (!result) return null;
     return __mapAdminMemberModelToEntity(result);
   },
 
-  changeAdminMemberDepartment: function (member: AdminMemberEntity, department: DepartmentEntity): Promise<boolean> {
+  changeAdminMemberDepartment: function (member: AdminMemberEntity, department: DepartmentEntity): Promise<AdminMemberEntity> {
+
     throw new Error('Function not implemented.');
   },
 };
+
+const __getAdminMemberModel = async (memberId: number) => {
+  const result = await AdminMember.findByPk(memberId, {
+    include: {
+      association: AdminMember.associations.member,
+      required: true,
+    },
+  });
+
+  if (!result) return null;
+  
+  return result
+}
+
+const __getAdminMemberModelByEmail = async (email: string) => {
+  const result = await AdminMember.findOne({
+    include: [{
+      association: AdminMember.associations.member,
+      where: { email: email },
+    }],
+  });
+
+  if (!result) return null;
+
+  return result;
+}
 
 const __mapAdminMemberModelToEntity = (
   adminMember: AdminMember
