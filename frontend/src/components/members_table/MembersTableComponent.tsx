@@ -8,6 +8,7 @@ import {
   TableRow,
 } from '@material-ui/core';
 import useMembers from 'providers/members/useMembers';
+import MembersTableStatusCellComponent from './MembersTableStatusCellComponent';
 
 const MembersTableComponent = () => {
   const { members } = useMembers();
@@ -22,7 +23,7 @@ const MembersTableComponent = () => {
               <TableCell>Nome</TableCell>
               <TableCell>Curso</TableCell>
               <TableCell>Departamento</TableCell>
-              <TableCell>Status</TableCell>
+              <TableCell align="center">Status</TableCell>
               <TableCell>Ações</TableCell>
             </TableRow>
           </TableHead>
@@ -39,7 +40,9 @@ const MembersTableComponent = () => {
                 <TableCell>{member.name}</TableCell>
                 <TableCell>{member.course}</TableCell>
                 <TableCell>{member.department}</TableCell>
-                <TableCell>{member.status}</TableCell>
+                <TableCell align="center">
+                  <MembersTableStatusCellComponent status={member.status} />
+                </TableCell>
                 <TableCell></TableCell>
               </TableRow>
             ))}
