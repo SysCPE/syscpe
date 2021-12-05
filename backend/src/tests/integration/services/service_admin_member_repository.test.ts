@@ -6,7 +6,7 @@ const initAdminMembers = async () => {
     for (const adminMember of Object.values(mockAdminMembers)) {
         await ServicesMembersRepository.saveAdminMember({
             ...adminMember,
-            isActive: true,
+            isActive: 'ACTIVE',
         })
     }
 }

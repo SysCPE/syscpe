@@ -11,8 +11,6 @@ type MemberEntity = {
   gender?: string;
   birthday?: Date;
   phone?: string;
-  
-  isActive?: boolean;
 };
 
 export default MemberEntity;

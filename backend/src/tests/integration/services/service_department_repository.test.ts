@@ -6,13 +6,12 @@ describe('ServicesDepartmentRepository', () => {
     useDatabase();
   
     beforeEach(async () => {
-        // TODO: create a function to initialize table data?
-        await Promise.all(Object.values(mockDepartments).map(department => {
-            ServicesDepartmentRepository.saveDepartment(
+        for (const department of Object.values(mockDepartments)) {
+            await ServicesDepartmentRepository.saveDepartment(
                 department.name,
                 department.creationDate,
-            )
-        }));
+            );
+        }
     });
   
     it('should find a department', async () => {

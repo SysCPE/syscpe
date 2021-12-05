@@ -1,5 +1,6 @@
 import { Association, DataTypes, Model, Optional, Sequelize } from 'sequelize';
 import Member from './Member';
+import {activeEnum} from 'domain/entities/admin_member_entity'
 
 interface AdminMemberAttributes {
   memberId: number;
@@ -11,7 +12,7 @@ interface AdminMemberAttributes {
   semester?: number;
   period?: number;
 
-  isActive?: boolean;
+  isActive?: activeEnum;
 }
 
 interface AdminMemberCreationAttributes
@@ -30,7 +31,7 @@ class AdminMember
   semester?: number;
   period?: number;
 
-  isActive?: boolean;
+  isActive?: activeEnum;
 
   public static associations: {
     member: Association<AdminMember, Member>;
@@ -65,9 +66,14 @@ class AdminMember
           allowNull: true,
         },
         isActive: {
-          type: DataTypes.BOOLEAN,
+          type: DataTypes.STRING,
           allowNull: false,
-          defaultValue: true,
+          defaultValue: "ACTIVE",
+          validate: {
+            // NOTE: We don't need to add migrations for this, because validators
+            // are not run at the database level. https://sequelize.org/master/manual/validations-and-constraints.html
+            isIn: [['ACTIVE', 'INACTIVE', 'TIMEOFF']],
+          }
         },
       },
       {

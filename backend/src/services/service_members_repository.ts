@@ -2,7 +2,7 @@ import csv from 'csvtojson';
 import AdminMember from 'database/models/AdminMember';
 import Member from 'database/models/Member';
 import sequelize from 'database/sequelize';
-import AdminMemberEntity from 'domain/entities/admin_member_entity';
+import AdminMemberEntity, { activeEnum } from 'domain/entities/admin_member_entity';
 import DepartmentEntity from 'domain/entities/department_entity';
 import AdminMembersRepository from 'domain/repository/admin_members_repository';
 import { ValidationError } from 'sequelize';
@@ -38,7 +38,7 @@ const ServicesMembersRepository: AdminMembersRepository = {
             period: adminMember.period,
             pronoun: adminMember.pronoun,
             semester: adminMember.semester,
-            isActive: adminMember.isActive!,
+            isActive: adminMember.isActive,
           },
           { transaction }
         );
@@ -56,7 +56,7 @@ const ServicesMembersRepository: AdminMembersRepository = {
   getAllAdminMembers: async (): Promise<AdminMemberEntity[]> => {
     const result = await AdminMember.findAll({
       include: { association: AdminMember.associations.member },
-      where: { isActive: true },
+      where: { isActive: "ACTIVE" },
     });
 
     return result.map(__mapAdminMemberModelToEntity);
@@ -122,6 +122,7 @@ const __mapAdminMemberModelToEntity = (
     eachCourse: adminMember.eachCourse,
     semester: adminMember.semester,
     period: adminMember.period,
+    isActive: adminMember.isActive,
   };
 };
 
@@ -147,7 +148,7 @@ const __mapAdminMemberJSONToEntity = (adminMember: any): AdminMemberEntity => {
     eachCourse: adminMember.each_course || '',
     semester: parseInt(adminMember.semester) || undefined,
     period: parseInt(adminMember.period) || undefined,
-    isActive: adminMember.isActive || true,
+    isActive: adminMember.isActive || "ACTIVE" as activeEnum,
   };
 };
 
