@@ -1,10 +1,14 @@
-import { Association, DataTypes, Model, Optional, Sequelize } from 'sequelize';
+import { Association, DataTypes, Model, Sequelize } from 'sequelize';
 import Member from './Member';
-import {activeEnum} from 'domain/entities/admin_member_entity'
+import { activeEnum } from 'domain/entities/admin_member_entity'
+import Department from './Department';
 
 interface AdminMemberAttributes {
   memberId: number;
   member?: Member;
+  
+  departmentId?: number;
+  department?: Department;
 
   pronoun?: string;
 
@@ -24,6 +28,9 @@ class AdminMember
 {
   memberId!: number;
   member?: Member;
+
+  departmentId?: number;
+  department?: Department;
   
   pronoun?: string;
 
@@ -35,6 +42,7 @@ class AdminMember
 
   public static associations: {
     member: Association<AdminMember, Member>;
+    department: Association<AdminMember, Department>;
   };
 
   public static initialize(sequelize: Sequelize) {
@@ -47,7 +55,17 @@ class AdminMember
             model: Member,
             key: 'idCPE',
           },
-          onDelete: 'CASCADE'
+          onDelete: 'CASCADE',
+        },
+        departmentId: {
+          type: DataTypes.INTEGER,
+          defaultValue: null,
+          allowNull: true,
+          references: {
+            model: Department,
+            key: 'id',
+          },
+          onDelete: 'SET NULL',
         },
         pronoun: {
           type: DataTypes.STRING,

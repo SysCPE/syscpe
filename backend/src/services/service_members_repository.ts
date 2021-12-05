@@ -1,5 +1,6 @@
 import csv from 'csvtojson';
 import AdminMember from 'database/models/AdminMember';
+import Department from 'database/models/Department';
 import Member from 'database/models/Member';
 import sequelize from 'database/sequelize';
 import AdminMemberEntity, { activeEnum } from 'domain/entities/admin_member_entity';
@@ -74,7 +75,13 @@ const ServicesMembersRepository: AdminMembersRepository = {
     return __mapAdminMemberModelToEntity(result);
   },
 
-  changeAdminMemberDepartment: function (member: AdminMemberEntity, department: DepartmentEntity): Promise<AdminMemberEntity> {
+  changeAdminMemberDepartment: async function (member: AdminMemberEntity, department: DepartmentEntity): Promise<AdminMemberEntity> {
+    const memberModel = await __getAdminMemberModel(member.idCPE!);
+    if (!memberModel) return member;
+
+    // TODO: break this coupling (maybe add "private" methods to the Department repository that return Models?)
+    const departmentModel = Department.findOne({ where: { name: department.name } });
+
     throw new Error('Function not implemented.');
   },
 };
