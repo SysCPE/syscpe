@@ -68,7 +68,7 @@ class AdminMember
         isActive: {
           type: DataTypes.STRING,
           allowNull: false,
-          defaultValue: true,
+          defaultValue: "ACTIVE",
         },
       },
       {
