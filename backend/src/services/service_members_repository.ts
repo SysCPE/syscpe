@@ -79,19 +79,23 @@ const ServicesMembersRepository: AdminMembersRepository = {
     const memberModel = await __getAdminMemberModel(member.idCPE!);
     if (!memberModel) return member;
 
-    // TODO: break this coupling (maybe add "private" methods to the Department repository that return Models?)
-    const departmentModel = Department.findOne({ where: { name: department.name } });
+    // TODO: break this coupling (maybe add "private" methods to DepartmentService that return Models?)
+    const departmentModel = await Department.findOne({ where: { name: department.name } });
+    await memberModel.setDepartment(departmentModel!);
+    await memberModel.save();
 
-    throw new Error('Function not implemented.');
+    memberModel.department = await memberModel.getDepartment();
+    return __mapAdminMemberModelToEntity(memberModel);
   },
 };
 
 const __getAdminMemberModel = async (memberId: number) => {
   const result = await AdminMember.findByPk(memberId, {
-    include: {
+    include: [{
       association: AdminMember.associations.member,
       required: true,
     },
+    { association: AdminMember.associations.department }],
   });
 
   if (!result) return null;
@@ -104,7 +108,8 @@ const __getAdminMemberModelByEmail = async (email: string) => {
     include: [{
       association: AdminMember.associations.member,
       where: { email: email },
-    }],
+    },
+    { association: AdminMember.associations.department }],
   });
 
   if (!result) return null;
@@ -119,6 +124,8 @@ const __mapAdminMemberModelToEntity = (
     idCPE: adminMember.member!.idCPE,
     email: adminMember.member!.email,
     name: adminMember.member!.name,
+    departmentName: adminMember.department?.name,
+
     RG: adminMember.member!.RG,
     CPF: adminMember.member!.CPF,
     gender: adminMember.member!.gender,

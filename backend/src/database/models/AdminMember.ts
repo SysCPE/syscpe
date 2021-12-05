@@ -1,4 +1,4 @@
-import { Association, DataTypes, Model, Sequelize } from 'sequelize';
+import { Association, DataTypes, HasOneGetAssociationMixin, HasOneSetAssociationMixin, Model, Sequelize } from 'sequelize';
 import Member from './Member';
 import { activeEnum } from 'domain/entities/admin_member_entity'
 import Department from './Department';
@@ -44,6 +44,9 @@ class AdminMember
     member: Association<AdminMember, Member>;
     department: Association<AdminMember, Department>;
   };
+
+  public setDepartment!: HasOneSetAssociationMixin<Department, number>;
+  public getDepartment!: HasOneGetAssociationMixin<Department>;
 
   public static initialize(sequelize: Sequelize) {
     this.init(
