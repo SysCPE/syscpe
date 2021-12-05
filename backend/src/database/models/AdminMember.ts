@@ -69,6 +69,11 @@ class AdminMember
           type: DataTypes.STRING,
           allowNull: false,
           defaultValue: "ACTIVE",
+          validate: {
+            // NOTE: We don't need to add migrations for this, because validators
+            // are not run at the database level. https://sequelize.org/master/manual/validations-and-constraints.html
+            isIn: [['ACTIVE', 'INACTIVE', 'TIMEOFF']],
+          }
         },
       },
       {
