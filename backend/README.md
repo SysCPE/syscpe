@@ -18,7 +18,7 @@ Returns all registered departments.
 Returns an array of Departments:
 {
     name: string;
-    creationDate: string;
+    creationDate: Date;
 }
 ```
 
@@ -82,10 +82,23 @@ Returns:
 }
 ```
 
+```ts
+POST    /members/admin/change-department
+Assigns an Admin Member to a Department.
+
+Body parameters:
+{
+    memberId: number;
+    departmentName: string;
+}
+
+Returns 200 on success, 400 on failure (member or department does not exist).
+```
+
 ## TODO
 - Change period in AdminMemberEntity to be a string (Vespertino, Noturno e Integral)
 - POST: /departments/createDepartment:
     - add creationDate optional attribute
     - add proper status errors when name exists
--  GET: /members/admin
+- GET: /members/admin
     - omit personal information?
