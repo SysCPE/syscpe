@@ -1,8 +1,8 @@
-import Member from 'domain/members/entities/Member';
+import MemberEntity from 'domain/members/entities/MemberEntity';
 import { createContext } from 'react';
 
 type MembersContextType = {
-  members: Member[];
+  members: MemberEntity[];
 };
 const MembersContext = createContext<MembersContextType>({
   members: [],
