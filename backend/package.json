@@ -4,7 +4,7 @@
     "start": "NODE_ENV=production npm run build && node build/src/index.js",
     "start-dev": "ts-node-dev -r tsconfig-paths/register --respawn --transpile-only src/index.ts",
     "test": "NODE_ENV=testing jest --maxWorkers=1 --config=jest.config.js",
-    "integration-test": "NODE_ENV=testing jest --maxWorkers=1 --config=jest.integration.config.js ",
+    "integration-test": "NODE_ENV=testing jest --maxWorkers=1 --config=jest.integration.config.js",
     "test-coverage": "NODE_ENV=testing jest --maxWorkers=1 --config=jest.coverage.config.js"
   },
   "dependencies": {

@@ -1,4 +1,6 @@
 type MemberEntity = {
+  idCPE?: number;
+
   email: string;
   name: string;
 

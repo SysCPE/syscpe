@@ -1,10 +1,10 @@
 import AdminMemberEntity from 'domain/entities/admin_member_entity';
-import MembersRepository from 'domain/repository/members_repository';
+import AdminMembersRepository from 'domain/repository/admin_members_repository';
 
 class CreateAdminMembersFromCSVFile {
-  private membersRepository: MembersRepository;
+  private membersRepository: AdminMembersRepository;
 
-  constructor(membersRepository: MembersRepository) {
+  constructor(membersRepository: AdminMembersRepository) {
     this.membersRepository = membersRepository;
   }
 

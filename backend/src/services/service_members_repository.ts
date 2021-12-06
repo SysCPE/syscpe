@@ -1,12 +1,14 @@
 import csv from 'csvtojson';
 import AdminMember from 'database/models/AdminMember';
+import Department from 'database/models/Department';
 import Member from 'database/models/Member';
 import sequelize from 'database/sequelize';
 import AdminMemberEntity, { activeEnum } from 'domain/entities/admin_member_entity';
-import MembersRepository from 'domain/repository/members_repository';
+import DepartmentEntity from 'domain/entities/department_entity';
+import AdminMembersRepository from 'domain/repository/admin_members_repository';
 import { ValidationError } from 'sequelize';
 
-const ServicesMembersRepository: MembersRepository = {
+const ServicesMembersRepository: AdminMembersRepository = {
   readAdminMembersFromCSVFile: async (file: Buffer) => {
     const adminMembersJSON = await csv().fromString(file.toString());
 
@@ -45,7 +47,8 @@ const ServicesMembersRepository: MembersRepository = {
         return adminMember;
       });
     } catch (error) {
-      if (error instanceof ValidationError) return null;
+      if (error instanceof ValidationError)
+        return null;
 
       throw error;
     }
@@ -53,26 +56,76 @@ const ServicesMembersRepository: MembersRepository = {
 
   getAllAdminMembers: async (): Promise<AdminMemberEntity[]> => {
     const result = await AdminMember.findAll({
-      include: [
-        {
-          association: AdminMember.associations.member,
-        },
-      ],
-      where: {
-        isActive: "ACTIVE",
-      },
+      include: { association: AdminMember.associations.member },
+      where: { isActive: "ACTIVE" },
     });
 
     return result.map(__mapAdminMemberModelToEntity);
   },
+
+  getAdminMember: async function (memberId: number): Promise<AdminMemberEntity | null> {
+    const result = await __getAdminMemberModel(memberId);
+    if (!result) return null;
+    return __mapAdminMemberModelToEntity(result);
+  },
+
+  getAdminMemberByEmail: async function (email: string): Promise<AdminMemberEntity | null> {
+    const result = await __getAdminMemberModelByEmail(email);
+    if (!result) return null;
+    return __mapAdminMemberModelToEntity(result);
+  },
+
+  changeAdminMemberDepartment: async function (member: AdminMemberEntity, department: DepartmentEntity): Promise<AdminMemberEntity> {
+    const memberModel = await __getAdminMemberModel(member.idCPE!);
+    if (!memberModel) return member;
+
+    // TODO: break this coupling (maybe add "private" methods to DepartmentService that return Models?)
+    const departmentModel = await Department.findOne({ where: { name: department.name } });
+    await memberModel.setDepartment(departmentModel!);
+    await memberModel.save();
+
+    memberModel.department = await memberModel.getDepartment();
+    return __mapAdminMemberModelToEntity(memberModel);
+  },
 };
+
+const __getAdminMemberModel = async (memberId: number) => {
+  const result = await AdminMember.findByPk(memberId, {
+    include: [{
+      association: AdminMember.associations.member,
+      required: true,
+    },
+    { association: AdminMember.associations.department }],
+  });
+
+  if (!result) return null;
+  
+  return result
+}
+
+const __getAdminMemberModelByEmail = async (email: string) => {
+  const result = await AdminMember.findOne({
+    include: [{
+      association: AdminMember.associations.member,
+      where: { email: email },
+    },
+    { association: AdminMember.associations.department }],
+  });
+
+  if (!result) return null;
+
+  return result;
+}
 
 const __mapAdminMemberModelToEntity = (
   adminMember: AdminMember
 ): AdminMemberEntity => {
   return {
+    idCPE: adminMember.member!.idCPE,
     email: adminMember.member!.email,
     name: adminMember.member!.name,
+    departmentName: adminMember.department?.name,
+
     RG: adminMember.member!.RG,
     CPF: adminMember.member!.CPF,
     gender: adminMember.member!.gender,
@@ -83,6 +136,7 @@ const __mapAdminMemberModelToEntity = (
     eachCourse: adminMember.eachCourse,
     semester: adminMember.semester,
     period: adminMember.period,
+    isActive: adminMember.isActive,
   };
 };
 

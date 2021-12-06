@@ -1,5 +1,4 @@
-import AdminMemberEntity from 'domain/entities/admin_member_entity';
-import { DataTypes, Model, Optional, Sequelize } from 'sequelize';
+import { Association, DataTypes, Model, Optional, Sequelize } from 'sequelize';
 import AdminMember from './AdminMember';
 
 interface DepartmentAttributes {
@@ -10,8 +9,10 @@ interface DepartmentAttributes {
     directorId?: number;
     viceDirectorId?: number;
 
-    director?: AdminMemberEntity;
-    viceDirector?: AdminMemberEntity;
+    members?: AdminMember[];
+
+    director?: AdminMember;
+    viceDirector?: AdminMember;
 }
 
 interface DepartmentCreationAttributes
@@ -24,12 +25,20 @@ class Department
   id!: number;
   name!: string;
   creationDate!: Date;
-  
-  director?: AdminMemberEntity | undefined;
-  viceDirector?: AdminMemberEntity | undefined;
 
+  members?: AdminMember[];
+
+  director?: AdminMember;
   directorId?: number;
+
+  viceDirector?: AdminMember;
   viceDirectorId?: number;
+
+  public static associations: {
+    members: Association<Department, AdminMember>;
+    director: Association<Department, AdminMember>;
+    viceDirector: Association<Department, AdminMember>;
+  };
 
   public static initialize(sequelize: Sequelize) {
     this.init(
@@ -53,7 +62,9 @@ class Department
           type: DataTypes.NUMBER,
           allowNull: true,
           references: {
-            model: AdminMember,
+            // If we use AdminMember model directly, a cyclic reference will occur
+            model: 'AdminMembers',
+            key: 'memberId',
           },
           onDelete: 'SET NULL',
         },
@@ -61,7 +72,9 @@ class Department
           type: DataTypes.NUMBER,
           allowNull: true,
           references: {
-            model: AdminMember,
+            // If we use AdminMember model directly, a cyclic reference will occur
+            model: 'AdminMembers',
+            key: 'memberId',
           },
           onDelete: 'SET NULL',
         }

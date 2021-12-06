@@ -1,7 +1,12 @@
+import initModels from 'database';
 import runMigrations from 'database/run_migrations';
 import sequelize from 'database/sequelize';
 
 const useDatabase = () => {
+  beforeAll(() => {
+    initModels();
+  });
+
   beforeEach(async () => {
     await runMigrations();
   });
