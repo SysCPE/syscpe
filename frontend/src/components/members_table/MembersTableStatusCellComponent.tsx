@@ -1,10 +1,10 @@
 import { colors, Grid } from '@material-ui/core';
 import { Box } from '@material-ui/system';
-import MemberStatus from 'domain/members/entities/MemberStatus';
+import MemberStatusEntity from 'domain/members/entities/MemberStatusEntity';
 import { FC } from 'react';
 
 type Props = {
-  status: MemberStatus;
+  status: MemberStatusEntity;
 };
 const MembersTableStatusCellComponent: FC<Props> = ({ status }) => {
   const color = {
