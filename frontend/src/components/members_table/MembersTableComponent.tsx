@@ -8,10 +8,12 @@ import {
   TableRow,
 } from '@material-ui/core';
 import useMembers from 'providers/members/useMembers';
+import MembersTableEmptyWarningComponent from './MembersTableEmptyWarningComponent';
 import MembersTableStatusCellComponent from './MembersTableStatusCellComponent';
 
 const MembersTableComponent = () => {
   const { members } = useMembers();
+  const noMembersRegistered = members.length === 0;
 
   return (
     <Paper sx={{ width: '100%', overflow: 'hidden' }}>
@@ -22,7 +24,7 @@ const MembersTableComponent = () => {
               <TableCell>IDCPE</TableCell>
               <TableCell>Nome</TableCell>
               <TableCell>Curso</TableCell>
-              <TableCell>Departamento</TableCell>
+              <TableCell align="center">Departamento</TableCell>
               <TableCell align="center">Status</TableCell>
               <TableCell>Ações</TableCell>
             </TableRow>
@@ -39,7 +41,7 @@ const MembersTableComponent = () => {
                 </TableCell>
                 <TableCell>{member.name}</TableCell>
                 <TableCell>{member.course}</TableCell>
-                <TableCell>{member.department}</TableCell>
+                <TableCell align="center">{member.department}</TableCell>
                 <TableCell align="center">
                   <MembersTableStatusCellComponent status={member.status} />
                 </TableCell>
@@ -47,6 +49,14 @@ const MembersTableComponent = () => {
               </TableRow>
             ))}
           </TableBody>
+
+          {noMembersRegistered && (
+            <TableRow>
+              <TableCell colSpan={6}>
+                <MembersTableEmptyWarningComponent />
+              </TableCell>
+            </TableRow>
+          )}
         </Table>
       </TableContainer>
     </Paper>
