@@ -56,8 +56,9 @@ const ServicesMembersRepository: AdminMembersRepository = {
 
   getAllAdminMembers: async (): Promise<AdminMemberEntity[]> => {
     const result = await AdminMember.findAll({
-      include: { association: AdminMember.associations.member },
-      where: { isActive: "ACTIVE" },
+      include: [
+        { association: AdminMember.associations.member, required: true },
+        { association: AdminMember.associations.department }],
     });
 
     return result.map(__mapAdminMemberModelToEntity);

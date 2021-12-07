@@ -6,6 +6,7 @@ const createDepartment = async (ctx: Context) => {
     const usecase = new CreateDepartment(ServicesDepartmentRepository);
     const departmentName = ctx.request.body.departmentName;
     await usecase.run(departmentName);
+    ctx.response.body = {};
 };
 
 export default createDepartment;
