@@ -38,7 +38,7 @@ class WorkGroup
         },
         description: {
           type: DataTypes.STRING,
-          allowNull: false,
+          allowNull: true,
           defaultValue: null,
         },
         creationDate: {
@@ -54,6 +54,7 @@ class WorkGroup
       },
       {
         sequelize,
+        timestamps: false,
       }
     )
   }
