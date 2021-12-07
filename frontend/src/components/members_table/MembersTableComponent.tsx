@@ -1,4 +1,7 @@
 import {
+  CircularProgress,
+  Grid,
+  IconButton,
   Paper,
   Table,
   TableBody,
@@ -6,13 +9,15 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Typography,
 } from '@material-ui/core';
+import { Replay } from '@material-ui/icons';
 import useMembers from 'providers/members/useMembers';
 import MembersTableEmptyWarningComponent from './MembersTableEmptyWarningComponent';
 import MembersTableStatusCellComponent from './MembersTableStatusCellComponent';
 
 const MembersTableComponent = () => {
-  const { members } = useMembers();
+  const { done, members, loading, failed, retry } = useMembers();
   const noMembersRegistered = members.length === 0;
 
   return (
@@ -48,15 +53,43 @@ const MembersTableComponent = () => {
                 <TableCell></TableCell>
               </TableRow>
             ))}
-          </TableBody>
 
-          {noMembersRegistered && (
-            <TableRow>
-              <TableCell colSpan={6}>
-                <MembersTableEmptyWarningComponent />
-              </TableCell>
-            </TableRow>
-          )}
+            {loading && (
+              <TableRow sx={{ padding: 1 }}>
+                <TableCell colSpan={6} align="center">
+                  <CircularProgress />
+                </TableCell>
+              </TableRow>
+            )}
+
+            {failed && (
+              <TableRow sx={{ padding: 1 }}>
+                <TableCell colSpan={6} align="center">
+                  <Grid container direction="column" justifyContent="center">
+                    <Grid item>
+                      <Typography variant="body1" color="error">
+                        Carregamento de membros falhou
+                      </Typography>
+                    </Grid>
+
+                    <Grid item>
+                      <IconButton onClick={retry}>
+                        <Replay />
+                      </IconButton>
+                    </Grid>
+                  </Grid>
+                </TableCell>
+              </TableRow>
+            )}
+
+            {done && noMembersRegistered && (
+              <TableRow sx={{ padding: 1 }}>
+                <TableCell colSpan={6}>
+                  <MembersTableEmptyWarningComponent />
+                </TableCell>
+              </TableRow>
+            )}
+          </TableBody>
         </Table>
       </TableContainer>
     </Paper>
