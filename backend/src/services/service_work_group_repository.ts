@@ -7,6 +7,7 @@ const ServicesWorkGroupRepository: WorkGroupRepository = {
     getWorkGroup: async function (name: string): Promise<WorkGroupEntity | null> {
         throw new Error("Function not implemented.");
     },
+
     saveWorkGroup: async function (name: string, description?: string, creationDate?: Date): Promise<WorkGroupEntity> {
         try {
             const workgroup = await WorkGroup.create({
@@ -23,9 +24,12 @@ const ServicesWorkGroupRepository: WorkGroupRepository = {
           throw error;
         };
     },
+
     getAllWorkGroups: async function (): Promise<WorkGroupEntity[]> {
-        throw new Error("Function not implemented.");
+        const workgroups = await WorkGroup.findAll();
+        return workgroups.map(__mapWorkGroupModelToEntity);
     },
+
     endWorkGroup: async function (name: string): Promise<WorkGroupEntity> {
         throw new Error("Function not implemented.");
     }
