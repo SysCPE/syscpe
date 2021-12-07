@@ -3,9 +3,19 @@ import { createContext } from 'react';
 
 type MembersContextType = {
   members: MemberEntity[];
+
+  loading: boolean;
+  failed: boolean;
+  done: boolean;
+  retry: () => void;
 };
 const MembersContext = createContext<MembersContextType>({
   members: [],
+
+  loading: false,
+  failed: false,
+  done: false,
+  retry: () => {},
 });
 
 export default MembersContext;
