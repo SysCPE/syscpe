@@ -8,6 +8,6 @@ services:
       DB_USER: test_user
       DB_DATABASE: test_postgres
       DB_PASSWORD: test_password
-    entrypoint: [ "npm", "run", "integration-test"]
+    entrypoint: ["npm", "run", "integration-test"]
     stdin_open: true
     tty: true
