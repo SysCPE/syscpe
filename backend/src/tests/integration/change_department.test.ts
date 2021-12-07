@@ -1,4 +1,3 @@
-import AdminMemberEntity from 'domain/entities/admin_member_entity';
 import { Server } from 'http';
 import each from 'jest-each';
 import ServicesMembersRepository from 'services/service_members_repository';
