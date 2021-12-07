@@ -17,6 +17,7 @@ const changeDepartment = async (ctx: Context) => {
     if (e instanceof DepartmentNotFoundError)
       ctx.throw(400, `Cannot find Department ${departmentName}`);
   }
+  ctx.body = {};
 };
 
 export default changeDepartment;
