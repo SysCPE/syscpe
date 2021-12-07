@@ -1,12 +1,31 @@
-import Member from 'domain/members/entities/Member';
-import { FC, useState } from 'react';
+import MemberEntity from 'domain/members/entities/MemberEntity';
+import listMembersUseCase from 'domain/members/usecases/list_members_usecase';
+import { FC, useEffect, useState } from 'react';
+import delayed from 'utils/delayed';
+import useSubmit from 'utils/useSubmit';
 import MembersContext from './MembersContext';
 
 const MembersProvider: FC = ({ children }) => {
-  const [members, setMembers] = useState<Member[]>([]);
+  const [firstLoad, setFirstLoad] = useState(false);
+  const [members, setMembers] = useState<MemberEntity[]>([]);
+  const { done, failed, loading, submit } = useSubmit(
+    () => delayed(listMembersUseCase()),
+    (members) => setMembers(members)
+  );
+
+  useEffect(() => {
+    if (firstLoad) return;
+    setFirstLoad(true);
+    submit();
+  }, [submit, firstLoad]);
+
+  const retry = () => {
+    if (!failed) return;
+    submit();
+  };
 
   return (
-    <MembersContext.Provider value={{ members }}>
+    <MembersContext.Provider value={{ members, done, loading, failed, retry }}>
       {children}
     </MembersContext.Provider>
   );
