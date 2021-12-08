@@ -8,7 +8,7 @@ export default class CreateWorkGroup {
         this.WorkGroupRepository = WorkGroupRepository;
     }
 
-    async run(workGroupName: string): Promise<WorkGroupEntity> {
-        return this.WorkGroupRepository.saveWorkGroup(workGroupName);
+    async run(name: string, description?: string, creationDate?: Date): Promise<WorkGroupEntity> {
+        return this.WorkGroupRepository.saveWorkGroup(name, description, creationDate);
     }
 }
