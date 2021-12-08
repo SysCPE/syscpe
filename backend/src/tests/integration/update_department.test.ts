@@ -35,14 +35,14 @@ describe('Update Department route: /departments/update-departments', () => {
             where: {
                 name:expectedDepartment.name,
             },
-        }))!;
+        }))!;   //This is ugly
 
         const acquiredDepartment = __mapDepartmentModelToEntity(acquiredDepartmentModel);
         expect(expectedDepartment).not.toBeNull();
         expect(acquiredDepartment.name).toBe(expectedDepartment.name);
         expect(acquiredDepartment.creationDate).toBe(expectedDepartment.creationDate);
-        expect(acquiredDepartment.director?.idCPE).toBe(expectedDepartment.director?.idCPE);
-        expect(acquiredDepartment.viceDirector?.idCPE).toBe(expectedDepartment.director?.idCPE);
+        expect(acquiredDepartment.directorId).toBe(expectedDepartment.directorId);
+        expect(acquiredDepartment.viceDirectorId).toBe(expectedDepartment.viceDirectorId);
     };
 
     it('should return bad request when body is empty', async () => {
@@ -54,7 +54,7 @@ describe('Update Department route: /departments/update-departments', () => {
 
     it('should return bad request when department entity does not exist', async () => {
         const department: DepartmentEntity = { name: 'ivoa tnecs', creationDate: new Date()}
-        const response =  await request(server).post(ROUTE).field('DepartmentEntity', JSON.stringify(department));
+        const response =  await request(server).post(ROUTE).send(department);
         
         expect(response.status).toBe(400);
         expect(response.text).toBe("Department does not exist");
@@ -64,12 +64,9 @@ describe('Update Department route: /departments/update-departments', () => {
         const department: DepartmentEntity = { 
             name: inovaTec.name, 
             creationDate: inovaTec.creationDate, 
-            director:{
-                email: "Hey dol! merry dol! ring a dong dillo!",
-                name: "Tom Bom, jolly Tom, Tom Bombadillo!"
-            }
+            directorId: (new Date()).getTime(),
         }
-        const response =  await request(server).post(ROUTE).field('DepartmentEntity', JSON.stringify(department));
+        const response =  await request(server).post(ROUTE).send(department);
         
         expect(response.status).toBe(400);
         expect(response.text).toBe("There is no record of that director in the database");
@@ -79,12 +76,9 @@ describe('Update Department route: /departments/update-departments', () => {
         const department: DepartmentEntity = { 
             name: inovaTec.name, 
             creationDate: inovaTec.creationDate, 
-            viceDirector:{
-                email: "Hey dol! merry dol! ring a dong dillo!",
-                name: "Tom Bom, jolly Tom, Tom Bombadillo!"
-            }
+            viceDirectorId: 6969696969,
         }
-        const response =  await request(server).post(ROUTE).field('DepartmentEntity', JSON.stringify(department));
+        const response =  await request(server).post(ROUTE).send(department);
         
         expect(response.status).toBe(400);
         expect(response.text).toBe("There is no record of that vice director in the database");
@@ -95,7 +89,7 @@ describe('Update Department route: /departments/update-departments', () => {
             name: inovaTec.name,
             creationDate: inovaTec.creationDate,
         };
-        const response = await request(server).post(ROUTE).field('DepartmentEntity', JSON.stringify(gestaoDePessoasUpdate));
+        const response = await request(server).post(ROUTE).send(gestaoDePessoasUpdate);
 
 
         expect(response.statusCode).toBe(200);
@@ -106,10 +100,10 @@ describe('Update Department route: /departments/update-departments', () => {
         const inovaTecUpdate: DepartmentEntity = { 
             name: inovaTec.name,
             creationDate: inovaTec.creationDate,
-            director:mockAdminMembers['a@gmail.com'],
-            viceDirector:mockAdminMembers['b@gmail.com']
+            directorId:mockAdminMembers['a@gmail.com'].idCPE,
+            viceDirectorId:mockAdminMembers['b@gmail.com'].idCPE,
         };
-        const response = await request(server).post(ROUTE).field('DepartmentEntity', JSON.stringify(inovaTecUpdate));
+        const response = await request(server).post(ROUTE).send(inovaTecUpdate);
 
 
         expect(response.statusCode).toBe(200);
