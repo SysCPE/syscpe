@@ -29,22 +29,17 @@ const ServicesDepartmentRepository: DepartmentRepository = {
         if (!result) return null;
         return __mapDepartmentModelToEntity(result);
     }
+
+
 };
 
 export const __mapDepartmentModelToEntity = (department: Department): DepartmentEntity => {
-    //UGLY
-    let director = undefined;
-    let viceDirector = undefined;
-
-    if (department.director) director = __mapAdminMemberModelToEntity(department.director);
-    if (department.viceDirector) viceDirector = __mapAdminMemberModelToEntity(department.viceDirector);
-    //END OF UGLY
 
     const departmentEntity =  {
         name: department.name,
         creationDate: department.creationDate,
-        director: director,
-        viceDirector: viceDirector,
+        director: department.directorId,
+        viceDirector: department.directorId,
     }
     return departmentEntity;
 };
