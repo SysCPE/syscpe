@@ -118,7 +118,7 @@ const __getAdminMemberModelByEmail = async (email: string) => {
   return result;
 }
 
-const __mapAdminMemberModelToEntity = (
+export const __mapAdminMemberModelToEntity = (
   adminMember: AdminMember
 ): AdminMemberEntity => {
   return {

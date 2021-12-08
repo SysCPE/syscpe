@@ -1,6 +1,8 @@
+import AdminMember from "database/models/AdminMember";
 import Department from "database/models/Department";
 import DepartmentEntity from "domain/entities/department_entity";
 import DepartmentRepository from "domain/repository/department_repository";
+import { __mapAdminMemberModelToEntity }  from "services/service_members_repository"
 
 const ServicesDepartmentRepository: DepartmentRepository = {
     saveDepartment: async function (name: string, creationDate?: Date): Promise<DepartmentEntity> {
@@ -29,11 +31,22 @@ const ServicesDepartmentRepository: DepartmentRepository = {
     }
 };
 
-const __mapDepartmentModelToEntity = (department: Department): DepartmentEntity => {
-    return {
+export const __mapDepartmentModelToEntity = (department: Department): DepartmentEntity => {
+    //UGLY
+    let director = undefined;
+    let viceDirector = undefined;
+
+    if (department.director) director = __mapAdminMemberModelToEntity(department.director);
+    if (department.viceDirector) viceDirector = __mapAdminMemberModelToEntity(department.viceDirector);
+    //END OF UGLY
+
+    const departmentEntity =  {
         name: department.name,
         creationDate: department.creationDate,
-    };
+        director: director,
+        viceDirector: viceDirector,
+    }
+    return departmentEntity;
 };
 
 export default ServicesDepartmentRepository;
