@@ -1,98 +1,164 @@
 import {
   CircularProgress,
+  Fab,
+  Fade,
   Grid,
+  Grow,
   IconButton,
   Paper,
   Table,
   TableBody,
-  TableCell,
+  TableCell as MuiTableCell,
+  TableCellProps,
   TableContainer,
   TableHead,
   TableRow,
   Typography,
 } from '@material-ui/core';
-import { Replay } from '@material-ui/icons';
+import { Add, Replay } from '@material-ui/icons';
+import MembersUploadModalComponent from 'components/members_upload/MembersUploadModalComponent';
 import useMembers from 'providers/members/useMembers';
+import { FC } from 'react';
 import MembersTableEmptyWarningComponent from './MembersTableEmptyWarningComponent';
 import MembersTableStatusCellComponent from './MembersTableStatusCellComponent';
 
+const TableCell: FC<TableCellProps> = (props) => {
+  const { children } = props;
+
+  return (
+    <MuiTableCell sx={{ border: 0 }} {...props}>
+      {children}
+    </MuiTableCell>
+  );
+};
 const MembersTableComponent = () => {
   const { done, members, loading, failed, retry } = useMembers();
   const noMembersRegistered = members.length === 0;
 
   return (
-    <Paper sx={{ width: '100%', overflow: 'hidden' }}>
-      <TableContainer sx={{ maxHeight: 440 }}>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>IDCPE</TableCell>
-              <TableCell>Nome</TableCell>
-              <TableCell>Curso</TableCell>
-              <TableCell align="center">Departamento</TableCell>
-              <TableCell align="center">Status</TableCell>
-              <TableCell>Ações</TableCell>
-            </TableRow>
-          </TableHead>
+    <Grow in={true} exit={false}>
+      <Paper
+        elevation={5}
+        sx={{
+          position: 'relative',
+          overflow: 'hidden',
+          width: '100%',
+          minHeight: 400,
+          maxHeight: 880,
+          paddingBottom: 10,
+          height: '100%',
+        }}
+      >
+        <Grid container direction="column" sx={{ height: '100%' }}>
+          <Grid item>
+            <TableContainer>
+              <Table>
+                <TableHead>
+                  <TableRow>
+                    <MuiTableCell width="10%">IDCPE</MuiTableCell>
+                    <MuiTableCell width="30%">Nome</MuiTableCell>
+                    <MuiTableCell width="15%">Curso</MuiTableCell>
+                    <MuiTableCell width="15%" align="center">
+                      Departamento
+                    </MuiTableCell>
+                    <MuiTableCell width="10%" align="center">
+                      Status
+                    </MuiTableCell>
+                    <MuiTableCell width="20%" align="center">
+                      Ações
+                    </MuiTableCell>
+                  </TableRow>
+                </TableHead>
 
-          <TableBody>
-            {members.map((member) => (
-              <TableRow
-                key={member.idCPE}
-                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                <TableBody>
+                  {done &&
+                    members.map((member) => (
+                      <Fade key={member.idCPE} in={true}>
+                        <TableRow key={member.idCPE}>
+                          <TableCell width="10%">{member.idCPE}</TableCell>
+                          <TableCell width="30%">{member.name}</TableCell>
+                          <TableCell width="15%">{member.course}</TableCell>
+                          <TableCell width="15%" align="center">
+                            {member.department}
+                          </TableCell>
+                          <TableCell width="10%" align="center">
+                            <MembersTableStatusCellComponent
+                              status={member.status}
+                            />
+                          </TableCell>
+                          <TableCell width="20%" align="center"></TableCell>
+                        </TableRow>
+                      </Fade>
+                    ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Grid>
+
+          <Grid container sx={{ flexGrow: 1 }} alignContent="center">
+            <Fade in={loading} exit={false} unmountOnExit>
+              <Grid container justifyContent="center">
+                <CircularProgress />
+              </Grid>
+            </Fade>
+
+            <Fade in={done && noMembersRegistered} exit={false} unmountOnExit>
+              <Grid container justifyContent="center">
+                <MembersTableEmptyWarningComponent />
+              </Grid>
+            </Fade>
+
+            <Fade in={failed} exit={false} unmountOnExit>
+              <Grid
+                container
+                direction="column"
+                justifyContent="center"
+                alignContent="center"
+                justifyItems="center"
+                alignItems="center"
               >
-                <TableCell component="th" scope="row">
-                  {member.idCPE}
-                </TableCell>
-                <TableCell>{member.name}</TableCell>
-                <TableCell>{member.course}</TableCell>
-                <TableCell align="center">{member.department}</TableCell>
-                <TableCell align="center">
-                  <MembersTableStatusCellComponent status={member.status} />
-                </TableCell>
-                <TableCell></TableCell>
-              </TableRow>
-            ))}
+                <Grid item>
+                  <Typography
+                    variant="body1"
+                    color="error"
+                    sx={{ textAlign: 'center' }}
+                  >
+                    Carregamento de membros falhou
+                  </Typography>
+                </Grid>
 
-            {loading && (
-              <TableRow sx={{ padding: 1 }}>
-                <TableCell colSpan={6} align="center">
-                  <CircularProgress />
-                </TableCell>
-              </TableRow>
-            )}
+                <Grid item>
+                  <IconButton onClick={retry}>
+                    <Replay />
+                  </IconButton>
+                </Grid>
+              </Grid>
+            </Fade>
+          </Grid>
+        </Grid>
 
-            {failed && (
-              <TableRow sx={{ padding: 1 }}>
-                <TableCell colSpan={6} align="center">
-                  <Grid container direction="column" justifyContent="center">
-                    <Grid item>
-                      <Typography variant="body1" color="error">
-                        Carregamento de membros falhou
-                      </Typography>
-                    </Grid>
-
-                    <Grid item>
-                      <IconButton onClick={retry}>
-                        <Replay />
-                      </IconButton>
-                    </Grid>
-                  </Grid>
-                </TableCell>
-              </TableRow>
-            )}
-
-            {done && noMembersRegistered && (
-              <TableRow sx={{ padding: 1 }}>
-                <TableCell colSpan={6}>
-                  <MembersTableEmptyWarningComponent />
-                </TableCell>
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </Paper>
+        <MembersUploadModalComponent
+          render={(onOpen) => {
+            return (
+              <Grow in={done}>
+                <Fab
+                  onClick={onOpen}
+                  color="secondary"
+                  sx={{
+                    position: 'absolute',
+                    right: 0,
+                    bottom: 0,
+                    margin: 1,
+                  }}
+                >
+                  <Add />
+                </Fab>
+              </Grow>
+            );
+          }}
+        />
+      </Paper>
+    </Grow>
   );
 };
 
