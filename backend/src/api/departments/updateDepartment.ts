@@ -3,13 +3,10 @@ import { Context } from 'koa';
 import UpdateDepartment from 'domain/usecases/updateDepartment';
 
 const updateDepartment = async (ctx: Context) => {
-  console.log("REQUEST BODY: ");
-  const a = ctx.request.body?.name;  
-  console.log(a);
   const usecase = new UpdateDepartment(ServicesDepartmentRepository);
   const response = await usecase.run(ctx.request.body);
-
-  ctx.response.body = { response };
+  if (!response[0]) ctx.throw(400, response[1])
+  ctx.response.body = response[1] ;
 };
 
 export default updateDepartment;
