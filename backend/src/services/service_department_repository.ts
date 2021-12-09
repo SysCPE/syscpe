@@ -65,7 +65,7 @@ export const __mapDepartmentModelToEntity = (department: Department): Department
 
     const departmentEntity =  {
         name: department.name,
-        creationDate: department.creationDate,
+        creationDate: new Date(department.creationDate),
         director: department.directorId,
         viceDirector: department.directorId,
     }
