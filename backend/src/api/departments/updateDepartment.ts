@@ -7,7 +7,7 @@ const updateDepartment = async (ctx: Context) => {
   const a = ctx.request.body?.name;  
   console.log(a);
   const usecase = new UpdateDepartment(ServicesDepartmentRepository);
-  const response = await usecase.run({name:"ronaldo", creationDate: new Date()});
+  const response = await usecase.run(ctx.request.body);
 
   ctx.response.body = { response };
 };

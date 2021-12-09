@@ -7,6 +7,6 @@ import updateDepartment from "./updateDepartment";
 const DepartmentRouter = new Router();
 DepartmentRouter.post('/', bodyParser(), createDepartment);
 DepartmentRouter.get('/', getAllDepartments);
-DepartmentRouter.post('/update-department', updateDepartment);
+DepartmentRouter.post('/update-department', bodyParser(), updateDepartment);
 
 export default DepartmentRouter;
