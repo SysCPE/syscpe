@@ -1,4 +1,5 @@
 import { Association, DataTypes, Model, Optional, Sequelize } from 'sequelize';
+import AdminMember from './AdminMember';
 
 interface WorkGroupAttributes {
   id: number;
@@ -19,9 +20,14 @@ class WorkGroup
   name!: string;
   description?: string;
 
+  members?: AdminMember[];
+
   creationDate?: Date;
   endDate?: Date;
-  
+
+  public static associations: {
+    members: Association<WorkGroup, AdminMember>
+  };
 
   static initialize(sequelize: Sequelize) {
     this.init(
