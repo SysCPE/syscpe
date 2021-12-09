@@ -9,25 +9,31 @@ import useServer from 'tests/hook/useServer';
 import  request  from 'supertest';
 import { Server } from 'http';
 
-describe('Update Department route: /departments/update-departments', () => {
+describe('Update Department route: /departments/update-department', () => {
     const serverFactory = useServer();
-    const ROUTE = '/departments/update-departments';
+    const ROUTE = '/departments/update-department';
     const inovaTec = mockDepartments['inovaTec'];
     const gestaoDePessoas = mockDepartments['Gestão de Pessoas'];
     let server: Server;
 
+    const populateDB = async () => {
+        Object.values(mockAdminMembers).map(async mockMember => {
+            await ServicesMembersRepository.saveAdminMember(mockMember)
+        });
+        await ServicesDepartmentRepository.saveDepartment(inovaTec.name, inovaTec.creationDate);
+        await ServicesDepartmentRepository.saveDepartment(gestaoDePessoas.name, inovaTec.creationDate);
+    }
+
     beforeAll(() => {
         server = serverFactory();
-        
-        Object.values(mockAdminMembers).map( mockMember => {
-            ServicesMembersRepository.saveAdminMember(mockMember)
-        });
-        ServicesDepartmentRepository.saveDepartment(inovaTec.name, inovaTec.creationDate);
-        ServicesDepartmentRepository.saveDepartment(gestaoDePessoas.name, inovaTec.creationDate);
     });
 
     afterAll(() => {
         server.close();
+    });
+
+    beforeEach(async () => {
+        await populateDB(); 
     });
 
     const assertDepartmentExists = async (expectedDepartment: DepartmentEntity) => {
@@ -46,6 +52,7 @@ describe('Update Department route: /departments/update-departments', () => {
     };
 
     it('should return bad request when body is empty', async () => {
+        console.log("no body")
         const response = await request(server).post(ROUTE);
         
         expect(response.status).toBe(400);
@@ -54,7 +61,9 @@ describe('Update Department route: /departments/update-departments', () => {
 
     it('should return bad request when department entity does not exist', async () => {
         const department: DepartmentEntity = { name: 'ivoa tnecs', creationDate: new Date()}
-        const response =  await request(server).post(ROUTE).send(department);
+        console.log("wrong body")
+        console.log(department)
+        const response = await request(server).post(ROUTE).send(department);
         
         expect(response.status).toBe(400);
         expect(response.text).toBe("Department does not exist");
@@ -84,13 +93,12 @@ describe('Update Department route: /departments/update-departments', () => {
         expect(response.text).toBe("There is no record of that vice director in the database");
     });
 
-    it('should update department given that director and vice director are not present', async () => {
+    it('should update department given that director and vice director are NOT present', async () => {
         const gestaoDePessoasUpdate: DepartmentEntity = { 
             name: inovaTec.name,
             creationDate: inovaTec.creationDate,
         };
         const response = await request(server).post(ROUTE).send(gestaoDePessoasUpdate);
-
 
         expect(response.statusCode).toBe(200);
         await assertDepartmentExists(gestaoDePessoasUpdate);
