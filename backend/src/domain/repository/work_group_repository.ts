@@ -1,5 +1,7 @@
 import WorkGroupEntity from "domain/entities/work_group_entity";
 
+export class WorkGroupNotFoundError extends Error { }
+
 type WorkGroupRepository = {
     getWorkGroup: (name: string) => Promise<WorkGroupEntity | null>;
     
