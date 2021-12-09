@@ -12,18 +12,12 @@ describe('ServicesDepartmentRepository', () => {
     const USEDATABASE = useDatabase();
 
     const assertDepartmentExists = async (expectedDepartment: DepartmentEntity) => {
-        const acquiredDepartmentModel = (await Department.findOne({
-            where: {
-                name:expectedDepartment.name,
-            },
-        }))!;   //This is ugly
-
-        const acquiredDepartment = __mapDepartmentModelToEntity(acquiredDepartmentModel);
-        expect(expectedDepartment).not.toBeNull();
-        expect(acquiredDepartment.name).toBe(expectedDepartment.name);
-        // expect(acquiredDepartment.creationDate).toBe(expectedDepartment.creationDate);
-        expect(acquiredDepartment.directorId).toBe(expectedDepartment.directorId);
-        expect(acquiredDepartment.viceDirectorId).toBe(expectedDepartment.viceDirectorId);
+        const receivedDepartment = await ServicesDepartmentRepository.getDepartment(expectedDepartment.name);
+        expect(receivedDepartment).not.toBeNull();
+        expect(receivedDepartment!.name).toBe(expectedDepartment.name);
+        expect(receivedDepartment!.creationDate).toStrictEqual(expectedDepartment.creationDate);
+        expect(receivedDepartment!.directorId).toBe(expectedDepartment.directorId);
+        expect(receivedDepartment!.viceDirectorId).toBe(expectedDepartment.viceDirectorId);
     };
 
   
