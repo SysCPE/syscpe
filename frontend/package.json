@@ -74,5 +74,6 @@
     "jest-each": "^26.6.2",
     "prettier": "^2.4.1",
     "prettier-plugin-organize-imports": "^2.3.4"
-  }
+  },
+  "proxy": "http://localhost:4000"
 }
