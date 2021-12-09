@@ -33,6 +33,20 @@ Returns 200 on success, 500 on failure.
 ```
 
 ```ts
+POST    /departments/update-department
+Updates a department. 
+
+Body params:
+    - name: string;   // name of the department to update. This cannot be updated.
+    - creationDate : string;   // the creation date of the updated department.
+    - directorId: number || undefined;   // this department new director's IDCPE. Is optional
+    - viceDirectorId: number || undefined;   // this department new vice-director's IDCPE. Is optional
+
+
+Returns 200 on success, 400 on failure. If failed, a reason of the failure is included in the response body.
+```
+
+```ts
 GET     /members/admin
 Returns all registered AdminMembers.
 
