@@ -1,9 +1,9 @@
-import AdminMember from "database/models/AdminMember";
 import Department from "database/models/Department";
 import DepartmentEntity from "domain/entities/department_entity";
 import DepartmentRepository from "domain/repository/department_repository";
-import { Sequelize, ValidationError } from "sequelize/types";
-import ServicesMembersRepository, { __mapAdminMemberModelToEntity }  from "services/service_members_repository"
+import { ForeignKeyConstraintError, ValidationError } from "sequelize/types";
+import { __mapAdminMemberModelToEntity }  from "services/service_members_repository"
+import ServicesMembersRepository from "services/service_members_repository";
 
 const ServicesDepartmentRepository: DepartmentRepository = {
     saveDepartment: async function (name: string, creationDate?: Date): Promise<DepartmentEntity> {
@@ -34,23 +34,30 @@ const ServicesDepartmentRepository: DepartmentRepository = {
     updateDepartment: async function (department: DepartmentEntity) {
         type returnType = [Boolean, String]
         const NO_DEPT_FOUND: returnType = [false, "NO DEPT"];
-        const OK : returnType = [true, ""];
+        const EMPTY_BODY: returnType = [false, "Empty body"];
+        const OK : returnType = [true, "It's Saul Goodman"];
+        const NO_ADMIN_MEMBER_FOUND = (memberId:any) => [false, "NO ADMIN MEMBER FOUND WITH ID " + memberId] as returnType;
+        
+        if(!department?.name) return EMPTY_BODY;
 
-        const departmentModel =  await Department.findOne({
-            where: {
-                name:department.name
-            }
-        });
+        try {
 
-        const returnTuple =  await departmentModel?.update(department)
-        .then(
-            () => OK, 
-            (reason: ValidationError) => [ 
-                false, 
-                reason.errors.map(err => err.message).toString()
-            ] as returnType
-        );
-        return returnTuple || NO_DEPT_FOUND;
+            const departmentModel =  await Department.findOne({
+                where: {
+                    name:department.name 
+                }
+            });
+
+            const returnTuple =  await departmentModel?.update(department)
+            .then(
+                () => OK, 
+                (reason: ForeignKeyConstraintError) => NO_ADMIN_MEMBER_FOUND(reason.parameters[0])
+            );
+            return returnTuple || NO_DEPT_FOUND;
+        }
+        catch (error) {
+            return [false, error] as returnType; 
+        }
     }
 };
 
