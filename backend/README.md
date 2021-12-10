@@ -111,18 +111,46 @@ Returns 200 on success, 400 on failure (member or department does not exist).
 ```
 
 ```ts
+POST    /workgroups
+Creates new work group
+
+Body parameters:
+{
+    name: string;
+    description?: string;
+    creationDate?: Date;
+}
+
+Returns 200 on success, 400 on failure (work group already exists)
+```
+
+```ts
+GET     /workgroups
+Returns all work groups
+
+Returns an array of Workgroups:
+{
+    name: string;
+    members: number[]; // Array of idCPEs
+
+    description?: string;
+    creationDate: Date;
+    endDate?: Date;
+}
+```
+
+```ts
 POST   /members/admin/assign-workgroup
 Assign an Admin Member to a Work Group
 
 Body parameters:
 {
-    memberId: number,
+    memberId: number;
     workgroupName: string;
 }
 
 Returns 200 on success, 400 on failure (member or workgroup does not exist; or member is already part of the workgroup).
 ```
-
 
 ## TODO
 - Change period in AdminMemberEntity to be a string (Vespertino, Noturno e Integral)
