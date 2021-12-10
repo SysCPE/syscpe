@@ -41,7 +41,6 @@ const ServicesDepartmentRepository: DepartmentRepository = {
         if(!department?.name) return EMPTY_BODY;
 
         try {
-
             const departmentModel =  await Department.findOne({
                 where: {
                     name:department.name 

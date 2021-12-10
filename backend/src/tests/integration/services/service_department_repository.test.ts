@@ -36,12 +36,12 @@ describe('ServicesDepartmentRepository', () => {
         expect(result?.name).toEqual('Gestão de Pessoas');
     });
 
-    it ('should not find a department', async () => {
+    it('should not find a department', async () => {
         const result = await ServicesDepartmentRepository.getDepartment('Gestão');
         expect(result).not.toBeTruthy();
     });
 
-    it ('should update a department when directorId or viceDirectorId are present', async () => {
+    it('should update a department when directorId or viceDirectorId are present', async () => {
         const inovaTecUpdate: DepartmentEntity = { 
             name: inovaTec.name,
             creationDate: inovaTec.creationDate,
@@ -55,14 +55,22 @@ describe('ServicesDepartmentRepository', () => {
         await assertDepartmentExists(inovaTecUpdate);
     });
 
-    it('should update department given that director and vice director are NOT present', async () => {
+    it('should update department\'s creation date', async () => {
         const gestaoDePessoasUpdate: DepartmentEntity = { 
             name: gestaoDePessoas.name,
-            creationDate: gestaoDePessoas.creationDate,
+            creationDate: new Date(12, 10, 2021),
         };
+
+        const initialDepartment = await ServicesDepartmentRepository.getDepartment(gestaoDePessoas.name);
+        expect(initialDepartment).toBeTruthy();
+        expect(initialDepartment!.creationDate).not.toEqual(gestaoDePessoasUpdate.creationDate);
 
         const result = await ServicesDepartmentRepository.updateDepartment(gestaoDePessoasUpdate);
         expect(result[0]).toBeTruthy();
-        await assertDepartmentExists(gestaoDePessoasUpdate);
+
+        // Ensure update persisted in the database
+        const verification = await ServicesDepartmentRepository.getDepartment(gestaoDePessoas.name);
+        expect(verification).toBeTruthy();
+        expect(verification!.creationDate).toEqual(gestaoDePessoasUpdate.creationDate);
     });
 });

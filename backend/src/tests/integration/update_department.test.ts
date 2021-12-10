@@ -35,6 +35,15 @@ describe('Update Department route: /departments/update-department', () => {
         await populateDB(); 
     });
 
+    it('should return 200 on a good request', async () => {
+        const department: DepartmentEntity = {
+            name: 'inovaTec',
+            creationDate: new Date(12, 10, 2021),
+        };
+        const response = await request(server).post(ROUTE).send(department);
+        expect(response.status).toBe(200);
+    })
+
     it('should return bad request when body is empty', async () => {
         const response = await request(server).post(ROUTE);
         
@@ -43,7 +52,7 @@ describe('Update Department route: /departments/update-department', () => {
     });
 
     it('should return bad request when department entity does not exist', async () => {
-        const department: DepartmentEntity = { name: 'ivoa tnecs', creationDate: new Date()}
+        const department: DepartmentEntity = { name: 'ivoa tnecs', creationDate: new Date() }
         const response = await request(server).post(ROUTE).send(department);
         
         expect(response.status).toBe(400);
