@@ -1,3 +1,4 @@
+import { WorkGroupAlreadyExistsError } from "domain/repository/work_group_repository";
 import CreateWorkGroup from "domain/usecases/create_work_group";
 import { Context } from "koa";
 import ServicesWorkGroupRepository from "services/service_work_group_repository";
@@ -7,7 +8,15 @@ const createWorkGroup = async (ctx: Context) => {
     const name = ctx.request.body.name;
     const description = ctx.request.body.description;
     const creationDate = ctx.request.body.creationDate;
-    await usecase.run(name, description, creationDate);
+
+    try {
+        await usecase.run(name, description, creationDate);
+    }
+    catch (e) {
+        if (e instanceof WorkGroupAlreadyExistsError) {
+            ctx.throw(400, `Work group ${name} already exists`);
+        }
+    }
     ctx.response.body = {};
 }
 

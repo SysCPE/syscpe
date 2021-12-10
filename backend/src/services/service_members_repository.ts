@@ -57,13 +57,7 @@ const ServicesMembersRepository: AdminMembersRepository = {
   },
 
   getAllAdminMembers: async (): Promise<AdminMemberEntity[]> => {
-    const result = await AdminMember.findAll({
-      include: [
-        { association: AdminMember.associations.member, required: true },
-        { association: AdminMember.associations.department }
-      ],
-    });
-
+    const result = await __getAllAdminMemberModels();
     return result.map(__mapAdminMemberModelToEntity);
   },
 
@@ -108,6 +102,19 @@ const ServicesMembersRepository: AdminMembersRepository = {
     return __mapAdminMemberModelToEntity(memberModel);
   }
 };
+
+const __getAllAdminMemberModels = async () => {
+  const result = await AdminMember.findAll({
+    include: [{
+      association: AdminMember.associations.member,
+      required: true,
+    },
+    { association: AdminMember.associations.department },
+    { association: AdminMember.associations.workgroups },
+  ],
+  });
+  return result;
+}
 
 const __getAdminMemberModel = async (memberId: number) => {
   const result = await AdminMember.findByPk(memberId, {

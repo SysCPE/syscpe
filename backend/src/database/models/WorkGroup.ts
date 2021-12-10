@@ -1,4 +1,4 @@
-import { Association, DataTypes, Model, Optional, Sequelize } from 'sequelize';
+import { Association, BelongsToManyGetAssociationsMixin, DataTypes, Model, Optional, Sequelize } from 'sequelize';
 import AdminMember from './AdminMember';
 
 interface WorkGroupAttributes {
@@ -28,6 +28,8 @@ class WorkGroup
   public static associations: {
     members: Association<WorkGroup, AdminMember>
   };
+
+  public getMembers!: BelongsToManyGetAssociationsMixin<AdminMember>;
 
   static initialize(sequelize: Sequelize) {
     this.init(
