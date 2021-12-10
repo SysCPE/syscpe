@@ -115,7 +115,9 @@ const __getAdminMemberModel = async (memberId: number) => {
       association: AdminMember.associations.member,
       required: true,
     },
-    { association: AdminMember.associations.department }],
+    { association: AdminMember.associations.department },
+    { association: AdminMember.associations.workgroups },
+  ],
   });
 
   if (!result) return null;
