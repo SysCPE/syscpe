@@ -1,9 +1,10 @@
 import Department from "database/models/Department";
 import DepartmentEntity from "domain/entities/department_entity";
-import DepartmentRepository from "domain/repository/department_repository";
-import { ForeignKeyConstraintError, ValidationError } from "sequelize/types";
+import { AdminMemberNotFoundError } from "domain/repository/admin_members_repository";
+import DepartmentRepository, { DepartmentNotFoundError, UpdateDepartmentParams } from "domain/repository/department_repository";
+import { ForeignKeyConstraintError } from "sequelize";
 import { __mapAdminMemberModelToEntity }  from "services/service_members_repository"
-import ServicesMembersRepository from "services/service_members_repository";
+import { removeUndefined } from "utils";
 
 const ServicesDepartmentRepository: DepartmentRepository = {
     saveDepartment: async function (name: string, creationDate?: Date): Promise<DepartmentEntity> {
@@ -17,58 +18,64 @@ const ServicesDepartmentRepository: DepartmentRepository = {
     },
 
     getAllDepartments: async function (): Promise<DepartmentEntity[]> {
-        const result = await Department.findAll();
-
+        const result = await __getAllDepartmentModels();
         return result.map(__mapDepartmentModelToEntity);
     },
 
     getDepartment: async function (name: string): Promise<DepartmentEntity | null> {
-        const result = await Department.findOne({
-            where: { name: name }
-        });
+        const result = await __getDepartmentModelByName(name);
 
         if (!result) return null;
         return __mapDepartmentModelToEntity(result);
     },
 
-    updateDepartment: async function (department: DepartmentEntity) {
-        type returnType = [Boolean, String]
-        const NO_DEPT_FOUND: returnType = [false, "NO DEPT"];
-        const EMPTY_BODY: returnType = [false, "Empty body"];
-        const OK : returnType = [true, "It's Saul Goodman"];
-        const NO_ADMIN_MEMBER_FOUND = (memberId:any) => [false, "NO ADMIN MEMBER FOUND WITH ID " + memberId] as returnType;
-        
-        if(!department?.name) return EMPTY_BODY;
+    updateDepartment: async function (name: string, changes: UpdateDepartmentParams): Promise<void> {
+        const department = await __getDepartmentModelByName(name);
+        if (!department) throw new DepartmentNotFoundError(`Department ${name} does not exist`);
 
         try {
-            const departmentModel =  await Department.findOne({
-                where: {
-                    name:department.name 
-                }
-            });
-
-            const returnTuple =  await departmentModel?.update(department)
-            .then(
-                () => OK, 
-                (reason: ForeignKeyConstraintError) => NO_ADMIN_MEMBER_FOUND(reason.parameters[0])
-            );
-            return returnTuple || NO_DEPT_FOUND;
+            await department.update(removeUndefined(changes));
         }
         catch (error) {
-            return [false, error] as returnType; 
+            if (error instanceof ForeignKeyConstraintError)
+                throw new AdminMemberNotFoundError(`Could not assign director or vice-director`);
+            throw error;
         }
-    }
+    },
 };
 
-export const __mapDepartmentModelToEntity = (department: Department): DepartmentEntity => {
+const __getDepartmentModelByName = async (name: string) => {
+    const department = await Department.findOne({
+        where: { name: name },
+        include: [
+            { association: Department.associations.director },
+            { association: Department.associations.viceDirector },
+            { association: Department.associations.members },
+        ]
+    });
 
-    const departmentEntity =  {
+    if (!department) return null;
+    return department;
+}
+
+const __getAllDepartmentModels = async () => {
+    const results = await Department.findAll({
+        include: [
+            { association: Department.associations.director },
+            { association: Department.associations.viceDirector },
+            { association: Department.associations.members },
+        ]
+    });
+    return results;
+}
+
+const __mapDepartmentModelToEntity = (department: Department): DepartmentEntity => {
+    return {
         name: department.name,
         creationDate: new Date(department.creationDate),
-        director: department.directorId,
-        viceDirector: department.directorId,
+        directorId: department.director?.memberId,
+        viceDirectorId: department.viceDirector?.memberId,
     }
-    return departmentEntity;
 };
 
 export default ServicesDepartmentRepository;
