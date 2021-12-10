@@ -2,6 +2,12 @@ import DepartmentEntity from "domain/entities/department_entity";
 
 export class DepartmentNotFoundError extends Error { }
 
+export type UpdateDepartmentParams = {
+    creationDate?: Date;
+    directorId?: number;
+    viceDirectorId?: number;
+};
+
 type DepartmentRepository = {
     getDepartment: (name: string) => Promise<DepartmentEntity | null>;
     
@@ -9,7 +15,8 @@ type DepartmentRepository = {
 
     getAllDepartments: () => Promise<DepartmentEntity[]>;
 
-    updateDepartment: (department: DepartmentEntity) => Promise<[Boolean, String]>;
+    updateDepartment: (name: string, changes: UpdateDepartmentParams) => Promise<void>;
 };
+
 
 export default DepartmentRepository;

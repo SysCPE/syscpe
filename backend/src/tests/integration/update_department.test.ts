@@ -1,7 +1,5 @@
 import ServicesDepartmentRepository from 'services/service_department_repository';
 import ServicesMembersRepository from 'services/service_members_repository';
-import { __mapDepartmentModelToEntity }  from 'services/service_department_repository';
-import DepartmentEntity from 'domain/entities/department_entity';
 import { mockDepartments } from './mocks/mock_departments';
 import {  mockAdminMembers } from './mocks/mock_members';
 import useServer from 'tests/hook/useServer';
@@ -35,43 +33,43 @@ describe('Update Department route: /departments/update-department', () => {
         await populateDB(); 
     });
 
+    it('should return 200 on a good request', async () => {
+        const response = await request(server).post(ROUTE).send({
+            name: 'inovaTec',
+            creationDate: new Date(2021, 12, 12),
+        });
+        expect(response.status).toBe(200);
+    })
+
     it('should return bad request when body is empty', async () => {
         const response = await request(server).post(ROUTE);
-        
         expect(response.status).toBe(400);
-        expect(response.text).toBe("Empty body");
     });
 
     it('should return bad request when department entity does not exist', async () => {
-        const department: DepartmentEntity = { name: 'ivoa tnecs', creationDate: new Date()}
-        const response = await request(server).post(ROUTE).send(department);
+        const response = await request(server).post(ROUTE).send({
+            name: 'AAAAAAAAAAAAAAAAA',
+            creationDate: new Date(2021, 12, 12),
+        });
         
         expect(response.status).toBe(400);
-        expect(response.text).toBe("NO DEPT");
     });
 
-    it('should return bad request when director admim member entity does not exist', async () => {
-        const department: DepartmentEntity = { 
-            name: inovaTec.name, 
-            creationDate: inovaTec.creationDate, 
+    it('should return bad request when director does not exist', async () => {
+        const response =  await request(server).post(ROUTE).send({
+            name: 'inovaTec',
             directorId: -1,
-        }
-        const response =  await request(server).post(ROUTE).send(department);
+        });
         
         expect(response.status).toBe(400);
-        expect(response.text).toBe("NO ADMIN MEMBER FOUND WITH ID " + department.directorId);
     });
 
     it('should return bad request when vice director admim member entity does not exist', async () => {
-        const department: DepartmentEntity = { 
-            name: inovaTec.name, 
-            creationDate: inovaTec.creationDate, 
-            viceDirectorId: -1,
-        }
-        const response =  await request(server).post(ROUTE).send(department);
+        const response =  await request(server).post(ROUTE).send({
+            name: 'inovaTec',
+            directorId: -1,
+        });
         
         expect(response.status).toBe(400);
-        expect(response.text).toBe("NO ADMIN MEMBER FOUND WITH ID " + department.viceDirectorId);
     });
-
 })
