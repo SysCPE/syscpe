@@ -3,8 +3,8 @@ import AdminMemberEntity from "./admin_member_entity";
 type DepartmentEntity = {
     name: string;
     creationDate: Date;
-    director?: AdminMemberEntity;
-    viceDirector?: AdminMemberEntity;
+    directorId?: number;
+    viceDirectorId?: number;
 };
 
 export default DepartmentEntity;

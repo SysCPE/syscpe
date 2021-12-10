@@ -8,6 +8,8 @@ type DepartmentRepository = {
     saveDepartment: (name: string, creationDate?: Date) => Promise<DepartmentEntity>;
 
     getAllDepartments: () => Promise<DepartmentEntity[]>;
+
+    updateDepartment: (department: DepartmentEntity) => Promise<[Boolean, String]>;
 };
 
 export default DepartmentRepository;
