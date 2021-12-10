@@ -38,11 +38,10 @@ Updates a department.
 
 Body params: {
     - name: string;   // name of the department to update. This cannot be updated.
-    - creationDate : string;   // the creation date of the updated department.
-    - directorId: number || undefined;   // this department new director's IDCPE. Is optional
-    - viceDirectorId: number || undefined;   // this department new vice-director's IDCPE. Is optional
+    - creationDate?: Date;   // the creation date of the updated department.
+    - directorId?: number;   // this department new director's IDCPE. Is optional
+    - viceDirectorId?: number;   // this department new vice-director's IDCPE. Is optional
 }
-
 
 Returns 200 on success, 400 on failure. If failed, a reason of the failure is included in the response body.
 ```
