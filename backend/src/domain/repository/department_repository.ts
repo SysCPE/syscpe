@@ -1,5 +1,7 @@
 import DepartmentEntity from "domain/entities/department_entity";
 
+export class DepartmentNotFoundError extends Error { }
+
 type DepartmentRepository = {
     getDepartment: (name: string) => Promise<DepartmentEntity | null>;
     

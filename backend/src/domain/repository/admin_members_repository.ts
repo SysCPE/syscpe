@@ -1,5 +1,8 @@
 import AdminMemberEntity from 'domain/entities/admin_member_entity';
 import DepartmentEntity from 'domain/entities/department_entity';
+import WorkGroupEntity from 'domain/entities/work_group_entity';
+
+export class AdminMemberNotFoundError extends Error { }
 
 type AdminMembersRepository = {
   getAdminMember: (memberId: number) => Promise<AdminMemberEntity | null>;
@@ -15,6 +18,8 @@ type AdminMembersRepository = {
   getAllAdminMembers: () => Promise<AdminMemberEntity[]>;
 
   changeAdminMemberDepartment: (member: AdminMemberEntity, department: DepartmentEntity) => Promise<AdminMemberEntity>;
+
+  assignToWorkGroup: (member: AdminMemberEntity, workgroup: WorkGroupEntity) => Promise<AdminMemberEntity>;
 };
 
 export default AdminMembersRepository;
