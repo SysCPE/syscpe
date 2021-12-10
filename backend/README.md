@@ -95,6 +95,20 @@ Body parameters:
 Returns 200 on success, 400 on failure (member or department does not exist).
 ```
 
+```ts
+POST   /members/admin/assign-workgroup
+Assign an Admin Member to a Work Group
+
+Body parameters:
+{
+    memberId: number,
+    workgroupName: string;
+}
+
+Returns 200 on success, 400 on failure (member or workgroup does not exist; or member is already part of the workgroup).
+```
+
+
 ## TODO
 - Change period in AdminMemberEntity to be a string (Vespertino, Noturno e Integral)
 - POST: /departments/createDepartment:

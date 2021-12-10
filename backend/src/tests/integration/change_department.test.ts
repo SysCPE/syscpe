@@ -14,7 +14,7 @@ const initAdminMembers = async () => {
     await ServicesMembersRepository.saveAdminMember({
       ...adminMember,
       isActive: 'ACTIVE',
-    })
+    });
   }
 }
 

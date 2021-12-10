@@ -5,7 +5,10 @@ import { ValidationError } from "sequelize";
 
 const ServicesWorkGroupRepository: WorkGroupRepository = {
     getWorkGroup: async function (name: string): Promise<WorkGroupEntity | null> {
-        throw new Error("Function not implemented.");
+        const workgroup = await WorkGroup.findOne({ where: { name: name } });
+        if (!workgroup) return null;
+
+        return __mapWorkGroupModelToEntity(workgroup);
     },
 
     saveWorkGroup: async function (name: string, description?: string, creationDate?: Date): Promise<WorkGroupEntity> {

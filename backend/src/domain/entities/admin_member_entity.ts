@@ -2,7 +2,8 @@ import MemberEntity from './member_entity';
 export type activeEnum = 'ACTIVE' | 'INACTIVE' | 'TIMEOFF';
 
 type AdminMemberEntity = {
-  departmentName?: string;  // Should this be a DepartmentEntity?
+  departmentName?: string;
+  workgroups?: string[];
   
   pronoun?: string;
   eachCourse?: string;

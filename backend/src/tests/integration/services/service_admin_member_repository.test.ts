@@ -4,6 +4,8 @@ import { mockDepartments } from "../mocks/mock_departments";
 import useDatabase from "tests/hook/useDatabase";
 import ServicesDepartmentRepository from "services/service_department_repository";
 import each from "jest-each";
+import { mockWorkGroups } from "../mocks/mock_work_groups";
+import ServicesWorkGroupRepository from "services/service_work_group_repository";
 
 const initAdminMembers = async () => {
     for (const adminMember of Object.values(mockAdminMembers)) {
@@ -19,6 +21,16 @@ const initDepartments = async () => {
         await ServicesDepartmentRepository.saveDepartment(
             department.name,
             department.creationDate
+        );
+    }
+}
+
+const initWorkGroups = async () => {
+    for (const workgroup of Object.values(mockWorkGroups)) {
+        await ServicesWorkGroupRepository.saveWorkGroup(
+            workgroup.name,
+            workgroup.description,
+            workgroup.creationDate,
         );
     }
 }
@@ -68,5 +80,28 @@ describe('ServicesDepartmentRepository', () => {
         // Ensure that it persisted the changes in the database
         const verification = await ServicesMembersRepository.getAdminMemberByEmail(email);
         expect(verification!.departmentName).toBe(departmentName);
+    });
+
+    each([
+        ['a@gmail.com', 'Dados'],
+        ['a@gmail.com', 'Apostilas'],
+        ['b@gmail.com', 'Dados'],
+        ['c@gmail.com', 'Dados'],
+    ]).it('should assign a member to a work group', async (email: string, workgroupName: string) => {
+        await initWorkGroups();
+
+        const member = await ServicesMembersRepository.getAdminMemberByEmail(email);
+        const workgroup = await ServicesWorkGroupRepository.getWorkGroup(workgroupName);
+        
+        expect(member).toBeTruthy();
+        expect(workgroup).toBeTruthy();
+
+        expect(member!.workgroups).not.toContain(workgroupName);
+        const result = await ServicesMembersRepository.assignToWorkGroup(member!, workgroup!);
+        expect(result.workgroups).toContain(workgroupName);
+
+        // Ensure that it persisted the changes in the database
+        const verification = await ServicesMembersRepository.getAdminMemberByEmail(email);
+        expect(verification!.workgroups).toContain(workgroupName);
     });
 });

@@ -1,7 +1,8 @@
-import { Association, DataTypes, HasOneGetAssociationMixin, HasOneSetAssociationMixin, Model, Sequelize } from 'sequelize';
+import { Association, BelongsToManyAddAssociationMixin, BelongsToManyGetAssociationsMixin, DataTypes, HasManyAddAssociationMixin, HasOneGetAssociationMixin, HasOneSetAssociationMixin, Model, Sequelize } from 'sequelize';
 import Member from './Member';
 import { activeEnum } from 'domain/entities/admin_member_entity'
 import Department from './Department';
+import WorkGroup from './WorkGroup';
 
 interface AdminMemberAttributes {
   memberId: number;
@@ -31,6 +32,8 @@ class AdminMember
 
   departmentId?: number;
   department?: Department;
+
+  workgroups?: WorkGroup[];
   
   pronoun?: string;
 
@@ -43,10 +46,15 @@ class AdminMember
   public static associations: {
     member: Association<AdminMember, Member>;
     department: Association<AdminMember, Department>;
+    workgroups: Association<AdminMember, WorkGroup>;
   };
 
   public setDepartment!: HasOneSetAssociationMixin<Department, number>;
   public getDepartment!: HasOneGetAssociationMixin<Department>;
+
+  // WARNING: These method names cannot change since Sequelize expects them as such (no capital G :c)
+  public addWorkgroup!: BelongsToManyAddAssociationMixin<WorkGroup, number>;
+  public getWorkgroups!: BelongsToManyGetAssociationsMixin<WorkGroup>;
 
   public static initialize(sequelize: Sequelize) {
     this.init(
