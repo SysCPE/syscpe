@@ -45,6 +45,24 @@ describe('POST /workgroups', () => {
             assertWorkGroupInList(workgroup, workgroups);
         }
     });
+
+    it('Should not create existing work group', async () => {
+        const workgroup = Object.values(mockWorkGroups)[0];
+        const response1 = await request(server).post(ROUTE).send({
+            name: workgroup.name,
+            description: workgroup.description,
+            creationDate: workgroup.creationDate,
+        });
+        expect(response1.status).toBe(200);
+        
+        const response2 = await request(server).post(ROUTE).send({
+            name: workgroup.name,
+            description: workgroup.description,
+            creationDate: workgroup.creationDate,
+        });
+        expect(response2.status).toBe(400);
+        expect(response2.text).toBe(`Work group ${workgroup.name} already exists`);
+    });
 });
 
 
