@@ -131,6 +131,34 @@ const ServicesMembersRepository: AdminMembersRepository = {
       },
     });
   },
+
+  editMember: async (idCPE: number, adminMember: AdminMemberEntity) => {
+    await sequelize.transaction(async (transaction) => {
+      await AdminMember.update(
+        {
+          eachCourse: adminMember.eachCourse,
+          period: adminMember.period,
+          pronoun: adminMember.pronoun,
+          semester: adminMember.semester,
+          isActive: adminMember.isActive,
+        },
+        { where: { memberId: idCPE }, transaction }
+      );
+
+      await Member.update(
+        {
+          name: adminMember.name,
+          CPF: adminMember.CPF,
+          RG: adminMember.RG,
+          birthday: adminMember.birthday,
+          gender: adminMember.gender,
+          phone: adminMember.phone,
+          socialName: adminMember.socialName,
+        },
+        { where: { idCPE }, transaction }
+      );
+    });
+  },
 };
 
 const __getAllAdminMemberModels = async () => {

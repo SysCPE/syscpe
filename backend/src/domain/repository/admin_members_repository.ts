@@ -28,6 +28,8 @@ type AdminMembersRepository = {
   ) => Promise<AdminMemberEntity>;
 
   deleteMember: (idCPE: number) => Promise<void>;
+
+  editMember: (idCPE: number, adminMember: AdminMemberEntity) => Promise<void>;
 };
 
 export default AdminMembersRepository;
