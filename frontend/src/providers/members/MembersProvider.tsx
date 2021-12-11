@@ -24,8 +24,15 @@ const MembersProvider: FC = ({ children }) => {
     submit();
   };
 
+  const onMemberDeleted = (deletedMember: MemberEntity) =>
+    setMembers((members) =>
+      members.filter((member) => member.idCPE !== deletedMember.idCPE)
+    );
+
   return (
-    <MembersContext.Provider value={{ members, done, loading, failed, retry }}>
+    <MembersContext.Provider
+      value={{ members, done, loading, failed, retry, onMemberDeleted }}
+    >
       {children}
     </MembersContext.Provider>
   );

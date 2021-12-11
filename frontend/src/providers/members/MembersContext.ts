@@ -8,6 +8,8 @@ type MembersContextType = {
   failed: boolean;
   done: boolean;
   retry: () => void;
+
+  onMemberDeleted: (member: MemberEntity) => void;
 };
 const MembersContext = createContext<MembersContextType>({
   members: [],
@@ -16,6 +18,8 @@ const MembersContext = createContext<MembersContextType>({
   failed: false,
   done: false,
   retry: () => {},
+
+  onMemberDeleted: () => {},
 });
 
 export default MembersContext;

@@ -15,7 +15,8 @@ import {
   TableRow,
   Typography,
 } from '@material-ui/core';
-import { Add, Replay } from '@material-ui/icons';
+import { Add, EditOutlined, LoupeOutlined, Replay } from '@material-ui/icons';
+import DeleteMemberMenuComponent from 'components/delete_member/DeleteMemberMenuComponent';
 import MembersUploadModalComponent from 'components/members_upload/MembersUploadModalComponent';
 import useMembers from 'providers/members/useMembers';
 import { FC } from 'react';
@@ -86,7 +87,23 @@ const MembersTableComponent = () => {
                               status={member.status}
                             />
                           </TableCell>
-                          <TableCell width="20%" align="center"></TableCell>
+                          <TableCell width="20%" align="center">
+                            <Grid container justifyContent="center" spacing={0}>
+                              <IconButton color="secondary" size="small">
+                                <LoupeOutlined fontSize="small" />
+                              </IconButton>
+
+                              <IconButton
+                                color="warning"
+                                size="small"
+                                sx={{ marginLeft: 1, marginRight: 1 }}
+                              >
+                                <EditOutlined fontSize="small" />
+                              </IconButton>
+
+                              <DeleteMemberMenuComponent member={member} />
+                            </Grid>
+                          </TableCell>
                         </TableRow>
                       </Fade>
                     ))}

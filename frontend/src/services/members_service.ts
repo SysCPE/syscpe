@@ -27,12 +27,17 @@ const memberService = {
     const usersData = response.data.users as AdminMemberData[];
 
     return usersData.map((userData) => ({
-      idCPE: userData.idCPE.toString(),
+      idCPE: userData.idCPE,
       name: userData.name,
       course: userData.eachCourse,
       department: '',
       status: _mapStatusDataToEntity(userData.isActive),
     }));
+  },
+  deleteMember: async (idCPE: number) => {
+    const ROUTE = '/members/admin/delete-member';
+
+    await axios.post(ROUTE, { idCPE });
   },
 };
 
