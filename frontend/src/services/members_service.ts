@@ -12,6 +12,18 @@ const memberService = {
 
     return usersData.map(mapAdminMemberDataToEntity);
   },
+  editMeber: async (member: MemberEntity) => {
+    const ROUTE = '/members/admin/edit-member';
+    const { idCPE } = member;
+
+    const memberData: any = { ...member };
+    delete memberData.idCPE;
+
+    await axios.post(ROUTE, {
+      idCPE,
+      data: memberData,
+    });
+  },
   deleteMember: async (idCPE: number) => {
     const ROUTE = '/members/admin/delete-member';
 

@@ -6,6 +6,7 @@ type AdminMemberData = {
   eachCourse: string;
   name: string;
   isActive: string;
+  email: string;
 };
 
 export default AdminMemberData;

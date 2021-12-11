@@ -15,7 +15,7 @@ import {
   TableRow,
   Typography,
 } from '@material-ui/core';
-import { Add, EditOutlined, Replay } from '@material-ui/icons';
+import { Add, Replay } from '@material-ui/icons';
 import MembersUploadModalComponent from 'components/members_upload/MembersUploadModalComponent';
 import MemberDeleteMenuComponent from 'components/member_delete/MemberDeleteMenuComponent';
 import MemberDetailsModalComponent from 'components/member_details/MemberDetailsModalComponent';
@@ -92,13 +92,7 @@ const MembersTableComponent = () => {
                             <Grid container justifyContent="center" spacing={0}>
                               <MemberDetailsModalComponent member={member} />
 
-                              <IconButton
-                                color="warning"
-                                size="small"
-                                sx={{ marginLeft: 1, marginRight: 1 }}
-                              >
-                                <EditOutlined fontSize="small" />
-                              </IconButton>
+                              <div style={{ margin: 8 }}></div>
 
                               <MemberDeleteMenuComponent member={member} />
                             </Grid>

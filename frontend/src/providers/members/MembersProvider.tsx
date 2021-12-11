@@ -32,6 +32,14 @@ const MembersProvider: FC = ({ children }) => {
       members.filter((member) => member.idCPE !== deletedMember.idCPE)
     );
 
+  const onMemberEdited = (editedMember: MemberEntity) =>
+    setMembers((members) =>
+      members.map((member) => {
+        if (member.idCPE === editedMember.idCPE) return editedMember;
+        return member;
+      })
+    );
+
   return (
     <MembersContext.Provider
       value={{
@@ -42,6 +50,7 @@ const MembersProvider: FC = ({ children }) => {
         retry,
         onMemberDeleted,
         onMembersCreated,
+        onMemberEdited,
       }}
     >
       {children}

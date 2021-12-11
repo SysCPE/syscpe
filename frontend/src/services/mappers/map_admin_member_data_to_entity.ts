@@ -11,6 +11,7 @@ const mapAdminMemberDataToEntity = (
     course: adminMember.eachCourse,
     department: '',
     status: mapMemberStatusDataToEntity(adminMember.isActive),
+    email: adminMember.email,
   };
 };
 

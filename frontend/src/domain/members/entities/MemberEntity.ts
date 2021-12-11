@@ -6,6 +6,7 @@ type MemberEntity = {
   course: string;
   department: string;
   status: MemberStatusEntity;
+  email: string;
 };
 
 export default MemberEntity;
