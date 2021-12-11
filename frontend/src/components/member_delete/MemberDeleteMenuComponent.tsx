@@ -3,16 +3,17 @@ import {
   IconButton,
   Menu,
   MenuItem,
+  Tooltip,
   Typography,
 } from '@material-ui/core';
 import { DeleteOutlined } from '@material-ui/icons';
 import MemberEntity from 'domain/members/entities/MemberEntity';
 import { FC, Fragment, MouseEvent, useState } from 'react';
-import useDeleteMember from './useDeleteMember';
+import useMemberDelete from './useMemberDelete';
 
 type Props = { member: MemberEntity };
-const DeleteMemberMenuComponent: FC<Props> = ({ member }) => {
-  const { loading, submit } = useDeleteMember(member);
+const MemberDeleteMenuComponent: FC<Props> = ({ member }) => {
+  const { loading, submit } = useMemberDelete(member);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const open = !!anchorEl;
@@ -44,24 +45,26 @@ const DeleteMemberMenuComponent: FC<Props> = ({ member }) => {
       </Menu>
 
       <div style={{ display: 'relative' }}>
-        <IconButton
-          size="small"
-          onClick={openMenu}
-          color="error"
-          disabled={loading}
-        >
-          {loading && (
-            <CircularProgress
-              sx={{ position: 'absolute' }}
-              size={24}
-              color="error"
-            />
-          )}
-          <DeleteOutlined fontSize="small" />
-        </IconButton>
+        <Tooltip title="Deletar">
+          <IconButton
+            size="small"
+            onClick={openMenu}
+            color="error"
+            disabled={loading}
+          >
+            {loading && (
+              <CircularProgress
+                sx={{ position: 'absolute' }}
+                size={24}
+                color="error"
+              />
+            )}
+            <DeleteOutlined fontSize="small" />
+          </IconButton>
+        </Tooltip>
       </div>
     </Fragment>
   );
 };
 
-export default DeleteMemberMenuComponent;
+export default MemberDeleteMenuComponent;

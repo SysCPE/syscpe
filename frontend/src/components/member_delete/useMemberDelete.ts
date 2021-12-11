@@ -5,7 +5,7 @@ import useMembers from 'providers/members/useMembers';
 import delayed from 'utils/delayed';
 import useSubmit from 'utils/useSubmit';
 
-const useDeleteMember = (member: MemberEntity) => {
+const useMemberDelete = (member: MemberEntity) => {
   const { enqueueSnackbar } = useSnackbar();
   const { onMemberDeleted } = useMembers();
 
@@ -26,4 +26,4 @@ const useDeleteMember = (member: MemberEntity) => {
   return { loading, submit };
 };
 
-export default useDeleteMember;
+export default useMemberDelete;

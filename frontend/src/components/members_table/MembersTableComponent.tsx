@@ -16,8 +16,8 @@ import {
   Typography,
 } from '@material-ui/core';
 import { Add, EditOutlined, Replay } from '@material-ui/icons';
-import DeleteMemberMenuComponent from 'components/delete_member/DeleteMemberMenuComponent';
 import MembersUploadModalComponent from 'components/members_upload/MembersUploadModalComponent';
+import MemberDeleteMenuComponent from 'components/member_delete/MemberDeleteMenuComponent';
 import MemberDetailsModalComponent from 'components/member_details/MemberDetailsModalComponent';
 import useMembers from 'providers/members/useMembers';
 import { FC } from 'react';
@@ -100,7 +100,7 @@ const MembersTableComponent = () => {
                                 <EditOutlined fontSize="small" />
                               </IconButton>
 
-                              <DeleteMemberMenuComponent member={member} />
+                              <MemberDeleteMenuComponent member={member} />
                             </Grid>
                           </TableCell>
                         </TableRow>
