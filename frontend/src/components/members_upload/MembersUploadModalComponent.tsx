@@ -1,5 +1,4 @@
 import {
-  Alert,
   Button,
   CircularProgress,
   Dialog,
@@ -7,7 +6,6 @@ import {
   DialogContent,
   DialogTitle,
   Grid,
-  Snackbar,
   Typography,
 } from '@material-ui/core';
 import { UploadFile } from '@material-ui/icons';
@@ -18,17 +16,8 @@ type Props = {
   render: (onOpen: () => void) => JSX.Element;
 };
 const MembersUploadModalComponent: FC<Props> = ({ render }) => {
-  const {
-    loading,
-    uploadFile,
-    failed,
-    done,
-    closeDoneDialog,
-    closeFailedDialog,
-    usersCreated,
-  } = useMembersUpload();
+  const { loading, uploadFile, file, setFile } = useMembersUpload();
   const [open, setOpen] = useState(false);
-  const [file, setFile] = useState<File>();
 
   const fileSelected = !!file;
 
@@ -37,10 +26,6 @@ const MembersUploadModalComponent: FC<Props> = ({ render }) => {
 
   const allowSelectSameFile = (event: MouseEvent) => {
     (event.target as HTMLInputElement).value = '';
-  };
-
-  const onUploadButtonClick = () => {
-    if (file) uploadFile(file);
   };
 
   return (
@@ -87,28 +72,11 @@ const MembersUploadModalComponent: FC<Props> = ({ render }) => {
           </Grid>
         </DialogContent>
 
-        <Snackbar open={done} autoHideDuration={4000} onClose={closeDoneDialog}>
-          <Alert
-            onClose={closeDoneDialog}
-            severity="success"
-          >{`${usersCreated} membros adicionados`}</Alert>
-        </Snackbar>
-
-        <Snackbar
-          open={failed}
-          autoHideDuration={4000}
-          onClose={closeFailedDialog}
-        >
-          <Alert onClose={closeFailedDialog} severity="error">
-            Ocorreu um erro na hora de adicionar novos membros
-          </Alert>
-        </Snackbar>
-
         <DialogActions>
           <Button
             sx={{ textTransform: 'none' }}
             disabled={!fileSelected || loading}
-            onClick={onUploadButtonClick}
+            onClick={uploadFile}
           >
             Fazer upload
           </Button>

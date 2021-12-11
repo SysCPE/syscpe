@@ -1,43 +1,37 @@
 import uploadUsersCSVUseCase from 'domain/user/usecases/upload_users_csv_usecase';
+import { useSnackbar } from 'notistack';
+import useMembers from 'providers/members/useMembers';
 import { useState } from 'react';
+import delayed from 'utils/delayed';
 import useSubmit from 'utils/useSubmit';
 
 const useMembersUpload = () => {
-  const [done, setDone] = useState(false);
-  const [failed, setFailed] = useState(false);
-  const [usersCreated, setUsersCreated] = useState<number>();
-  const [file, setFile] = useState<File>();
+  const { onMembersCreated } = useMembers();
+  const { enqueueSnackbar } = useSnackbar();
+  const [file, setFile] = useState<File | null>(null);
 
   const { loading, submit } = useSubmit(
-    async () => {
-      return await uploadUsersCSVUseCase(file!);
-    },
+    async () => delayed(uploadUsersCSVUseCase(file!)),
     (usersCreated) => {
-      setUsersCreated(usersCreated);
-      setDone(true);
+      enqueueSnackbar(`${usersCreated.length} membro(s) criado(s)`, {
+        variant: 'success',
+      });
+      onMembersCreated(usersCreated);
+      setFile(null);
     },
     (error) => {
-      setFailed(true);
+      enqueueSnackbar('Ocorreu um erro na hora de adicionar novos membros');
       throw error;
     }
   );
 
-  const uploadFile = (fileToUpload: File) => {
-    setFile(fileToUpload);
-    submit();
-  };
-
-  const closeDoneDialog = () => setDone(false);
-  const closeFailedDialog = () => setFailed(false);
+  const uploadFile = () => submit();
 
   return {
     loading,
     uploadFile,
-    usersCreated,
-    done,
-    closeDoneDialog,
-    failed,
-    closeFailedDialog,
+    file,
+    setFile,
   };
 };
 

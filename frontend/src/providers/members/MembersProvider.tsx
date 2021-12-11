@@ -24,6 +24,9 @@ const MembersProvider: FC = ({ children }) => {
     submit();
   };
 
+  const onMembersCreated = (createdMembers: MemberEntity[]) =>
+    setMembers((members) => createdMembers.concat(members));
+
   const onMemberDeleted = (deletedMember: MemberEntity) =>
     setMembers((members) =>
       members.filter((member) => member.idCPE !== deletedMember.idCPE)
@@ -31,7 +34,15 @@ const MembersProvider: FC = ({ children }) => {
 
   return (
     <MembersContext.Provider
-      value={{ members, done, loading, failed, retry, onMemberDeleted }}
+      value={{
+        members,
+        done,
+        loading,
+        failed,
+        retry,
+        onMemberDeleted,
+        onMembersCreated,
+      }}
     >
       {children}
     </MembersContext.Provider>

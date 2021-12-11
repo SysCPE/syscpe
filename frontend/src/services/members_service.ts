@@ -1,23 +1,7 @@
 import axios from 'axios';
 import MemberEntity from 'domain/members/entities/MemberEntity';
-import MemberStatusEntity from 'domain/members/entities/MemberStatusEntity';
-
-type AdminMemberData = {
-  idCPE: number;
-  CPF: string;
-  RG: string;
-  birthday: string;
-  eachCourse: string;
-  name: string;
-  isActive: string;
-};
-
-const _mapStatusDataToEntity = (status: string): MemberStatusEntity => {
-  if (['ACTIVE', 'INACTIVE', 'TIMEOFF'].includes(status))
-    return status as MemberStatusEntity;
-
-  throw new Error(`${status} is not a valid value for MemberStatusEntity`);
-};
+import AdminMemberData from './mappers/admin_member_data';
+import mapAdminMemberDataToEntity from './mappers/map_admin_member_data_to_entity';
 
 const memberService = {
   listMembers: async (): Promise<MemberEntity[]> => {
@@ -26,13 +10,7 @@ const memberService = {
     const response = await axios.get(ROUTE);
     const usersData = response.data.users as AdminMemberData[];
 
-    return usersData.map((userData) => ({
-      idCPE: userData.idCPE,
-      name: userData.name,
-      course: userData.eachCourse,
-      department: '',
-      status: _mapStatusDataToEntity(userData.isActive),
-    }));
+    return usersData.map(mapAdminMemberDataToEntity);
   },
   deleteMember: async (idCPE: number) => {
     const ROUTE = '/members/admin/delete-member';

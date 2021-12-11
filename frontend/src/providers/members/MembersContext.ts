@@ -9,6 +9,7 @@ type MembersContextType = {
   done: boolean;
   retry: () => void;
 
+  onMembersCreated: (members: MemberEntity[]) => void;
   onMemberDeleted: (member: MemberEntity) => void;
 };
 const MembersContext = createContext<MembersContextType>({
@@ -19,6 +20,7 @@ const MembersContext = createContext<MembersContextType>({
   done: false,
   retry: () => {},
 
+  onMembersCreated: () => {},
   onMemberDeleted: () => {},
 });
 
