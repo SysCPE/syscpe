@@ -11,6 +11,7 @@ docker volume create syscpe_db
 ```
 
 ## Endpoints
+### Departments
 ```ts
 GET     /departments
 Returns all registered departments.
@@ -37,15 +38,16 @@ POST    /departments/update-department
 Updates a department. 
 
 Body params: {
-    - name: string;   // name of the department to update. This cannot be updated.
-    - creationDate?: Date;   // the creation date of the updated department.
-    - directorId?: number;   // this department new director's IDCPE. Is optional
-    - viceDirectorId?: number;   // this department new vice-director's IDCPE. Is optional
+    - name: string;             // name of the department to update. This cannot be updated.
+    - creationDate?: Date;      // the creation date of the updated department.
+    - directorId?: number;      // this department new director's IDCPE. Is optional
+    - viceDirectorId?: number;  // this department new vice-director's IDCPE. Is optional
 }
 
 Returns 200 on success, 400 on failure. If failed, a reason of the failure is included in the response body.
 ```
 
+### Admin members
 ```ts
 GET     /members/admin
 Returns all registered AdminMembers.
@@ -110,6 +112,21 @@ Returns 200 on success, 400 on failure (member or department does not exist).
 ```
 
 ```ts
+POST   /members/admin/assign-workgroup
+Assign an Admin Member to a Work Group
+
+Body parameters:
+{
+    memberId: number;
+    workgroupName: string;
+}
+
+Returns 200 on success, 400 on failure (member or workgroup does not exist; or member is already part of the workgroup).
+```
+
+
+### Work Groups
+```ts
 POST    /workgroups
 Creates new work group
 
@@ -136,19 +153,6 @@ Returns an array of Workgroups:
     creationDate: Date;
     endDate?: Date;
 }
-```
-
-```ts
-POST   /members/admin/assign-workgroup
-Assign an Admin Member to a Work Group
-
-Body parameters:
-{
-    memberId: number;
-    workgroupName: string;
-}
-
-Returns 200 on success, 400 on failure (member or workgroup does not exist; or member is already part of the workgroup).
 ```
 
 ## TODO
