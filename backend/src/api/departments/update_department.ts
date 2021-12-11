@@ -1,8 +1,8 @@
-import ServicesDepartmentRepository from 'services/service_department_repository';
-import { Context } from 'koa';
-import UpdateDepartment from 'domain/usecases/update_department';
 import { AdminMemberNotFoundError } from 'domain/repository/admin_members_repository';
 import { DepartmentNotFoundError } from 'domain/repository/department_repository';
+import UpdateDepartment from 'domain/usecases/update_department';
+import { Context } from 'koa';
+import ServicesDepartmentRepository from 'services/service_department_repository';
 
 const updateDepartment = async (ctx: Context) => {
   const usecase = new UpdateDepartment(ServicesDepartmentRepository);
@@ -16,9 +16,11 @@ const updateDepartment = async (ctx: Context) => {
       directorId: ctx.request.body.directorId,
       viceDirectorId: ctx.request.body.viceDirectorId,
     });
-  }
-  catch (error) {
-    if (error instanceof AdminMemberNotFoundError || error instanceof DepartmentNotFoundError) {
+  } catch (error) {
+    if (
+      error instanceof AdminMemberNotFoundError ||
+      error instanceof DepartmentNotFoundError
+    ) {
       ctx.throw(400, error.message);
     }
     throw error;
