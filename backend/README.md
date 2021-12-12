@@ -11,42 +11,6 @@ docker volume create syscpe_db
 ```
 
 ## Endpoints
-### Departments
-```ts
-GET     /departments
-Returns all registered departments.
-
-Returns an array of Departments:
-{
-    name: string;
-    creationDate: Date;
-}
-```
-
-```ts
-POST    /departments
-Creates a department. The name must be unique among registered departments.
-
-Body params:
-    - departmentName: string;   // name of the department to create
-
-Returns 200 on success, 500 on failure.
-```
-
-```ts
-POST    /departments/update-department
-Updates a department. 
-
-Body params: {
-    - name: string;             // name of the department to update. This cannot be updated.
-    - creationDate?: Date;      // the creation date of the updated department.
-    - directorId?: number;      // this department new director's IDCPE. Is optional
-    - viceDirectorId?: number;  // this department new vice-director's IDCPE. Is optional
-}
-
-Returns 200 on success, 400 on failure. If failed, a reason of the failure is included in the response body.
-```
-
 ### Admin members
 ```ts
 GET     /members/admin
@@ -57,14 +21,15 @@ Returns an array of AdminMembers:
     idCPE?: number;
     email: string;
     name: string;
+    RG?: string;
+    CPF?: string;
     departmentName?: string;
+    workgroups?: string[];
     pronoun?: string;
     eachCourse?: string;
     semester?: number;
     period?: number;
     isActive?: 'ACTIVE' | 'INACTIVE' | 'TIMEOFF';
-    RG?: string;
-    CPF?: string;
     socialName?: string;
     gender?: string;
     birthday?: Date;
@@ -124,6 +89,76 @@ Body parameters:
 Returns 200 on success, 400 on failure (member or workgroup does not exist; or member is already part of the workgroup).
 ```
 
+```ts
+POST    /members/admin/edit-member
+Edits Admin Member data
+
+Body parameters:
+{
+    idCPE: number;  // idCPE of the member that will be edited
+    
+    name?: string;
+    RG?: string;
+    CPF?: string;
+    isActive?: 'ACTIVE' | 'INACTIVE' | 'TIMEOFF';
+    eachCourse?: string;
+    period?: string;
+    pronoun?: string;
+    semester?: number;
+    birthday?: Date;
+    gender?: string;
+    phone?: string;
+    socialName?: string;
+}
+```
+
+```ts
+POST    /members/admin/delete-member
+Hard-deletes an admin user
+
+Body parameters:
+{
+    memberId: number;
+}
+
+Returns 200 on success, 400 on missing parameters and 404 on invalid member ID.
+```
+
+### Departments
+```ts
+GET     /departments
+Returns all registered departments.
+
+Returns an array of Departments:
+{
+    name: string;
+    creationDate: Date;
+}
+```
+
+```ts
+POST    /departments
+Creates a department. The name must be unique among registered departments.
+
+Body params:
+    - departmentName: string;   // name of the department to create
+
+Returns 200 on success, 500 on failure.
+```
+
+```ts
+POST    /departments/update-department
+Updates a department. 
+
+Body params: {
+    - name: string;             // name of the department to update. This cannot be updated.
+    - creationDate?: Date;      // the creation date of the updated department.
+    - directorId?: number;      // this department new director's IDCPE. Is optional
+    - viceDirectorId?: number;  // this department new vice-director's IDCPE. Is optional
+}
+
+Returns 200 on success, 400 on failure. If failed, a reason of the failure is included in the response body.
+```
 
 ### Work Groups
 ```ts
