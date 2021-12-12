@@ -140,9 +140,10 @@ Returns an array of Departments:
 POST    /departments
 Creates a department. The name must be unique among registered departments.
 
-Body params:
-    - departmentName: string;   // name of the department to create
-
+Body params
+{
+    departmentName: string;   // name of the department to create
+}
 Returns 200 on success, 500 on failure.
 ```
 
@@ -150,11 +151,12 @@ Returns 200 on success, 500 on failure.
 POST    /departments/update-department
 Updates a department. 
 
-Body params: {
-    - name: string;             // name of the department to update. This cannot be updated.
-    - creationDate?: Date;      // the creation date of the updated department.
-    - directorId?: number;      // this department new director's IDCPE. Is optional
-    - viceDirectorId?: number;  // this department new vice-director's IDCPE. Is optional
+Body params:
+{
+    name: string;             // name of the department to update. This cannot be updated.
+    creationDate?: Date;      // the creation date of the updated department.
+    directorId?: number;      // this department new director's IDCPE. Is optional
+    viceDirectorId?: number;  // this department new vice-director's IDCPE. Is optional
 }
 
 Returns 200 on success, 400 on failure. If failed, a reason of the failure is included in the response body.
