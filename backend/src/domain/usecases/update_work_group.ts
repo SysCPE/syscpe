@@ -8,6 +8,6 @@ export default class UpdateWorkGroup {
     }
 
     async run(name: string, changes: UpdateWorkGroupParams): Promise<void> {
-        return this.workgroupRepository.updateWorkGroup(name, changes);
+        await this.workgroupRepository.updateWorkGroup(name, changes);
     }
 }
