@@ -18,6 +18,9 @@ const initModels = () => {
   AdminMember.belongsTo(Department, { foreignKey: 'departmentId', as: 'department' });
   Department.hasMany(AdminMember, { foreignKey: 'departmentId', as: 'members' });
 
+  Department.belongsTo(AdminMember, { foreignKey: 'directorId', as: 'director' });
+  Department.belongsTo(AdminMember, { foreignKey: 'viceDirectorId', as: 'viceDirector' });
+
   AdminMember.belongsToMany(WorkGroup, { through: AdminWorkGroup, foreignKey: 'adminMemberId', as: 'workgroups' });
   WorkGroup.belongsToMany(AdminMember, { through: AdminWorkGroup, foreignKey: 'workGroupId', as: 'members' });
 };

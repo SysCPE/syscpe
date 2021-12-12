@@ -1,11 +1,13 @@
-import { Grid } from '@material-ui/core';
-import MembersUpload from './members_upload/MembersUpload';
+import { Grid } from '@mui/material';
+import MembersTableComponent from 'components/members_table/MembersTableComponent';
 
 const AdminPanel = () => {
   return (
-    <Grid container direction="column">
-      <Grid item>
-        <MembersUpload />
+    <Grid container sx={{ padding: 3 }} justifyContent="center">
+      <Grid container item xs={12} sm={11} md={10} lg={9} direction="column">
+        <Grid item>
+          <MembersTableComponent />
+        </Grid>
       </Grid>
     </Grid>
   );

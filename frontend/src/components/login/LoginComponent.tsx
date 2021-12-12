@@ -4,7 +4,7 @@ import {
   Grid,
   TextField,
   Typography,
-} from '@material-ui/core';
+} from '@mui/material';
 import ErrorText from 'components/typography/ErrorText';
 import APP_NAME from 'config/app_name';
 import { FC, Fragment, useState } from 'react';

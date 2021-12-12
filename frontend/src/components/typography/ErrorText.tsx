@@ -1,5 +1,5 @@
-import { Typography } from '@material-ui/core';
-import { Theme } from '@material-ui/core/styles';
+import { Typography } from '@mui/material';
+import { Theme } from '@mui/material/styles';
 import { FC } from 'react';
 
 type Props = {

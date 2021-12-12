@@ -1,6 +1,5 @@
 import { GetTokenSilentlyOptions } from '@auth0/auth0-spa-js';
 import axios from 'axios';
-import { API_URL } from 'config/api_url';
 
 const configureAxios = (
   getTokenSilently?: (
@@ -12,8 +11,6 @@ const configureAxios = (
       const token = await getTokenSilently();
       config.headers.Authorization = `Bearer ${token}`;
     }
-
-    config.baseURL = API_URL;
 
     return config;
   });
