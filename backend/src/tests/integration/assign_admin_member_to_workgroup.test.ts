@@ -4,7 +4,6 @@ import ServicesMembersRepository from 'services/service_members_repository';
 import request from 'supertest';
 import useServer from 'tests/hook/useServer';
 import { mockAdminMembers } from './mocks/mock_members';
-import AdminMember from 'database/models/AdminMember';
 import ServicesWorkGroupRepository from 'services/service_work_group_repository';
 import { mockWorkGroups } from './mocks/mock_work_groups';
 
@@ -26,13 +25,6 @@ const initWorkGroups = async () => {
         workgroup.creationDate,
     );
   }
-}
-
-const memberDepartment = async (memberId: number) => {
-  const member = await AdminMember.findByPk(memberId, {
-    include: { association: AdminMember.associations.department },
-  });
-  return member!.department?.name;
 }
 
 describe('POST /members/admin/assign-workgroup', () => {
