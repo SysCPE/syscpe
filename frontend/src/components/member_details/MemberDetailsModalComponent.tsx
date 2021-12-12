@@ -71,7 +71,6 @@ const MemberDetailsModalComponent: FC<Props> = ({ member }) => {
                 color="secondary"
                 sx={{ position: 'absolute', right: 0, bottom: 0, margin: 2 }}
                 onClick={saveMember}
-                disabled={loading}
               >
                 {loading && <CircularProgress sx={{ position: 'absolute' }} />}
                 <Save />
