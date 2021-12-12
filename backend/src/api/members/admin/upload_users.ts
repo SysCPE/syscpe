@@ -16,7 +16,7 @@ const uploadUsers = async (ctx: Context) => {
   const fileBuffer = fs.readFileSync(usersFile.path);
   const adminUsers = await usecase.run(fileBuffer);
 
-  ctx.response.body = { created_users: adminUsers.length };
+  ctx.response.body = { created_users: adminUsers };
 };
 
 export default uploadUsers;

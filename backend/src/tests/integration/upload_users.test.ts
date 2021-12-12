@@ -91,10 +91,21 @@ describe('/members/admin/upload-users', () => {
       .attach('users', mockMembersCSV, 'mock_members.csv');
 
     expect(response.status).toBe(200);
-    expect(response.body.created_users).toBe(3);
-    assertMemberExists('a@gmail.com');
-    assertMemberExists('b@gmail.com');
-    assertMemberExists('c@gmail.com');
+
+    for (const createdUserEmail of [
+      'a@gmail.com',
+      'b@gmail.com',
+      'c@gmail.com',
+    ]) {
+      const createdUser = response.body.created_users.find(
+        (user: any) => user.email === createdUserEmail
+      );
+      expect({
+        ...createdUser,
+        birthday: new Date(createdUser.birthday),
+      }).toMatchObject(mockAdminMembers[createdUserEmail]);
+      assertMemberExists(createdUserEmail);
+    }
   });
 
   it('should not create users with repeated emails', async () => {
@@ -105,8 +116,16 @@ describe('/members/admin/upload-users', () => {
       .attach('users', mockMembersCSV, 'mock_members.csv');
 
     expect(response.status).toBe(200);
-    expect(response.body.created_users).toBe(2);
-    assertMemberExists('b@gmail.com');
-    assertMemberExists('c@gmail.com');
+
+    for (const createdUserEmail of ['b@gmail.com', 'c@gmail.com']) {
+      const createdUser = response.body.created_users.find(
+        (user: any) => user.email === createdUserEmail
+      );
+      expect({
+        ...createdUser,
+        birthday: new Date(createdUser.birthday),
+      }).toMatchObject(mockAdminMembers[createdUserEmail]);
+      assertMemberExists(createdUserEmail);
+    }
   });
 });
