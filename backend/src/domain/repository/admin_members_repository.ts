@@ -29,6 +29,8 @@ type AdminMembersRepository = {
 
   deleteMember: (idCPE: number) => Promise<void>;
 
+  leaveWorkGroup: (idCPE: number, workgroup: string) => Promise<void>;
+
   editMember: (idCPE: number, adminMember: AdminMemberEntity) => Promise<void>;
 };
 

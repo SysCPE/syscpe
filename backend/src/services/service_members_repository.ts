@@ -9,7 +9,8 @@ import AdminMemberEntity, {
 } from 'domain/entities/admin_member_entity';
 import DepartmentEntity from 'domain/entities/department_entity';
 import WorkGroupEntity from 'domain/entities/work_group_entity';
-import AdminMembersRepository from 'domain/repository/admin_members_repository';
+import AdminMembersRepository, { AdminMemberNotFoundError } from 'domain/repository/admin_members_repository';
+import { WorkGroupNotFoundError } from 'domain/repository/work_group_repository';
 import { ValidationError } from 'sequelize';
 
 const ServicesMembersRepository: AdminMembersRepository = {
@@ -86,7 +87,8 @@ const ServicesMembersRepository: AdminMembersRepository = {
     department: DepartmentEntity
   ): Promise<AdminMemberEntity> {
     const memberModel = await __getAdminMemberModel(member.idCPE!);
-    if (!memberModel) return member;
+    if (!memberModel)
+      return member;
 
     // TODO: break this coupling (maybe add "private" methods to DepartmentService that return Models?)
     const departmentModel = await Department.findOne({
@@ -103,7 +105,8 @@ const ServicesMembersRepository: AdminMembersRepository = {
     workgroup: WorkGroupEntity
   ): Promise<AdminMemberEntity> {
     const memberModel = await __getAdminMemberModel(member.idCPE!);
-    if (!memberModel) return member;
+    if (!memberModel)
+      return member;
 
     // TODO: break this coupling (maybe add "private" methods to WorkGroupService that return Models?)
     const workGroupModel = await WorkGroup.findOne({
@@ -116,6 +119,20 @@ const ServicesMembersRepository: AdminMembersRepository = {
     memberModel.workgroups = await memberModel.getWorkgroups();
 
     return __mapAdminMemberModelToEntity(memberModel);
+  },
+
+
+  leaveWorkGroup: async function (idCPE: number, workgroup: string): Promise<void> {
+    const memberModel = await __getAdminMemberModel(idCPE);
+    if (!memberModel)
+      throw new AdminMemberNotFoundError(`Could not find admin member with ID ${idCPE}`);
+
+    // TODO: break this coupling (maybe add "private" methods to WorkGroupService that return Models?)
+    const workGroupModel = await WorkGroup.findOne({ where: { name: workgroup } });
+    if (!workGroupModel)
+      throw new WorkGroupNotFoundError(`Could not find work group ${workgroup}`);
+
+    await memberModel.removeWorkgroup(workGroupModel);
   },
 
   deleteMember: async (idCPE: number) => {

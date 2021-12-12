@@ -120,6 +120,19 @@ Body parameters:
 ```
 
 ```ts
+POST   /members/admin/leave-workgroup
+Remove an Admin Member from a Work Group
+
+Body parameters:
+{
+    memberId: number;
+    workgroupName: string;
+}
+
+Returns 200 on success, 400 on failure (member or workgroup does not exist).
+```
+
+```ts
 POST    /members/admin/delete-member
 Hard-deletes an admin user
 
@@ -208,3 +221,4 @@ Returns an array of Workgroups:
     - omit personal information?
 - Change delete methods to HTTP DELETE and update methods to HTTP PUT
 - Refactor user update route to take AdminUserUpdateParams instead of AdminUserEntity.
+- Change assignAdminMemberToWorkgroup signature to receive only memberId and workgroupName (like leaveWorkGroup)

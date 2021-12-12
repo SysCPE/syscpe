@@ -6,12 +6,14 @@ import deleteMember from './delete_member';
 import editMember from './edit_member';
 import getAllAdminMembers from './get_all_admin_members';
 import uploadUsers from './upload_users';
+import leaveWorkGroup from './leave_work_group';
 
 const AdminRouter = new Router();
 AdminRouter.get('/', getAllAdminMembers);
 AdminRouter.post('/upload-users', koaBody({ multipart: true }), uploadUsers);
 AdminRouter.post('/change-department', koaBody(), changeDepartment);
 AdminRouter.post('/assign-workgroup', koaBody(), assignWorkGroup);
+AdminRouter.post('/leave-workgroup', koaBody(), leaveWorkGroup);
 AdminRouter.post('/delete-member', koaBody(), deleteMember);
 AdminRouter.post('/edit-member', koaBody(), editMember);
 
