@@ -1,6 +1,6 @@
 import WorkGroup from "database/models/WorkGroup";
 import WorkGroupEntity from "domain/entities/work_group_entity";
-import WorkGroupRepository, { WorkGroupAlreadyExistsError } from "domain/repository/work_group_repository";
+import WorkGroupRepository, { WorkGroupAlreadyEndedError, WorkGroupAlreadyExistsError, WorkGroupNotFoundError } from "domain/repository/work_group_repository";
 import { ValidationError } from "sequelize";
 
 const ServicesWorkGroupRepository: WorkGroupRepository = {
@@ -32,8 +32,15 @@ const ServicesWorkGroupRepository: WorkGroupRepository = {
         return workgroups.map(__mapWorkGroupModelToEntity);
     },
 
-    endWorkGroup: async function (name: string): Promise<WorkGroupEntity> {
-        throw new Error("Function not implemented.");
+    endWorkGroup: async function (name: string): Promise<void> {
+        const workgroup = await __getWorkGroupModelByName(name);
+        if (!workgroup)
+            throw new WorkGroupNotFoundError(`Could not find work group ${name}`);
+
+        if (workgroup.endDate)
+            throw new WorkGroupAlreadyEndedError(`Work group ${name} already ended at ${workgroup.endDate}`);
+        
+        await workgroup.update({ endDate: new Date() });
     }
 }
 
@@ -58,7 +65,8 @@ const __mapWorkGroupModelToEntity = (workgroup: WorkGroup): WorkGroupEntity => {
     return {
         name: workgroup.name,
         members: workgroup.members?.map((member) => member.memberId) || [],
-        creationDate: workgroup.creationDate, 
+        creationDate: workgroup.creationDate,
+        endDate: workgroup.endDate,
         description: workgroup.description,
     };
 }

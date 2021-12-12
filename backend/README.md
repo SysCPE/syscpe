@@ -222,3 +222,4 @@ Returns an array of Workgroups:
 - Change delete methods to HTTP DELETE and update methods to HTTP PUT
 - Refactor user update route to take AdminUserUpdateParams instead of AdminUserEntity.
 - Change assignAdminMemberToWorkgroup signature to receive only memberId and workgroupName (like leaveWorkGroup)
+- Check for missing required body parameters in most endpoints 
