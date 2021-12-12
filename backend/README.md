@@ -6,6 +6,8 @@ $ docker volume create syscpe_db
 $ ./run-migrations-local.sh
 $ ./run-server-local.sh
 ```
+The local server will start on `localhost:4000`.
+
 ## Running tests
 ```
 $ ./run-integration-tests.sh
@@ -204,3 +206,5 @@ Returns an array of Workgroups:
     - add proper status errors when name exists
 - GET: /members/admin
     - omit personal information?
+- Change delete methods to HTTP DELETE and update methods to HTTP PUT
+- Refactor user update route to take AdminUserUpdateParams instead of AdminUserEntity.
