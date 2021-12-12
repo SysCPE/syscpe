@@ -104,4 +104,30 @@ describe('ServicesDepartmentRepository', () => {
         const verification = await ServicesMembersRepository.getAdminMemberByEmail(email);
         expect(verification!.workgroups).toContain(workgroupName);
     });
+
+    each([
+        ['a@gmail.com', 'Dados'],
+        ['a@gmail.com', 'Apostilas'],
+        ['b@gmail.com', 'Dados'],
+        ['c@gmail.com', 'Dados'],
+    ]).it('should remove a workgroup from a member', async (email: string, workgroupName: string) => {
+        await initWorkGroups();
+
+        const member = await ServicesMembersRepository.getAdminMemberByEmail(email);
+        const workgroup = await ServicesWorkGroupRepository.getWorkGroup(workgroupName);
+
+        expect(member).toBeTruthy();
+        expect(workgroup).toBeTruthy();
+
+        const result1 = await ServicesMembersRepository.assignToWorkGroup(member!, workgroup!);
+        expect(result1.workgroups).toContain(workgroupName);
+        const result2 = await ServicesMembersRepository.leaveWorkGroup(member!, workgroup!);
+        expect(result2.workgroups).not.toContain(workgroupName);
+
+        // Ensure that it persisted the changes in the database
+        const verification = await ServicesMembersRepository.getAdminMemberByEmail(email);
+        expect(verification!.workgroups).not.toContain(workgroupName);
+    });
+
+
 });
