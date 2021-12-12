@@ -20,6 +20,9 @@ type AdminMembersRepository = {
   changeAdminMemberDepartment: (member: AdminMemberEntity, department: DepartmentEntity) => Promise<AdminMemberEntity>;
 
   assignToWorkGroup: (member: AdminMemberEntity, workgroup: WorkGroupEntity) => Promise<AdminMemberEntity>;
+
+  leaveWorkGroup: (member: AdminMemberEntity, workgroup: WorkGroupEntity) => Promise<AdminMemberEntity>;
+
 };
 
 export default AdminMembersRepository;

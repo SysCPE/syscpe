@@ -1,4 +1,4 @@
-import { Association, BelongsToManyAddAssociationMixin, BelongsToManyGetAssociationsMixin, DataTypes, HasManyAddAssociationMixin, HasOneGetAssociationMixin, HasOneSetAssociationMixin, Model, Sequelize } from 'sequelize';
+import { Association, BelongsToManyAddAssociationMixin, BelongsToManyGetAssociationsMixin, BelongsToManyRemoveAssociationMixin, DataTypes, HasManyAddAssociationMixin, HasOneGetAssociationMixin, HasOneSetAssociationMixin, Model, Sequelize } from 'sequelize';
 import Member from './Member';
 import { activeEnum } from 'domain/entities/admin_member_entity'
 import Department from './Department';
@@ -55,6 +55,7 @@ class AdminMember
   // WARNING: These method names cannot change since Sequelize expects them as such (no capital G :c)
   public addWorkgroup!: BelongsToManyAddAssociationMixin<WorkGroup, number>;
   public getWorkgroups!: BelongsToManyGetAssociationsMixin<WorkGroup>;
+  public removeWorkgroup!: BelongsToManyRemoveAssociationMixin<WorkGroup, number>;
 
   public static initialize(sequelize: Sequelize) {
     this.init(

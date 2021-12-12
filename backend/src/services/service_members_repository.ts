@@ -77,7 +77,8 @@ const ServicesMembersRepository: AdminMembersRepository = {
 
   changeAdminMemberDepartment: async function (member: AdminMemberEntity, department: DepartmentEntity): Promise<AdminMemberEntity> {
     const memberModel = await __getAdminMemberModel(member.idCPE!);
-    if (!memberModel) return member;
+    if (!memberModel)
+      return member;
 
     // TODO: break this coupling (maybe add "private" methods to DepartmentService that return Models?)
     const departmentModel = await Department.findOne({ where: { name: department.name } });
@@ -86,21 +87,40 @@ const ServicesMembersRepository: AdminMembersRepository = {
     memberModel.department = await memberModel.getDepartment();
     return __mapAdminMemberModelToEntity(memberModel);
   },
-  
+
   assignToWorkGroup: async function (member: AdminMemberEntity, workgroup: WorkGroupEntity): Promise<AdminMemberEntity> {
     const memberModel = await __getAdminMemberModel(member.idCPE!);
-    if (!memberModel) return member;
+    if (!memberModel)
+      return member;
 
     // TODO: break this coupling (maybe add "private" methods to WorkGroupService that return Models?)
     const workGroupModel = await WorkGroup.findOne({ where: { name: workgroup.name } });
-    if (!workGroupModel) return member;
-    
+    if (!workGroupModel)
+      return member;
+
     await memberModel.addWorkgroup(workGroupModel);
-    
+
     memberModel.workgroups = await memberModel.getWorkgroups();
 
     return __mapAdminMemberModelToEntity(memberModel);
-  }
+  },
+
+  leaveWorkGroup: async function (member: AdminMemberEntity, workgroup: WorkGroupEntity): Promise<AdminMemberEntity> {
+    const memberModel = await __getAdminMemberModel(member.idCPE!);
+    if (!memberModel)
+      return member;
+
+    const workGroupModel = await WorkGroup.findOne({ where: { name: workgroup.name } });
+    if (!workGroupModel)
+      return member;
+
+    await memberModel.removeWorkgroup(workGroupModel);
+
+    memberModel.workgroups = await memberModel.getWorkgroups();
+
+    return __mapAdminMemberModelToEntity(memberModel);
+
+  },
 };
 
 const __getAllAdminMemberModels = async () => {
