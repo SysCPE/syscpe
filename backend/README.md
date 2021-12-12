@@ -1,13 +1,18 @@
 # Backend
-## Installation & usage
+## Running locally
 ```bash
-npm install
+$ npm install
+$ docker volume create syscpe_db
+$ ./run-migrations-local.sh
+$ ./run-server-local.sh
 ```
+## Running tests
 ```
-docker volume create syscpe_db
+$ ./run-integration-tests.sh
 ```
+or
 ```
-./dev.sh
+$ ./run-tests-with-coverage.sh
 ```
 
 ## Endpoints
