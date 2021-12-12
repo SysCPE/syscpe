@@ -18,6 +18,8 @@ const endWorkGroup = async (ctx: Context) => {
             ctx.throw(400, error.message);
         throw error;
     }
+
+    ctx.response.body = {};
 }
 
 export default endWorkGroup;
