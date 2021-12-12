@@ -78,7 +78,7 @@ describe('POST /members/admin/leave-workgroup', () => {
         });
 
         expect(response.status).toBe(400);
-        expect(response.text).toBe(`Cannot find member with ID ${memberId}`);
+        expect(response.text).toBe(`Could not find admin member with ID ${memberId}`);
     });
 
     it('should not remove member of non assigned workgroup', async() => {

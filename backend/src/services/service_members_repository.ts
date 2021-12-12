@@ -9,7 +9,8 @@ import AdminMemberEntity, {
 } from 'domain/entities/admin_member_entity';
 import DepartmentEntity from 'domain/entities/department_entity';
 import WorkGroupEntity from 'domain/entities/work_group_entity';
-import AdminMembersRepository from 'domain/repository/admin_members_repository';
+import AdminMembersRepository, { AdminMemberNotFoundError } from 'domain/repository/admin_members_repository';
+import { WorkGroupNotFoundError } from 'domain/repository/work_group_repository';
 import { ValidationError } from 'sequelize';
 
 const ServicesMembersRepository: AdminMembersRepository = {
@@ -121,20 +122,17 @@ const ServicesMembersRepository: AdminMembersRepository = {
   },
 
 
-  leaveWorkGroup: async function (member: AdminMemberEntity, workgroup: WorkGroupEntity): Promise<AdminMemberEntity> {
-    const memberModel = await __getAdminMemberModel(member.idCPE!);
+  leaveWorkGroup: async function (idCPE: number, workgroup: string): Promise<void> {
+    const memberModel = await __getAdminMemberModel(idCPE);
     if (!memberModel)
-      return member;
+      throw new AdminMemberNotFoundError(`Could not find admin member with ID ${idCPE}`);
 
-    const workGroupModel = await WorkGroup.findOne({ where: { name: workgroup.name } });
+    // TODO: break this coupling (maybe add "private" methods to WorkGroupService that return Models?)
+    const workGroupModel = await WorkGroup.findOne({ where: { name: workgroup } });
     if (!workGroupModel)
-      return member;
+      throw new WorkGroupNotFoundError(`Could not find work group ${workgroup}`);
 
     await memberModel.removeWorkgroup(workGroupModel);
-
-    memberModel.workgroups = await memberModel.getWorkgroups();
-
-    return __mapAdminMemberModelToEntity(memberModel);
   },
 
   deleteMember: async (idCPE: number) => {
