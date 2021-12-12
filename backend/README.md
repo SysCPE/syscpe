@@ -212,6 +212,19 @@ Returns an array of Workgroups:
 }
 ```
 
+```ts
+POST    /workgroups/end-workgroup
+End a work group
+
+Body parameters:
+{
+    name: string;
+}
+
+Returns 200 on success, 400 on failure (work group doesn't exist or it's already ended)
+```
+
+
 ## TODO
 - Change period in AdminMemberEntity to be a string (Vespertino, Noturno e Integral)
 - POST: /departments/createDepartment:
