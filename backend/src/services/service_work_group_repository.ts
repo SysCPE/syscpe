@@ -1,12 +1,14 @@
 import WorkGroup from "database/models/WorkGroup";
 import WorkGroupEntity from "domain/entities/work_group_entity";
-import WorkGroupRepository, { WorkGroupAlreadyEndedError, WorkGroupAlreadyExistsError, WorkGroupNotFoundError } from "domain/repository/work_group_repository";
+import WorkGroupRepository, { WorkGroupAlreadyEndedError, WorkGroupAlreadyExistsError, WorkGroupNotFoundError, UpdateWorkGroupParams } from "domain/repository/work_group_repository";
 import { ValidationError } from "sequelize";
+import { removeUndefined } from "utils";
 
 const ServicesWorkGroupRepository: WorkGroupRepository = {
     getWorkGroup: async function (name: string): Promise<WorkGroupEntity | null> {
         const workgroup = await __getWorkGroupModelByName(name);
-        if (!workgroup) return null;
+        if (!workgroup)
+            return null;
         return __mapWorkGroupModelToEntity(workgroup);
     },
 
@@ -18,12 +20,12 @@ const ServicesWorkGroupRepository: WorkGroupRepository = {
                 creationDate: creationDate || new Date(),
             });
 
-            return __mapWorkGroupModelToEntity(workgroup);    
+            return __mapWorkGroupModelToEntity(workgroup);
         } catch (error) {
-          if (error instanceof ValidationError) {
-              throw new WorkGroupAlreadyExistsError(`Work Group ${name} already exists`);
-          }
-          throw error;
+            if (error instanceof ValidationError) {
+                throw new WorkGroupAlreadyExistsError(`Work Group ${name} already exists`);
+            }
+            throw error;
         };
     },
 
@@ -39,8 +41,16 @@ const ServicesWorkGroupRepository: WorkGroupRepository = {
 
         if (workgroup.endDate)
             throw new WorkGroupAlreadyEndedError(`Work group ${name} already ended at ${workgroup.endDate}`);
-        
+
         await workgroup.update({ endDate: new Date() });
+    },
+    
+    updateWorkGroup: async function (name: string, changes: UpdateWorkGroupParams): Promise<void> {
+        const workgroup = await __getWorkGroupModelByName(name);
+        if (!workgroup)
+            throw new WorkGroupNotFoundError(`Could not find work group ${name}`);
+        
+        await workgroup.update(removeUndefined(changes));
     }
 }
 

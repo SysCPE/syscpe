@@ -1,7 +1,7 @@
 import ServicesWorkGroupRepository from "services/service_work_group_repository";
 import { mockWorkGroups } from "../mocks/mock_work_groups";
 import useDatabase from "tests/hook/useDatabase";
-import { WorkGroupAlreadyEndedError, WorkGroupNotFoundError } from "domain/repository/work_group_repository";
+import { UpdateWorkGroupParams, WorkGroupAlreadyEndedError, WorkGroupNotFoundError } from "domain/repository/work_group_repository";
 
 describe('ServicesWorkGroupRepository', () => {
     useDatabase();
@@ -47,5 +47,33 @@ describe('ServicesWorkGroupRepository', () => {
         const name = 'Dados';
         await ServicesWorkGroupRepository.endWorkGroup(name);
         await expect(ServicesWorkGroupRepository.endWorkGroup(name)).rejects.toThrow(WorkGroupAlreadyEndedError);
+    });
+
+    it('should edit a work group\'s description and creationDate', async () => {
+        const name = 'Dados';
+        const changes: UpdateWorkGroupParams = {
+            description: 'Departamento responsável por jogar RPG com os alunos do cursinho',
+            creationDate: new Date(2020, 1, 20),
+        };
+        
+        const workgroupBefore = await ServicesWorkGroupRepository.getWorkGroup(name);
+        expect(workgroupBefore!.description).not.toEqual(changes.description);
+        expect(workgroupBefore!.creationDate).not.toEqual(changes.creationDate);
+
+        await ServicesWorkGroupRepository.updateWorkGroup(name, changes);
+
+        const workgroupAfter = await ServicesWorkGroupRepository.getWorkGroup(name);
+        expect(workgroupAfter!.description).toEqual(changes.description);
+        expect(workgroupAfter!.creationDate).toEqual(changes.creationDate);
+    });
+
+    it('should not edit an invalid work group', async () => {
+        const name = 'Dados d20';
+        const changes: UpdateWorkGroupParams = {
+            description: 'Departamento responsável por jogar RPG com os alunos do cursinho',
+            creationDate: new Date(2020, 1, 20),
+        };
+        
+        await expect(ServicesWorkGroupRepository.updateWorkGroup(name, changes)).rejects.toThrow(WorkGroupNotFoundError);
     });
 });

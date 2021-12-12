@@ -104,18 +104,20 @@ Body parameters:
 {
     idCPE: number;  // idCPE of the member that will be edited
     
-    name?: string;
-    RG?: string;
-    CPF?: string;
-    isActive?: 'ACTIVE' | 'INACTIVE' | 'TIMEOFF';
-    eachCourse?: string;
-    period?: string;
-    pronoun?: string;
-    semester?: number;
-    birthday?: Date;
-    gender?: string;
-    phone?: string;
-    socialName?: string;
+    data: {
+        name?: string;
+        RG?: string;
+        CPF?: string;
+        isActive?: 'ACTIVE' | 'INACTIVE' | 'TIMEOFF';
+        eachCourse?: string;
+        period?: string;
+        pronoun?: string;
+        semester?: number;
+        birthday?: Date;
+        gender?: string;
+        phone?: string;
+        socialName?: string;
+    };
 }
 ```
 
@@ -213,6 +215,22 @@ Returns an array of Workgroups:
 ```
 
 ```ts
+POST    /workgroups/update-workgroup
+Updates a work group
+
+Body parameters:
+{
+    workgroupName: string;
+    changes?: {
+        description?: string;
+        creationDate?: Date;
+    }
+}
+
+Returns 200 on success, 400 on failure (missing body parameters or invalid name)
+```
+
+```ts
 POST    /workgroups/end-workgroup
 End a work group
 
@@ -237,3 +255,4 @@ Returns 200 on success, 400 on failure (work group doesn't exist or it's already
 - Change assignAdminMemberToWorkgroup signature to receive only memberId and workgroupName (like leaveWorkGroup)
 - Check for missing required body parameters in most endpoints
 - Add table initialisation functions to test suites to remove code duplication!!
+- Standardize work_group vs. workgroup and WorkGroup vs. Workgroup

@@ -77,6 +77,20 @@ describe('ServicesDepartmentRepository', () => {
         expect(verification!.directorId).toBe(changes.directorId);
     });
 
+    it('should not update when no update parameters are sent', async () => {
+        const name = 'inovaTec';
+        const changes: UpdateDepartmentParams = { };
+
+        const department = await ServicesDepartmentRepository.getDepartment(name);
+        expect(department).toBeTruthy();
+
+        await ServicesDepartmentRepository.updateDepartment(name, changes);
+
+        const verification = await ServicesDepartmentRepository.getDepartment(name);
+        expect(verification).toBeTruthy();
+        expect(verification).toEqual(department);
+    });
+
     it('should update all department fields', async () => {
         const name = 'inovaTec';
         const changes: UpdateDepartmentParams = { 
