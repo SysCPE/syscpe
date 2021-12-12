@@ -1,6 +1,8 @@
 import WorkGroupEntity from "domain/entities/work_group_entity";
 
 export class WorkGroupNotFoundError extends Error { }
+export class WorkGroupAlreadyExistsError extends Error { };
+export class WorkGroupAlreadyEndedError extends Error { };
 
 type WorkGroupRepository = {
     getWorkGroup: (name: string) => Promise<WorkGroupEntity | null>;
@@ -9,9 +11,7 @@ type WorkGroupRepository = {
 
     getAllWorkGroups: () => Promise<WorkGroupEntity[]>;
 
-    endWorkGroup: (name: string) => Promise<WorkGroupEntity>;
+    endWorkGroup: (name: string) => Promise<void>;
 };
-
-export class WorkGroupAlreadyExistsError extends Error {};
 
 export default WorkGroupRepository;
