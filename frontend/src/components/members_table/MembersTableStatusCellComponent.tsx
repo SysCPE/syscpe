@@ -1,5 +1,4 @@
-import { colors, Grid } from '@material-ui/core';
-import { Box } from '@material-ui/system';
+import { Box, colors, Grid } from '@mui/material';
 import MemberStatusEntity from 'domain/members/entities/MemberStatusEntity';
 import { FC } from 'react';
 

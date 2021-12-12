@@ -1,6 +1,5 @@
-import { IconButton, Menu, MenuItem } from '@material-ui/core';
-import { AccountCircle, Logout } from '@material-ui/icons';
-import { Box } from '@material-ui/system';
+import { AccountCircle, Logout } from '@mui/icons-material';
+import { Box, IconButton, Menu, MenuItem } from '@mui/material';
 import useAuthentication from 'providers/authentication/useAuthentication';
 import { Fragment, MouseEvent, useState } from 'react';
 

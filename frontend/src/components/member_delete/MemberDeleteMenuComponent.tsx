@@ -1,3 +1,4 @@
+import { DeleteOutlined } from '@mui/icons-material';
 import {
   CircularProgress,
   IconButton,
@@ -5,8 +6,7 @@ import {
   MenuItem,
   Tooltip,
   Typography,
-} from '@material-ui/core';
-import { DeleteOutlined } from '@material-ui/icons';
+} from '@mui/material';
 import MemberEntity from 'domain/members/entities/MemberEntity';
 import { FC, Fragment, MouseEvent, useState } from 'react';
 import useMemberDelete from './useMemberDelete';

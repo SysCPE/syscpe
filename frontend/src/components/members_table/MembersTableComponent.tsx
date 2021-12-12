@@ -1,3 +1,4 @@
+import { Add, Replay } from '@mui/icons-material';
 import {
   CircularProgress,
   Fab,
@@ -14,8 +15,7 @@ import {
   TableHead,
   TableRow,
   Typography,
-} from '@material-ui/core';
-import { Add, Replay } from '@material-ui/icons';
+} from '@mui/material';
 import MembersUploadModalComponent from 'components/members_upload/MembersUploadModalComponent';
 import MemberDeleteMenuComponent from 'components/member_delete/MemberDeleteMenuComponent';
 import MemberDetailsModalComponent from 'components/member_details/MemberDetailsModalComponent';

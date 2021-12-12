@@ -1,3 +1,4 @@
+import { Close, Info, Save } from '@mui/icons-material';
 import {
   CircularProgress,
   Dialog,
@@ -7,8 +8,7 @@ import {
   IconButton,
   styled,
   Tooltip,
-} from '@material-ui/core';
-import { Close, Info, Save } from '@material-ui/icons';
+} from '@mui/material';
 import MemberEntity from 'domain/members/entities/MemberEntity';
 import { FC, Fragment, useEffect, useState } from 'react';
 import MemberDetailsFormComponent from './MemberDetailsFormComponent';

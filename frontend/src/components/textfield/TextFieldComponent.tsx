@@ -1,4 +1,4 @@
-import { Grid, TextField, Typography } from '@material-ui/core';
+import { Grid, TextField, Typography } from '@mui/material';
 import { FC } from 'react';
 
 type Props = {

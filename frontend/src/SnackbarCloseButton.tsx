@@ -1,5 +1,5 @@
-import { IconButton } from '@material-ui/core';
-import { Close } from '@material-ui/icons';
+import { Close } from '@mui/icons-material';
+import { IconButton } from '@mui/material';
 import { SnackbarKey, useSnackbar } from 'notistack';
 import { FC } from 'react';
 

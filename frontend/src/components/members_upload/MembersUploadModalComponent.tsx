@@ -1,3 +1,4 @@
+import { UploadFile } from '@mui/icons-material';
 import {
   Button,
   CircularProgress,
@@ -7,8 +8,7 @@ import {
   DialogTitle,
   Grid,
   Typography,
-} from '@material-ui/core';
-import { UploadFile } from '@material-ui/icons';
+} from '@mui/material';
 import { FC, Fragment, MouseEvent, useState } from 'react';
 import useMembersUpload from './useMembersUpload';
 

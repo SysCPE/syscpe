@@ -1,4 +1,4 @@
-import { Grid } from '@material-ui/core';
+import { Grid } from '@mui/material';
 import MembersTableComponent from 'components/members_table/MembersTableComponent';
 
 const AdminPanel = () => {

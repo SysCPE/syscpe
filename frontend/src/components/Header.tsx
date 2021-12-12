@@ -1,5 +1,4 @@
-import { AppBar, Grid, Toolbar, Typography } from '@material-ui/core';
-import { Box } from '@material-ui/system';
+import { AppBar, Box, Grid, Toolbar, Typography } from '@mui/material';
 import APP_NAME from 'config/app_name';
 import Routes from 'config/routes';
 import useAuthentication from 'providers/authentication/useAuthentication';

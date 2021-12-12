@@ -1,4 +1,4 @@
-import { Grid, Tooltip, Typography } from '@material-ui/core';
+import { Grid, Tooltip, Typography } from '@mui/material';
 import TextFieldComponent from 'components/textfield/TextFieldComponent';
 import MemberEntity from 'domain/members/entities/MemberEntity';
 import { FC } from 'react';
