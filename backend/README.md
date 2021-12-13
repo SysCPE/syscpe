@@ -1,12 +1,17 @@
 # Backend
-## Running locally
+## Installing
 ```bash
 $ npm install
 $ docker volume create syscpe_db
 $ ./run-migrations-local.sh
+```
+
+## Running locally
+```bash
 $ ./run-server-local.sh
 ```
 The local server will start on `localhost:4000`.
+If there are new migrations to run, just run the migrations script again.
 
 ## Running tests
 ```
@@ -25,13 +30,13 @@ Returns all registered AdminMembers.
 
 Returns an array of AdminMembers:
 {
-    idCPE?: number;
+    idCPE: number;
     email: string;
     name: string;
     RG?: string;
     CPF?: string;
     departmentName?: string;
-    workgroups?: string[];
+    workgroups: string[];
     pronoun?: string;
     eachCourse?: string;
     semester?: number;
@@ -256,3 +261,4 @@ Returns 200 on success, 400 on failure (work group doesn't exist or it's already
 - Check for missing required body parameters in most endpoints
 - Add table initialisation functions to test suites to remove code duplication!!
 - Standardize work_group vs. workgroup and WorkGroup vs. Workgroup
+- Investigate and fix Docker warnings/errors
