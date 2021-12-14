@@ -9,5 +9,8 @@ export const mockDepartments: { [key: string]: DepartmentEntity } = {
     'Gestão de Pessoas': {
         name: 'Gestão de Pessoas',
         creationDate: new Date(2020, 12, 12),
+    },
+    'Marketing': {
+        name: 'Marketing',
     }
 }

@@ -2,7 +2,7 @@ import AdminMemberEntity from "./admin_member_entity";
 
 type DepartmentEntity = {
     name: string;
-    creationDate: Date;
+    creationDate?: Date;
     directorId?: number;
     viceDirectorId?: number;
 };

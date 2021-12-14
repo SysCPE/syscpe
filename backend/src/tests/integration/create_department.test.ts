@@ -61,4 +61,16 @@ describe('POST /departments', () => {
         expect(response2.text).toBe(`Department ${department.name} already exists`);
     });
 
+    it('Should create department without passing data', async () => {
+        const department = Object.values(mockDepartments)[2];
+        const name = department.name;
+        const response = await request(server).post(ROUTE).send({
+            name: name,
+        });
+
+        expect(response.status).toBe(200);
+        const verification = await ServicesDepartmentRepository.getDepartment(department.name);
+        expect(verification!.creationDate).toBeTruthy();
+    });
+
 });
