@@ -1,6 +1,7 @@
 import DepartmentEntity from "domain/entities/department_entity";
 
-export class DepartmentNotFoundError extends Error { }
+export class DepartmentNotFoundError extends Error { };
+export class DepartmentAlreadyExistsError extends Error { };
 
 export type UpdateDepartmentParams = {
     creationDate?: Date;
