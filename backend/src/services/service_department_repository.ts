@@ -2,8 +2,7 @@ import Department from "database/models/Department";
 import DepartmentEntity from "domain/entities/department_entity";
 import { AdminMemberNotFoundError } from "domain/repository/admin_members_repository";
 import DepartmentRepository, { DepartmentAlreadyExistsError, DepartmentNotFoundError, UpdateDepartmentParams } from "domain/repository/department_repository";
-import { ForeignKeyConstraintError } from "sequelize";
-import { ValidationError } from "sequelize";
+import { ForeignKeyConstraintError, UniqueConstraintError } from "sequelize";
 import { __mapAdminMemberModelToEntity }  from "services/service_members_repository"
 import { removeUndefined } from "utils";
 
@@ -17,7 +16,7 @@ const ServicesDepartmentRepository: DepartmentRepository = {
     
             return { name: department.name, creationDate: department.creationDate };
         } catch (error) {
-            if (error instanceof ValidationError) {
+            if (error instanceof UniqueConstraintError) {
                 throw new DepartmentAlreadyExistsError(`Department ${name} already exists`);
             }
             throw error;

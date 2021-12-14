@@ -10,10 +10,11 @@ const createDepartment = async (ctx: Context) => {
 
     try {
         await usecase.run(name, creationDate);
-    } catch (e) {
-        if (e instanceof DepartmentAlreadyExistsError) {
-            ctx.throw(400, `Department ${name} already exists`);
+    } catch (error) {
+        if (error instanceof DepartmentAlreadyExistsError) {
+            ctx.throw(400, error.message);
         }
+        throw error;
     }
      
     ctx.response.body = {};

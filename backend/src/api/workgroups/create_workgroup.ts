@@ -12,10 +12,11 @@ const createWorkGroup = async (ctx: Context) => {
     try {
         await usecase.run(name, description, creationDate);
     }
-    catch (e) {
-        if (e instanceof WorkGroupAlreadyExistsError) {
-            ctx.throw(400, `Work group ${name} already exists`);
+    catch (error) {
+        if (error instanceof WorkGroupAlreadyExistsError) {
+            ctx.throw(400, error.message);
         }
+        throw error;
     }
     ctx.response.body = {};
 }
