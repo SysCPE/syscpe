@@ -6,7 +6,7 @@ import delayed from 'utils/delayed';
 import useSubmit from 'utils/useSubmit';
 
 const useMembersUpload = () => {
-  const { onMembersCreated } = useMembers();
+  const { onItemsCreated } = useMembers();
   const { enqueueSnackbar } = useSnackbar();
   const [file, setFile] = useState<File | null>(null);
 
@@ -16,7 +16,7 @@ const useMembersUpload = () => {
       enqueueSnackbar(`${usersCreated.length} membro(s) criado(s)`, {
         variant: 'success',
       });
-      onMembersCreated(usersCreated);
+      onItemsCreated(usersCreated);
       setFile(null);
     },
     (error) => {

@@ -7,7 +7,7 @@ import useSubmit from 'utils/useSubmit';
 
 const useMemberDelete = (member: MemberEntity) => {
   const { enqueueSnackbar } = useSnackbar();
-  const { onMemberDeleted } = useMembers();
+  const { onItemDeleted } = useMembers();
 
   const { loading, submit } = useSubmit(
     async () => delayed(deleteMemberUseCase(member)),
@@ -15,7 +15,7 @@ const useMemberDelete = (member: MemberEntity) => {
       enqueueSnackbar('Membro deletado com sucesso', {
         variant: 'success',
       });
-      onMemberDeleted(member);
+      onItemDeleted(member);
     },
     () =>
       enqueueSnackbar('Ocorreu um erro na hora de adicionar novos membros', {

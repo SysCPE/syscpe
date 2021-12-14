@@ -13,6 +13,7 @@ import {
   TableHead,
   Typography,
 } from '@mui/material';
+import DialogComponent from 'components/dialog/DialogComponent';
 import ListContextType from 'providers/list/ListContextType';
 import { Context, PropsWithChildren, useContext } from 'react';
 import TableEmptyWarningComponent from './TableEmptyWarning';
@@ -23,7 +24,7 @@ type Props<T> = {
   renderItem: (item: T) => JSX.Element;
   emptyListWarning: string;
   failedMessage: string;
-  onAddButtonClick: () => void;
+  createForm: JSX.Element;
 };
 function TableComponent<T>({
   listContext,
@@ -31,7 +32,7 @@ function TableComponent<T>({
   renderItem,
   emptyListWarning,
   failedMessage,
-  onAddButtonClick,
+  createForm,
 }: PropsWithChildren<Props<T>>) {
   const { loading, done, items, failed, retry } = useContext(listContext);
   const emptyList = items.length === 0;
@@ -103,20 +104,25 @@ function TableComponent<T>({
           </Grid>
         </Grid>
 
-        <Grow in={done}>
-          <Fab
-            onClick={onAddButtonClick}
-            color="secondary"
-            sx={{
-              position: 'absolute',
-              right: 0,
-              bottom: 0,
-              margin: 1,
-            }}
-          >
-            <Add />
-          </Fab>
-        </Grow>
+        <DialogComponent
+          body={createForm}
+          renderButton={(onOpen) => (
+            <Grow in={done}>
+              <Fab
+                onClick={onOpen}
+                color="secondary"
+                sx={{
+                  position: 'absolute',
+                  right: 0,
+                  bottom: 0,
+                  margin: 1,
+                }}
+              >
+                <Add />
+              </Fab>
+            </Grow>
+          )}
+        />
       </Paper>
     </Grow>
   );

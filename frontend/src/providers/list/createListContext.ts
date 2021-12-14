@@ -10,6 +10,10 @@ function createListContext<T>() {
     done: false,
 
     retry: () => {},
+
+    onItemsCreated: () => {},
+    onItemDeleted: () => {},
+    onItemEdited: () => {},
   });
 }
 

@@ -1,15 +1,6 @@
 import MemberEntity from 'domain/members/entities/MemberEntity';
-import { createContext } from 'react';
+import createListContext from 'providers/list/createListContext';
 
-type MembersContextType = {
-  onMembersCreated: (members: MemberEntity[]) => void;
-  onMemberDeleted: (member: MemberEntity) => void;
-  onMemberEdited: (member: MemberEntity) => void;
-};
-const MembersContext = createContext<MembersContextType>({
-  onMembersCreated: () => {},
-  onMemberDeleted: () => {},
-  onMemberEdited: () => {},
-});
+const MembersContext = createListContext<MemberEntity>();
 
 export default MembersContext;

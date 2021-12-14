@@ -1,6 +1,8 @@
 import MemberStatusEntity from './MemberStatusEntity';
 
 type MemberEntity = {
+  id: string;
+
   idCPE: number;
   email: string;
   name: string;
