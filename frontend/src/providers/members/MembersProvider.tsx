@@ -1,9 +1,11 @@
 import MemberEntity from 'domain/members/entities/MemberEntity';
 import listMembersUseCase from 'domain/members/usecases/list_members_usecase';
+import ListProvider from 'providers/list/ListProvider';
 import { FC, useEffect, useState } from 'react';
 import delayed from 'utils/delayed';
 import useSubmit from 'utils/useSubmit';
 import MembersContext from './MembersContext';
+import MembersListContext from './MembersListContext';
 
 const MembersProvider: FC = ({ children }) => {
   const [firstLoad, setFirstLoad] = useState(false);
@@ -41,20 +43,20 @@ const MembersProvider: FC = ({ children }) => {
     );
 
   return (
-    <MembersContext.Provider
-      value={{
-        members,
-        done,
-        loading,
-        failed,
-        retry,
-        onMemberDeleted,
-        onMembersCreated,
-        onMemberEdited,
-      }}
+    <ListProvider
+      context={MembersListContext}
+      value={{ items: members, loading, failed, done, retry }}
     >
-      {children}
-    </MembersContext.Provider>
+      <MembersContext.Provider
+        value={{
+          onMemberDeleted,
+          onMembersCreated,
+          onMemberEdited,
+        }}
+      >
+        {children}
+      </MembersContext.Provider>
+    </ListProvider>
   );
 };
 

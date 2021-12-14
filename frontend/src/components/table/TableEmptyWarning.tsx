@@ -1,13 +1,17 @@
 import { Grid, Typography } from '@mui/material';
+import { FC } from 'react';
 
-const MembersTableEmptyWarningComponent = () => {
+type Props = {
+  message: string;
+};
+const TableEmptyWarningComponent: FC<Props> = ({ message }) => {
   return (
     <Grid container justifyContent="center" sx={{ padding: 1 }}>
       <Typography variant="body1">
-        <b>Nenhum membro adicionado</b>
+        <b>{message}</b>
       </Typography>
     </Grid>
   );
 };
 
-export default MembersTableEmptyWarningComponent;
+export default TableEmptyWarningComponent;
