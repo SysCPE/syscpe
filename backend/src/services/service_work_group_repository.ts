@@ -1,7 +1,7 @@
 import WorkGroup from "database/models/WorkGroup";
 import WorkGroupEntity from "domain/entities/work_group_entity";
 import WorkGroupRepository, { WorkGroupAlreadyEndedError, WorkGroupAlreadyExistsError, WorkGroupNotFoundError, UpdateWorkGroupParams } from "domain/repository/work_group_repository";
-import { ValidationError } from "sequelize";
+import { UniqueConstraintError } from "sequelize";
 import { removeUndefined } from "utils";
 
 const ServicesWorkGroupRepository: WorkGroupRepository = {
@@ -22,7 +22,7 @@ const ServicesWorkGroupRepository: WorkGroupRepository = {
 
             return __mapWorkGroupModelToEntity(workgroup);
         } catch (error) {
-            if (error instanceof ValidationError) {
+            if (error instanceof UniqueConstraintError) {
                 throw new WorkGroupAlreadyExistsError(`Work Group ${name} already exists`);
             }
             throw error;

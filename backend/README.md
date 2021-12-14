@@ -169,9 +169,10 @@ Creates a department. The name must be unique among registered departments.
 
 Body params
 {
-    departmentName: string;   // name of the department to create
+    name: string;
+    creationDate?: Date; 
 }
-Returns 200 on success, 500 on failure.
+Returns 200 on success, 400 on failure (department already exists).
 ```
 
 ```ts
@@ -201,7 +202,7 @@ Body parameters:
     creationDate?: Date;
 }
 
-Returns 200 on success, 400 on failure (work group already exists)
+Returns 200 on success, 400 on failure (work group already exists).
 ```
 
 ```ts
@@ -232,7 +233,7 @@ Body parameters:
     }
 }
 
-Returns 200 on success, 400 on failure (missing body parameters or invalid name)
+Returns 200 on success, 400 on failure (missing body parameters or invalid name).
 ```
 
 ```ts
@@ -244,15 +245,12 @@ Body parameters:
     name: string;
 }
 
-Returns 200 on success, 400 on failure (work group doesn't exist or it's already ended)
+Returns 200 on success, 400 on failure (work group doesn't exist or it's already ended).
 ```
 
 
 ## TODO
 - Change period in AdminMemberEntity to be a string (Vespertino, Noturno e Integral)
-- POST: /departments/createDepartment:
-    - add creationDate optional attribute
-    - add proper status errors when name exists
 - GET: /members/admin
     - omit personal information?
 - Change delete methods to HTTP DELETE and update methods to HTTP PUT

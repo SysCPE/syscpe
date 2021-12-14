@@ -61,7 +61,7 @@ describe('POST /workgroups', () => {
             creationDate: workgroup.creationDate,
         });
         expect(response2.status).toBe(400);
-        expect(response2.text).toBe(`Work group ${workgroup.name} already exists`);
+        expect(response2.text).toBe(`Work Group ${workgroup.name} already exists`);
     });
 });
 
