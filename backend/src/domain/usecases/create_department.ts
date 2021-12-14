@@ -8,7 +8,7 @@ export default class CreateDepartment {
         this.departmentRepository = departmentRepository;
     }
     
-    async run(departmentName: string): Promise<DepartmentEntity> {
-        return this.departmentRepository.saveDepartment(departmentName);
+    async run(departmentName: string, creationDate?: Date): Promise<DepartmentEntity> {
+        return this.departmentRepository.saveDepartment(departmentName, creationDate);
     }
 }
