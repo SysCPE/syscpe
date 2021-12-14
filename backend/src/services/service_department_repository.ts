@@ -1,20 +1,28 @@
 import Department from "database/models/Department";
 import DepartmentEntity from "domain/entities/department_entity";
 import { AdminMemberNotFoundError } from "domain/repository/admin_members_repository";
-import DepartmentRepository, { DepartmentNotFoundError, UpdateDepartmentParams } from "domain/repository/department_repository";
+import DepartmentRepository, { DepartmentAlreadyExistsError, DepartmentNotFoundError, UpdateDepartmentParams } from "domain/repository/department_repository";
 import { ForeignKeyConstraintError } from "sequelize";
+import { ValidationError } from "sequelize";
 import { __mapAdminMemberModelToEntity }  from "services/service_members_repository"
 import { removeUndefined } from "utils";
 
 const ServicesDepartmentRepository: DepartmentRepository = {
     saveDepartment: async function (name: string, creationDate?: Date): Promise<DepartmentEntity> {
+        try {
+            const department = await Department.create({
+                name: name,
+                creationDate: creationDate || new Date(),
+            });
+    
+            return { name: department.name, creationDate: department.creationDate };
+        } catch (error) {
+            if (error instanceof ValidationError) {
+                throw new DepartmentAlreadyExistsError(`Department ${name} already exists`);
+            }
+            throw error;
+        }
 
-        const department = await Department.create({
-            name: name,
-            creationDate: creationDate || new Date(),
-        });
-
-        return { name: department.name, creationDate: department.creationDate };
     },
 
     getAllDepartments: async function (): Promise<DepartmentEntity[]> {
