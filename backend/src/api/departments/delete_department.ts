@@ -10,7 +10,7 @@ const deleteDepartment = async (ctx: Context) => {
     if (!name) ctx.throw(400, `Department name cannot be empty`);
 
     try {
-        ServicesDepartmentRepository.deleteDepartment(name);
+        await ServicesDepartmentRepository.deleteDepartment(name);
     }
     catch (error) {
         if (error instanceof DepartmentNotFoundError)
