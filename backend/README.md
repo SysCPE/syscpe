@@ -251,9 +251,6 @@ Returns 200 on success, 400 on failure (work group doesn't exist or it's already
 
 ## TODO
 - Change period in AdminMemberEntity to be a string (Vespertino, Noturno e Integral)
-- POST: /departments/createDepartment:
-    - add creationDate optional attribute
-    - add proper status errors when name exists
 - GET: /members/admin
     - omit personal information?
 - Change delete methods to HTTP DELETE and update methods to HTTP PUT
