@@ -3,7 +3,6 @@ import DepartmentEntity from "domain/entities/department_entity";
 import { AdminMemberNotFoundError } from "domain/repository/admin_members_repository";
 import DepartmentRepository, { DepartmentAlreadyExistsError, DepartmentNotFoundError, UpdateDepartmentParams } from "domain/repository/department_repository";
 import { ForeignKeyConstraintError, UniqueConstraintError } from "sequelize";
-import { __mapAdminMemberModelToEntity }  from "services/service_members_repository"
 import { removeUndefined } from "utils";
 
 const ServicesDepartmentRepository: DepartmentRepository = {
@@ -13,7 +12,7 @@ const ServicesDepartmentRepository: DepartmentRepository = {
                 name: name,
                 creationDate: creationDate || new Date(),
             });
-    
+
             return { name: department.name, creationDate: department.creationDate };
         } catch (error) {
             if (error instanceof UniqueConstraintError) {
@@ -38,7 +37,8 @@ const ServicesDepartmentRepository: DepartmentRepository = {
 
     updateDepartment: async function (name: string, changes: UpdateDepartmentParams): Promise<void> {
         const department = await __getDepartmentModelByName(name);
-        if (!department) throw new DepartmentNotFoundError(`Department ${name} does not exist`);
+        if (!department)
+            throw new DepartmentNotFoundError(`Department ${name} does not exist`);
 
         try {
             await department.update(removeUndefined(changes));
@@ -49,6 +49,14 @@ const ServicesDepartmentRepository: DepartmentRepository = {
             throw error;
         }
     },
+
+    deleteDepartment: async function (name: string): Promise<void> {
+        const department = await __getDepartmentModelByName(name);
+        if (!department)
+            throw new DepartmentNotFoundError(`Department ${name} does not exist`);
+        
+        await department.destroy();
+    }
 };
 
 const __getDepartmentModelByName = async (name: string) => {

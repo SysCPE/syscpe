@@ -220,7 +220,7 @@ const __getAdminMemberModelByEmail = async (email: string) => {
   return result;
 };
 
-export const __mapAdminMemberModelToEntity = (
+const __mapAdminMemberModelToEntity = (
   adminMember: AdminMember
 ): AdminMemberEntity => {
   return {

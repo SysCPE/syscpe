@@ -142,4 +142,37 @@ describe('ServicesDepartmentRepository', () => {
 
         await expect(ServicesDepartmentRepository.updateDepartment(name, changes)).rejects.toThrow(AdminMemberNotFoundError);
     });
+
+    it('should delete a department', async () => {
+        const name = 'inovaTec';
+        const departmetnBefore = await ServicesDepartmentRepository.getDepartment(name);
+        expect(departmetnBefore).toBeTruthy();
+
+        await ServicesDepartmentRepository.deleteDepartment(name);
+        
+        const verification = await ServicesDepartmentRepository.getDepartment(name);
+        expect(verification).toBeFalsy();
+    });
+
+    it('should not delete department that doesn\'t exist', async () => {
+        const name = 'iinovaTec';
+        await expect(ServicesDepartmentRepository.deleteDepartment(name)).rejects.toThrow(DepartmentNotFoundError);
+    });
+
+    it('should set department member\'s to null', async () => {
+        const departmentName = 'inovaTec';
+        const memberEmail = 'a@gmail.com';
+
+        const department = await ServicesDepartmentRepository.getDepartment(departmentName);
+        const member = await ServicesMembersRepository.getAdminMemberByEmail(memberEmail);
+        await ServicesMembersRepository.changeAdminMemberDepartment(member!, department!);
+
+        const memberBefore = await ServicesMembersRepository.getAdminMemberByEmail(memberEmail);
+        expect(memberBefore!.departmentName).toBe(departmentName);
+        
+        await ServicesDepartmentRepository.deleteDepartment(departmentName);
+        
+        const memberAfter = await ServicesMembersRepository.getAdminMemberByEmail(memberEmail);
+        expect(memberAfter!.departmentName).toBeFalsy();
+    });
 });

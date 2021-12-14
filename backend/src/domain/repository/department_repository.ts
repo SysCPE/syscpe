@@ -17,6 +17,8 @@ type DepartmentRepository = {
     getAllDepartments: () => Promise<DepartmentEntity[]>;
 
     updateDepartment: (name: string, changes: UpdateDepartmentParams) => Promise<void>;
+
+    deleteDepartment: (name: string) => Promise<void>;
 };
 
 

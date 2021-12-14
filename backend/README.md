@@ -190,6 +190,18 @@ Body params:
 Returns 200 on success, 400 on failure. If failed, a reason of the failure is included in the response body.
 ```
 
+```ts
+POST    /departments/delete
+Deletes a department
+
+Body params:
+{
+    name: string;
+}
+Returns 200 on success, 400 on failure (Department does not exist or name parameter missing from body).
+```
+
+
 ### Work Groups
 ```ts
 POST    /workgroups
