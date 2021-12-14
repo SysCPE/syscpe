@@ -51,15 +51,15 @@ function TableComponent<T>({
         }}
       >
         <Grid container direction="column" sx={{ height: '100%' }}>
-          <Grid item>
-            <TableContainer>
-              <Table>
-                <TableHead>{header}</TableHead>
+          <TableContainer>
+            <Table>
+              <TableHead>{header}</TableHead>
 
-                <TableBody>{done && items.map(renderItem)}</TableBody>
-              </Table>
-            </TableContainer>
-          </Grid>
+              {done && !emptyList && (
+                <TableBody>{items.map(renderItem)}</TableBody>
+              )}
+            </Table>
+          </TableContainer>
 
           <Grid container sx={{ flexGrow: 1 }} alignContent="center">
             <Fade in={loading} exit={false} unmountOnExit>
