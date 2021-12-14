@@ -23,9 +23,16 @@ const AdminPanel = () => {
               }}
               color="secondary"
             >
-              <ToggleButton value="MEMBRO">Membros</ToggleButton>
-              <ToggleButton value="DEPARTAMENTO">Departamentos</ToggleButton>
-              <ToggleButton value="GRUPO_DE_TRABALHO">
+              <ToggleButton value="MEMBRO" sx={{ textTransform: 'none' }}>
+                Membros
+              </ToggleButton>
+              <ToggleButton value="DEPARTAMENTO" sx={{ textTransform: 'none' }}>
+                Departamentos
+              </ToggleButton>
+              <ToggleButton
+                value="GRUPO_DE_TRABALHO"
+                sx={{ textTransform: 'none' }}
+              >
                 Grupos de Trabalho
               </ToggleButton>
             </ToggleButtonGroup>
