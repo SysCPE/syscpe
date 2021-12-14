@@ -1,7 +1,7 @@
 import ServicesDepartmentRepository from 'services/service_department_repository';
 import ServicesMembersRepository from 'services/service_members_repository';
 import { mockDepartments } from './mocks/mock_departments';
-import {  mockAdminMembers } from './mocks/mock_members';
+import { mockAdminMembers } from './mocks/mock_members';
 import useServer from 'tests/hook/useServer';
 import  request  from 'supertest';
 import { Server } from 'http';
