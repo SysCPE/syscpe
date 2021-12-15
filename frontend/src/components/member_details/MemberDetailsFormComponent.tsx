@@ -1,8 +1,10 @@
+import { DatePicker } from '@mui/lab';
 import {
   Grid,
   InputLabel,
   MenuItem,
   Select,
+  TextField,
   Tooltip,
   Typography,
 } from '@mui/material';
@@ -124,6 +126,20 @@ const MemberDetailsFormComponent: FC<Props> = ({ member, onChange }) => {
               </MenuItem>
             ))}
         </Select>
+      </Grid>
+
+      <Grid item container direction="column" sx={{ marginBottom: 2 }}>
+        <InputLabel id={'member-birthday-label'}>
+          {/* TODO: fix color being slightly grayer than the other labels */}
+          <Typography variant="body1">Data de nascimento</Typography>
+        </InputLabel>
+        <DatePicker
+          value={member.birthday}
+          onChange={(newValue) =>
+            onChange({ ...member, birthday: newValue || new Date() })
+          }
+          renderInput={(params) => <TextField {...params} />}
+        />
       </Grid>
     </Grid>
   );

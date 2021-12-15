@@ -13,7 +13,7 @@ type MemberEntity = {
   RG: string;
   pronoun: string;
   socialName: string;
-  birthday: string;
+  birthday: Date;
 
   course: string;
   semester: number;

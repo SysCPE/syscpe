@@ -19,7 +19,7 @@ const mapAdminMemberDataToEntity = (
     RG: adminMember.RG,
     pronoun: adminMember.pronoun,
     socialName: adminMember.socialName,
-    birthday: adminMember.birthday,
+    birthday: new Date(adminMember.birthday),
 
     course: adminMember.course || '',
     semester: adminMember.semester,
