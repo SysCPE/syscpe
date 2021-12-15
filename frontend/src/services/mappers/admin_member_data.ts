@@ -6,7 +6,7 @@ type AdminMemberData = {
   status: string;
   departmentName?: string;
   workgroups: string[];
-  
+
   CPF: string;
   RG: string;
   pronoun: string;
