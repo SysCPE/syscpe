@@ -9,7 +9,7 @@ type AdminMemberEntity = {
   eachCourse?: string;
   semester?: number;
   period?: number;
-  isActive?: activeEnum;
+  status?: activeEnum;
 } & MemberEntity;
 
 export default AdminMemberEntity;

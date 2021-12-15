@@ -44,7 +44,7 @@ describe('/members/admin', () => {
     for (const userEmail of allUsers)
       await ServicesMembersRepository.saveAdminMember({
         ...mockAdminMembers[userEmail],
-        isActive: activeUsers.includes(userEmail) ? "ACTIVE" : "INACTIVE",
+        status: activeUsers.includes(userEmail) ? "ACTIVE" : "INACTIVE",
       });
 
     const response = await request(server).get(ROUTE);

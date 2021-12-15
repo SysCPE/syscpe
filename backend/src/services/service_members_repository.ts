@@ -44,7 +44,7 @@ const ServicesMembersRepository: AdminMembersRepository = {
             period: adminMember.period,
             pronoun: adminMember.pronoun,
             semester: adminMember.semester,
-            isActive: adminMember.isActive,
+            isActive: adminMember.status,
           },
           { transaction }
         );
@@ -151,7 +151,7 @@ const ServicesMembersRepository: AdminMembersRepository = {
           period: adminMember.period,
           pronoun: adminMember.pronoun,
           semester: adminMember.semester,
-          isActive: adminMember.isActive,
+          isActive: adminMember.status,
         },
         { where: { memberId: idCPE }, transaction }
       );
@@ -241,7 +241,7 @@ const __mapAdminMemberModelToEntity = (
     eachCourse: adminMember.eachCourse,
     semester: adminMember.semester,
     period: adminMember.period,
-    isActive: adminMember.isActive,
+    status: adminMember.isActive,
   };
 };
 
@@ -267,7 +267,7 @@ const __mapAdminMemberJSONToEntity = (adminMember: any): AdminMemberEntity => {
     eachCourse: adminMember.each_course || '',
     semester: parseInt(adminMember.semester) || undefined,
     period: parseInt(adminMember.period) || undefined,
-    isActive: adminMember.isActive || ('ACTIVE' as activeEnum),
+    status: adminMember.isActive || ('ACTIVE' as activeEnum),
   };
 };
 

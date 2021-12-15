@@ -272,3 +272,4 @@ Returns 200 on success, 400 on failure (work group doesn't exist or it's already
 - Add table initialisation functions to test suites to remove code duplication!!
 - Standardize work_group vs. workgroup and WorkGroup vs. Workgroup
 - Investigate and fix Docker warnings/errors
+- Change isActive to status on AdminMember Model column
