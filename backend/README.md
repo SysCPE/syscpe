@@ -274,3 +274,4 @@ Returns 200 on success, 400 on failure (work group doesn't exist or it's already
 - Investigate and fix Docker warnings/errors
 - Change isActive to status on AdminMember Model column
 - Change eachCourse to course on AdminMember Model column
+- Add graduation start year and make semester a derived attribute?
