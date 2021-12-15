@@ -64,7 +64,7 @@ const MemberDetailsFormComponent: FC<Props> = ({ member, onChange }) => {
       <Grid item container sx={{ marginBottom: 2 }}>
         <TextFieldComponent
           label={'Curso'}
-          value={member.course} // TODO: Change member.course to member.eachCourse to match backend API
+          value={member.course}
           onChange={(value) => onChange({ ...member, course: value })}
         />
       </Grid>

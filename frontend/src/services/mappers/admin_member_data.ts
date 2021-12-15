@@ -3,7 +3,7 @@ type AdminMemberData = {
   CPF: string;
   RG: string;
   birthday: string;
-  eachCourse: string;
+  course: string;
   name: string;
   status: string;
   email: string;

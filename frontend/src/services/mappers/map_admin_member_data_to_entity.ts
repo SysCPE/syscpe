@@ -8,7 +8,7 @@ const mapAdminMemberDataToEntity = (
   return {
     idCPE: adminMember.idCPE,
     name: adminMember.name,
-    course: adminMember.eachCourse,
+    course: adminMember.course,
     department: '',
     status: mapMemberStatusDataToEntity(adminMember.status),
     email: adminMember.email,
