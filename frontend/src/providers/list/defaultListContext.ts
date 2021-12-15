@@ -1,8 +1,7 @@
-import { createContext } from 'react';
 import ListContextType from './ListContextType';
 
-function createListContext<T>() {
-  return createContext<ListContextType<T>>({
+function defaultListContext<T>(): ListContextType<T> {
+  return {
     items: [],
 
     loading: false,
@@ -16,7 +15,7 @@ function createListContext<T>() {
     onItemEdited: () => {},
 
     deleteItem: async () => {},
-  });
+  };
 }
 
-export default createListContext;
+export default defaultListContext;

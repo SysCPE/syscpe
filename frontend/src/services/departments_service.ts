@@ -1,5 +1,6 @@
 import axios from 'axios';
 import DepartmentEntity from 'domain/departments/entities/DepartmentEntity';
+import MemberEntity from 'domain/members/entities/MemberEntity';
 import DepartmentData from './mappers/department_data';
 import mapDepartmentDataToEntity from './mappers/map_department_data_to_entity';
 
@@ -11,7 +12,7 @@ const departmentsService = {
     return departmentsData.map(mapDepartmentDataToEntity);
   },
   createDepartment: async (name: string): Promise<DepartmentEntity> => {
-    await axios.post('/departments', { departmentName: name });
+    await axios.post('/departments', { name });
 
     return {
       id: name,
@@ -24,6 +25,10 @@ const departmentsService = {
   deleteDepartment: async (department: DepartmentEntity): Promise<void> => {
     await axios.post('/departments/delete', { name: department.name });
   },
+  associateMember: async (
+    member: MemberEntity,
+    department: DepartmentEntity
+  ) => {},
 };
 
 export default departmentsService;

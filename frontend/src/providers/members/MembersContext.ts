@@ -1,6 +1,10 @@
 import MemberEntity from 'domain/members/entities/MemberEntity';
-import createListContext from 'providers/list/createListContext';
+import defaultListContext from 'providers/list/defaultListContext';
+import ListContextType from 'providers/list/ListContextType';
+import { createContext } from 'react';
 
-const MembersContext = createListContext<MemberEntity>();
+const MembersContext = createContext<ListContextType<MemberEntity>>({
+  ...defaultListContext<MemberEntity>(),
+});
 
 export default MembersContext;

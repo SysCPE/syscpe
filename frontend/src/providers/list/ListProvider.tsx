@@ -50,9 +50,9 @@ function ListProvider<T extends WithID>({
   return (
     <context.Provider
       value={{
+        items,
         done,
         failed,
-        items,
         loading,
         retry,
         onItemsCreated,
