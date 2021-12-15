@@ -11,8 +11,8 @@ type Props = {
 };
 const MembersTableItem: FC<Props> = ({ member }) => {
   return (
-    <Fade in={true} key={member.idCPE}>
-      <TableRow key={member.idCPE}>
+    <Fade in={true}>
+      <TableRow>
         <TableCell width="10%">{member.idCPE}</TableCell>
         <TableCell width="30%">{member.name}</TableCell>
         <TableCell width="15%">{member.course}</TableCell>

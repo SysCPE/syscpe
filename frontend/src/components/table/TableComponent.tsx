@@ -14,11 +14,12 @@ import {
   Typography,
 } from '@mui/material';
 import DialogComponent from 'components/dialog/DialogComponent';
+import WithID from 'domain/entities/WithID';
 import ListContextType from 'providers/list/ListContextType';
-import { Context, PropsWithChildren, useContext } from 'react';
+import { Context, Fragment, PropsWithChildren, useContext } from 'react';
 import TableEmptyWarningComponent from './TableEmptyWarning';
 
-type Props<T> = {
+type Props<T extends WithID> = {
   listContext: Context<ListContextType<T>>;
   header: JSX.Element;
   renderItem: (item: T) => JSX.Element;
@@ -26,7 +27,7 @@ type Props<T> = {
   failedMessage: string;
   createForm: JSX.Element;
 };
-function TableComponent<T>({
+function TableComponent<T extends WithID>({
   listContext,
   header,
   renderItem,
@@ -57,7 +58,11 @@ function TableComponent<T>({
               <TableHead>{header}</TableHead>
 
               {done && !emptyList && (
-                <TableBody>{items.map(renderItem)}</TableBody>
+                <TableBody>
+                  {items.map((item) => (
+                    <Fragment key={item.id}>{renderItem(item)}</Fragment>
+                  ))}
+                </TableBody>
               )}
             </Table>
           </TableContainer>
