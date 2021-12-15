@@ -6,6 +6,7 @@ const mapAdminMemberDataToEntity = (
   adminMember: AdminMemberData
 ): MemberEntity => {
   return {
+    id: adminMember.idCPE.toString(),
     idCPE: adminMember.idCPE,
     email: adminMember.email,
     name: adminMember.name,

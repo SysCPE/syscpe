@@ -25,7 +25,11 @@ const MemberDetailsFormComponent: FC<Props> = ({ member, onChange }) => {
           <Typography variant="body1">{member.idCPE}</Typography>
         </Tooltip>
         <span
-          style={{ margin: 8, height: 24, border: '1px solid #111111' }}
+          style={{
+            margin: 8,
+            height: 24,
+            border: '1px solid rgba(0, 0, 0, 0.16)',
+          }}
         ></span>
         <Tooltip title="Email">
           <Typography variant="body1">{member.email}</Typography>

@@ -7,7 +7,7 @@ import delayed from 'utils/delayed';
 import useSubmit from 'utils/useSubmit';
 
 const useMemberDetails = (initialMember: MemberEntity) => {
-  const { onMemberEdited } = useMembers();
+  const { onItemEdited } = useMembers();
   const { enqueueSnackbar } = useSnackbar();
   const [currentMember, setCurrentMember] =
     useState<MemberEntity>(initialMember);
@@ -15,7 +15,7 @@ const useMemberDetails = (initialMember: MemberEntity) => {
     async () => delayed(editMemberUseCase(currentMember)),
     () => {
       enqueueSnackbar('Membro editado com sucesso', { variant: 'success' });
-      onMemberEdited(currentMember);
+      onItemEdited(currentMember);
     },
     () =>
       enqueueSnackbar('Houve um erro na hora de editar membro', {
