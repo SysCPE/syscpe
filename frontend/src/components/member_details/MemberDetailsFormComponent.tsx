@@ -1,6 +1,14 @@
-import { Grid, Tooltip, Typography } from '@mui/material';
+import {
+  Grid,
+  InputLabel,
+  MenuItem,
+  Select,
+  Tooltip,
+  Typography,
+} from '@mui/material';
 import TextFieldComponent from 'components/textfield/TextFieldComponent';
 import MemberEntity from 'domain/members/entities/MemberEntity';
+import MemberStatusEntity from 'domain/members/entities/MemberStatusEntity';
 import { FC } from 'react';
 
 type Props = {
@@ -22,11 +30,42 @@ const MemberDetailsFormComponent: FC<Props> = ({ member, onChange }) => {
         </Tooltip>
       </Grid>
 
-      <Grid item container>
+      <Grid item container sx={{ marginBottom: 2 }}>
         <TextFieldComponent
           label={'Nome'}
           value={member.name}
           onChange={(value) => onChange({ ...member, name: value })}
+        />
+      </Grid>
+
+      <Grid item container direction="column" sx={{ marginBottom: 2 }}>
+        <InputLabel id={'member-status-label'}>
+          {/* TODO: fix color being slightly grayer than the other labels */}
+          <Typography variant="body1">Situação</Typography>
+        </InputLabel>
+        <Select
+          labelId={'member-status-label'}
+          value={member.status}
+          onChange={(value) =>
+            onChange({
+              ...member,
+              status: value.target.value as MemberStatusEntity,
+            })
+          }
+        >
+          <MenuItem value={'ACTIVE' as MemberStatusEntity}>Ativo</MenuItem>
+          <MenuItem value={'TIMEOFF' as MemberStatusEntity}>Afastado</MenuItem>
+          <MenuItem value={'INACTIVE' as MemberStatusEntity}>
+            Desligado
+          </MenuItem>
+        </Select>
+      </Grid>
+
+      <Grid item container sx={{ marginBottom: 2 }}>
+        <TextFieldComponent
+          label={'Curso'}
+          value={member.course} // TODO: Change member.course to member.eachCourse to match backend API
+          onChange={(value) => onChange({ ...member, course: value })}
         />
       </Grid>
     </Grid>
