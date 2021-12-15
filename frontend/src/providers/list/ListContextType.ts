@@ -10,6 +10,8 @@ type ListContextType<T> = {
   onItemsCreated: (items: T[]) => void;
   onItemDeleted: (item: T) => void;
   onItemEdited: (item: T) => void;
+
+  deleteItem: (item: T) => Promise<void>;
 };
 
 export default ListContextType;

@@ -1,19 +1,18 @@
+import WithID from 'domain/entities/WithID';
 import { Context, PropsWithChildren, useEffect, useState } from 'react';
 import delayed from 'utils/delayed';
 import useSubmit from 'utils/useSubmit';
 import ListContextType from './ListContextType';
 
-type WithID = {
-  id: string;
-};
-
 type Props<T extends WithID> = {
   context: Context<ListContextType<T>>;
   listItems: () => Promise<T[]>;
+  deleteItem: (item: T) => Promise<void>;
 };
 function ListProvider<T extends WithID>({
   context,
   listItems,
+  deleteItem,
   children,
 }: PropsWithChildren<Props<T>>) {
   const [firstLoad, setFirstLoad] = useState(false);
@@ -59,6 +58,7 @@ function ListProvider<T extends WithID>({
         onItemsCreated,
         onItemDeleted,
         onItemEdited,
+        deleteItem,
       }}
     >
       {children}

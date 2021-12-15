@@ -14,6 +14,8 @@ function createListContext<T>() {
     onItemsCreated: () => {},
     onItemDeleted: () => {},
     onItemEdited: () => {},
+
+    deleteItem: async () => {},
   });
 }
 
