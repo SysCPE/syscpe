@@ -36,21 +36,21 @@ export const mockMembers: { [key: string]: MemberEntity } = {
 export const mockAdminMembers: { [key: string]: AdminMemberEntity } = {
   'a@gmail.com': {
     pronoun: 'Ele',
-    eachCourse: '',
+    course: '',
     semester: 2,
     period: 6,
     ...mockMembers['a@gmail.com'],
   },
   'b@gmail.com': {
     pronoun: 'Ela',
-    eachCourse: 'Matemática',
+    course: 'Matemática',
     semester: 1,
     period: 4,
     ...mockMembers['b@gmail.com'],
   },
   'c@gmail.com': {
     pronoun: 'Ele',
-    eachCourse: '',
+    course: '',
     ...mockMembers['c@gmail.com'],
   },
 };

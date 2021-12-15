@@ -57,7 +57,7 @@ describe('/members/admin/upload-users', () => {
 
     expect(adminMemberModel).not.toBeNull();
     expect(adminMemberModel.pronoun).toBe(expectedAdminMember.pronoun);
-    expect(adminMemberModel.eachCourse).toBe(expectedAdminMember.eachCourse);
+    expect(adminMemberModel.eachCourse).toBe(expectedAdminMember.course);
     expect(adminMemberModel.semester || undefined).toBe(
       expectedAdminMember.semester
     );

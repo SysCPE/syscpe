@@ -6,7 +6,7 @@ type AdminMemberEntity = {
   workgroups?: string[];
   
   pronoun?: string;
-  eachCourse?: string;
+  course?: string;
   semester?: number;
   period?: number;
   status?: activeEnum;

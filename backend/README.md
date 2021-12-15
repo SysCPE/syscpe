@@ -38,10 +38,10 @@ Returns an array of AdminMembers:
     departmentName?: string;
     workgroups: string[];
     pronoun?: string;
-    eachCourse?: string;
+    course?: string;
     semester?: number;
     period?: number;
-    isActive?: 'ACTIVE' | 'INACTIVE' | 'TIMEOFF';
+    status?: 'ACTIVE' | 'INACTIVE' | 'TIMEOFF';
     socialName?: string;
     gender?: string;
     birthday?: Date;
@@ -273,3 +273,4 @@ Returns 200 on success, 400 on failure (work group doesn't exist or it's already
 - Standardize work_group vs. workgroup and WorkGroup vs. Workgroup
 - Investigate and fix Docker warnings/errors
 - Change isActive to status on AdminMember Model column
+- Change eachCourse to course on AdminMember Model column
