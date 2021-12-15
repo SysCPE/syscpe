@@ -5,7 +5,7 @@ type AdminMemberData = {
   birthday: string;
   eachCourse: string;
   name: string;
-  isActive: string;
+  status: string;
   email: string;
 };
 
