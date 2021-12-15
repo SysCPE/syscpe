@@ -6,10 +6,10 @@ type AdminMemberEntity = {
   workgroups?: string[];
   
   pronoun?: string;
-  eachCourse?: string;
+  course?: string;
   semester?: number;
   period?: number;
-  isActive?: activeEnum;
+  status?: activeEnum;
 } & MemberEntity;
 
 export default AdminMemberEntity;

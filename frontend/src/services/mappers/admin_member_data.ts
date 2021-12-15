@@ -1,12 +1,21 @@
 type AdminMemberData = {
   idCPE: number;
+  email: string;
+  name: string;
+
+  status: string;
+  departmentName?: string;
+  workgroups: string[];
+
   CPF: string;
   RG: string;
+  pronoun: string;
+  socialName: string;
   birthday: string;
-  eachCourse: string;
-  name: string;
-  isActive: string;
-  email: string;
+
+  course: string;
+  semester: number;
+  period: string; // 'Diurno', 'Noturno', 'Integral'?
 };
 
 export default AdminMemberData;

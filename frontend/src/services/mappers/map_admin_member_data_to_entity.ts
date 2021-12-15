@@ -7,11 +7,23 @@ const mapAdminMemberDataToEntity = (
 ): MemberEntity => {
   return {
     idCPE: adminMember.idCPE,
-    name: adminMember.name,
-    course: adminMember.eachCourse,
-    department: '',
-    status: mapMemberStatusDataToEntity(adminMember.isActive),
     email: adminMember.email,
+    name: adminMember.name,
+
+    status: mapMemberStatusDataToEntity(adminMember.status),
+    department: adminMember.departmentName || '',
+    workgroups: adminMember.workgroups,
+
+    // TODO: properly deal with missing fields
+    CPF: adminMember.CPF,
+    RG: adminMember.RG,
+    pronoun: adminMember.pronoun,
+    socialName: adminMember.socialName,
+    birthday: new Date(adminMember.birthday),
+
+    course: adminMember.course || '',
+    semester: adminMember.semester,
+    period: adminMember.period,
   };
 };
 

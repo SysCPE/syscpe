@@ -1,3 +1,5 @@
+import { LocalizationProvider } from '@mui/lab';
+import DateAdapter from '@mui/lab/AdapterDayjs';
 import Header from 'components/Header';
 import { SnackbarProvider } from 'notistack';
 import LoadingPage from 'pages/LoadingPage';
@@ -19,9 +21,11 @@ function App() {
     >
       <AuthenticationProvider>
         <BrowserRouter>
-          <Header></Header>
+          <LocalizationProvider dateAdapter={DateAdapter}>
+            <Header></Header>
 
-          <AppBody />
+            <AppBody />
+          </LocalizationProvider>
         </BrowserRouter>
       </AuthenticationProvider>
     </SnackbarProvider>

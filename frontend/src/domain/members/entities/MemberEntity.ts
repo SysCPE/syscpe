@@ -2,11 +2,22 @@ import MemberStatusEntity from './MemberStatusEntity';
 
 type MemberEntity = {
   idCPE: number;
-  name: string;
-  course: string;
-  department: string;
-  status: MemberStatusEntity;
   email: string;
+  name: string;
+
+  status: MemberStatusEntity;
+  department: string;
+  workgroups: string[];
+
+  CPF: string;
+  RG: string;
+  pronoun: string;
+  socialName: string;
+  birthday: Date;
+
+  course: string;
+  semester: number;
+  period: string;
 };
 
 export default MemberEntity;

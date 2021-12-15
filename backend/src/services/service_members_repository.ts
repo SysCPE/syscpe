@@ -40,11 +40,11 @@ const ServicesMembersRepository: AdminMembersRepository = {
         await AdminMember.create(
           {
             memberId: memberModel.idCPE,
-            eachCourse: adminMember.eachCourse,
+            eachCourse: adminMember.course,
             period: adminMember.period,
             pronoun: adminMember.pronoun,
             semester: adminMember.semester,
-            isActive: adminMember.isActive,
+            isActive: adminMember.status,
           },
           { transaction }
         );
@@ -147,11 +147,11 @@ const ServicesMembersRepository: AdminMembersRepository = {
     await sequelize.transaction(async (transaction) => {
       await AdminMember.update(
         {
-          eachCourse: adminMember.eachCourse,
+          eachCourse: adminMember.course,
           period: adminMember.period,
           pronoun: adminMember.pronoun,
           semester: adminMember.semester,
-          isActive: adminMember.isActive,
+          isActive: adminMember.status,
         },
         { where: { memberId: idCPE }, transaction }
       );
@@ -238,10 +238,10 @@ const __mapAdminMemberModelToEntity = (
     socialName: adminMember.member!.socialName,
     pronoun: adminMember.pronoun,
     phone: adminMember.member!.phone,
-    eachCourse: adminMember.eachCourse,
+    course: adminMember.eachCourse,
     semester: adminMember.semester,
     period: adminMember.period,
-    isActive: adminMember.isActive,
+    status: adminMember.isActive,
   };
 };
 
@@ -264,10 +264,10 @@ const __mapAdminMemberJSONToEntity = (adminMember: any): AdminMemberEntity => {
     pronoun: adminMember.pronoun || '',
     phone: adminMember.phone || '',
     socialName: adminMember.socialName || '',
-    eachCourse: adminMember.each_course || '',
+    course: adminMember.each_course || '',
     semester: parseInt(adminMember.semester) || undefined,
     period: parseInt(adminMember.period) || undefined,
-    isActive: adminMember.isActive || ('ACTIVE' as activeEnum),
+    status: adminMember.isActive || ('ACTIVE' as activeEnum),
   };
 };
 
