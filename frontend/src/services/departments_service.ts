@@ -21,6 +21,9 @@ const departmentsService = {
       viceDirector: '',
     };
   },
+  deleteDepartment: async (department: DepartmentEntity): Promise<void> => {
+    await axios.post('/departments/delete', { name: department.name });
+  },
 };
 
 export default departmentsService;

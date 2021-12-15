@@ -16,7 +16,7 @@ const MemberDeleteMenuComponent: FC<Props> = ({ member }) => {
         </Typography>
       }
       successMessage="Membro deletado com sucesso"
-      failMessage="Ocorreu um erro na hora de adicionar novos membros"
+      failMessage={`Ocorreu um erro na hora de remover membro com IDCPE ${member.idCPE}`}
     />
   );
 };

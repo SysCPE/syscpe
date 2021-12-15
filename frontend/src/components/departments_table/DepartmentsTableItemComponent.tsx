@@ -1,4 +1,5 @@
 import { Fade, TableRow } from '@mui/material';
+import DepartmentDeleteComponent from 'components/department_delete/DepartmentDeleteComponent';
 import TableCell from 'components/table/TableCell';
 import DepartmentEntity from 'domain/departments/entities/DepartmentEntity';
 import { FC } from 'react';
@@ -14,7 +15,9 @@ const DepartmentsTableItemComponent: FC<Props> = ({ department }) => {
         <TableCell width="20%">{department.director}</TableCell>
         <TableCell width="20%">{department.viceDirector}</TableCell>
         <TableCell width="20%">{department.description}</TableCell>
-        <TableCell width="20" align="center"></TableCell>
+        <TableCell width="20" align="center">
+          <DepartmentDeleteComponent department={department} />
+        </TableCell>
       </TableRow>
     </Fade>
   );
