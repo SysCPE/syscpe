@@ -2,7 +2,7 @@ import Routes from 'config/routes';
 import HomePage from 'pages/home/HomePage';
 import DepartmentsProvider from 'providers/departments/DepartmentsProvider';
 import MembersProvider from 'providers/members/MembersProvider';
-import WorkgroupProvider from 'providers/workgroups/WorkgroupProvider';
+import WorkgroupProvider from 'providers/workgroups/WorkgroupsProvider';
 import { Route, Switch } from 'react-router';
 
 const AppAuthenticated = () => {

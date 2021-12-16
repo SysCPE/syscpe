@@ -1,7 +1,7 @@
 import { Typography } from '@mui/material';
 import DeleteButtonComponent from 'components/delete_button/DeleteButtonComponent';
 import WorkgroupEntity from 'domain/workgroup/entities/WorkgroupEntity';
-import WorkgroupContext from 'providers/workgroups/WorkgroupsContext';
+import WorkgroupsContexts from 'providers/workgroups/WorkgroupsContexts';
 import { FC } from 'react';
 
 type Props = {
@@ -11,7 +11,7 @@ const WorkgroupEndComponent: FC<Props> = ({ workgroup }) => {
   return (
     <DeleteButtonComponent
       value={workgroup}
-      context={WorkgroupContext}
+      context={WorkgroupsContexts.withListContext}
       warning={
         <Typography variant="body1">
           Clique novamente para <b>encerrar</b> este GT
