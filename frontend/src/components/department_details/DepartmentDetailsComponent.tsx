@@ -12,8 +12,8 @@ const DepartmentDetailsComponent: FC<Props> = ({ department }) => {
     <DetailsComponent
       context={DepartmentsContexts.withListContext}
       item={department}
-      failMessage={`Houve um erro na hora de editar departamento "${department.name}"`}
-      sucessMessage={`Departamento "${department.name}" foi editado com sucesso`}
+      failMessage={`Houve um erro na hora de editar departamento ${department.name}`}
+      sucessMessage={`Departamento ${department.name} foi editado com sucesso`}
       Form={DeparmentEditFormComponent}
     />
   );

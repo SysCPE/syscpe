@@ -1,6 +1,7 @@
 import { Grid, Grow, ToggleButton, ToggleButtonGroup } from '@mui/material';
 import DepartmentsTableComponent from 'components/departments_table/DepartmentsTableComponent';
 import MembersTableComponent from 'components/members_table/MembersTableComponent';
+import WorkgroupsTableComponent from 'components/workgroups_table/WorkgroupsTableComponent';
 import { useState } from 'react';
 
 type Tab = 'MEMBRO' | 'DEPARTAMENTO' | 'GRUPO_DE_TRABALHO';
@@ -42,6 +43,7 @@ const AdminPanel = () => {
         <Grid item>
           {tab === 'MEMBRO' && <MembersTableComponent />}
           {tab === 'DEPARTAMENTO' && <DepartmentsTableComponent />}
+          {tab === 'GRUPO_DE_TRABALHO' && <WorkgroupsTableComponent />}
         </Grid>
       </Grid>
     </Grid>
