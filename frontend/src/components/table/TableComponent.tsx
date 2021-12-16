@@ -46,6 +46,7 @@ function TableComponent<T extends WithID>({
     useContext(listContext);
   const [load, setLoad] = useState(false);
   const emptyList = items.length === 0;
+  const showBody = done && !emptyList;
 
   useEffect(() => {
     if (load) return;
@@ -61,8 +62,8 @@ function TableComponent<T extends WithID>({
           position: 'relative',
           overflow: 'hidden',
           width: '100%',
-          minHeight: 400,
-          maxHeight: 880,
+          minHeight: 500,
+          maxHeight: 500,
           paddingBottom: 10,
           height: '100%',
         }}
@@ -72,7 +73,7 @@ function TableComponent<T extends WithID>({
             <Table>
               <TableHead>{header}</TableHead>
 
-              {done && !emptyList && (
+              {showBody && (
                 <TableBody>
                   {items.map((item) => (
                     <Fragment key={item.id}>{renderItem(item)}</Fragment>
@@ -82,46 +83,48 @@ function TableComponent<T extends WithID>({
             </Table>
           </TableContainer>
 
-          <Grid container sx={{ flexGrow: 1 }} alignContent="center">
-            <Fade in={loading} exit={false} unmountOnExit>
-              <Grid container justifyContent="center">
-                <CircularProgress />
-              </Grid>
-            </Fade>
-
-            <Fade in={done && emptyList} exit={false} unmountOnExit>
-              <Grid container justifyContent="center">
-                <TableEmptyWarningComponent message={emptyListWarning} />
-              </Grid>
-            </Fade>
-
-            <Fade in={failed} exit={false} unmountOnExit>
-              <Grid
-                container
-                direction="column"
-                justifyContent="center"
-                alignContent="center"
-                justifyItems="center"
-                alignItems="center"
-              >
-                <Grid item>
-                  <Typography
-                    variant="body1"
-                    color="error"
-                    sx={{ textAlign: 'center' }}
-                  >
-                    {failedMessage}
-                  </Typography>
+          {!showBody && (
+            <Grid container sx={{ flexGrow: 1 }} alignContent="center">
+              <Fade in={loading} exit={false} unmountOnExit>
+                <Grid container justifyContent="center">
+                  <CircularProgress />
                 </Grid>
+              </Fade>
 
-                <Grid item>
-                  <IconButton onClick={retry}>
-                    <Replay />
-                  </IconButton>
+              <Fade in={done && emptyList} exit={false} unmountOnExit>
+                <Grid container justifyContent="center">
+                  <TableEmptyWarningComponent message={emptyListWarning} />
                 </Grid>
-              </Grid>
-            </Fade>
-          </Grid>
+              </Fade>
+
+              <Fade in={failed} exit={false} unmountOnExit>
+                <Grid
+                  container
+                  direction="column"
+                  justifyContent="center"
+                  alignContent="center"
+                  justifyItems="center"
+                  alignItems="center"
+                >
+                  <Grid item>
+                    <Typography
+                      variant="body1"
+                      color="error"
+                      sx={{ textAlign: 'center' }}
+                    >
+                      {failedMessage}
+                    </Typography>
+                  </Grid>
+
+                  <Grid item>
+                    <IconButton onClick={retry}>
+                      <Replay />
+                    </IconButton>
+                  </Grid>
+                </Grid>
+              </Fade>
+            </Grid>
+          )}
         </Grid>
 
         <DialogComponent
