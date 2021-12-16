@@ -21,8 +21,6 @@ const departmentsService = {
       id: name,
       name,
       description: '',
-      director: '',
-      viceDirector: '',
       // TODO: make backend return creationDate in case it is null
       creationDate: creationDate || new Date(),
     };

@@ -8,8 +8,8 @@ const mapDepartmentDataToEntity = (
     id: department.name,
     name: department.name,
     description: '',
-    director: '',
-    viceDirector: '',
+    directorId: department.directorId,
+    viceDirectorId: department.viceDirectorId,
     creationDate: new Date(department.creationDate),
   };
 };
