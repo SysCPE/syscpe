@@ -12,7 +12,7 @@ const memberService = {
 
     return usersData.map(mapAdminMemberDataToEntity);
   },
-  editMeber: async (member: MemberEntity) => {
+  editMember: async (member: MemberEntity) => {
     const ROUTE = '/members/admin/edit-member';
     const { idCPE } = member;
 
