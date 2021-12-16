@@ -1,12 +1,5 @@
-import { DatePicker } from '@mui/lab';
-import {
-  DialogContent,
-  DialogTitle,
-  Grid,
-  InputLabel,
-  TextField,
-  Typography,
-} from '@mui/material';
+import { DialogContent, DialogTitle, Grid } from '@mui/material';
+import DatePickerComponent from 'components/date_picker/DatePickerComponent';
 import LoadingButtonComponent from 'components/LoadingButtonComponent';
 import TextFieldComponent from 'components/textfield/TextFieldComponent';
 import { Fragment } from 'react';
@@ -49,14 +42,10 @@ const WorkgroupUploadFormComponent = () => {
           </Grid>
 
           <Grid item>
-            <InputLabel id={'workgroup-creation-date-label'}>
-              {/* TODO: fix color being slightly grayer than the other labels */}
-              <Typography variant="body1">Data de criação</Typography>
-            </InputLabel>
-            <DatePicker
-              value={creationDate}
-              onChange={(newValue) => setCreationDate(newValue || new Date())}
-              renderInput={(params) => <TextField {...params} />}
+            <DatePickerComponent
+              label="Data de criação"
+              date={creationDate}
+              setDate={(date) => setCreationDate(date || new Date())}
             />
           </Grid>
 

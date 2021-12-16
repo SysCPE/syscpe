@@ -1,11 +1,5 @@
-import { DatePicker } from '@mui/lab';
-import {
-  Grid,
-  InputLabel,
-  TextField,
-  Tooltip,
-  Typography,
-} from '@mui/material';
+import { Grid, Tooltip, Typography } from '@mui/material';
+import DatePickerComponent from 'components/date_picker/DatePickerComponent';
 import DetailsFormProps from 'components/details/DetailsFormProps';
 import TextFieldComponent from 'components/textfield/TextFieldComponent';
 import WorkgroupEntity from 'domain/workgroup/entities/WorkgroupEntity';
@@ -32,16 +26,12 @@ const WorkgroupEditFormComponent: FC<DetailsFormProps<WorkgroupEntity>> = ({
       </Grid>
 
       <Grid item container direction="column" sx={{ marginBottom: 2 }}>
-        <InputLabel id={'workgroup-edit-start-date-label'}>
-          {/* TODO: fix color being slightly grayer than the other labels */}
-          <Typography variant="body1">Início</Typography>
-        </InputLabel>
-        <DatePicker
-          value={item.creationDate}
-          onChange={(newValue) =>
-            onChange({ ...item, creationDate: newValue || new Date() })
+        <DatePickerComponent
+          label="Início"
+          date={item.creationDate}
+          setDate={(date) =>
+            onChange({ ...item, creationDate: date || new Date() })
           }
-          renderInput={(params) => <TextField {...params} />}
         />
       </Grid>
     </Grid>
