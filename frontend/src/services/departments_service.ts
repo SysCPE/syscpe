@@ -41,6 +41,9 @@ const departmentsService = {
   editDepartment: async (department: DepartmentEntity) => {
     await axios.post('/departments/update-department', {
       name: department.name,
+      directorId: department.directorId,
+      viceDirectorId: department.viceDirectorId,
+      creationDate: department.creationDate,
     });
   },
 };

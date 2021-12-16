@@ -11,7 +11,7 @@ const DeparmentEditFormComponent: FC<DetailsFormProps<DepartmentEntity>> = ({
   onChange,
 }) => {
   const { items: members } = useMembers();
-  
+
   // TODO: move this function somewhere where it can be shared
   const _getAdminMemberEntityById = (id?: number) => {
     if (!id) return null;
