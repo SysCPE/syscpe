@@ -8,11 +8,13 @@ type Props<T extends WithID> = {
   context: Context<ListContextType<T>>;
   listItems: () => Promise<T[]>;
   deleteItem: (item: T) => Promise<void>;
+  editItem: (item: T) => Promise<void>;
 };
 function ListProvider<T extends WithID>({
   context,
   listItems,
   deleteItem,
+  editItem,
   children,
 }: PropsWithChildren<Props<T>>) {
   const [firstLoad, setFirstLoad] = useState(false);
@@ -59,6 +61,7 @@ function ListProvider<T extends WithID>({
         onItemDeleted,
         onItemEdited,
         deleteItem,
+        editItem,
       }}
     >
       {children}

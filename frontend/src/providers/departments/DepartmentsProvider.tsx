@@ -1,4 +1,5 @@
 import deleteDepartmentUseCase from 'domain/departments/usecases/delete_department_usecase';
+import editDepartmentUseCase from 'domain/departments/usecases/edit_department_usecase';
 import listDepartmentsUseCase from 'domain/departments/usecases/list_departments_usecase';
 import associateMemberWithDepartment from 'domain/member_department/usecases/associate_member_with_department';
 import ListProvider from 'providers/list/ListProvider';
@@ -12,6 +13,7 @@ const DepartmentsProvider: FC = ({ children }) => {
       context={DepartmentsContexts.withListContext}
       listItems={listDepartmentsUseCase}
       deleteItem={deleteDepartmentUseCase}
+      editItem={editDepartmentUseCase}
     >
       <WithMemberAssociationProvider
         context={DepartmentsContexts.withMemberAssociation}
