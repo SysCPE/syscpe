@@ -160,6 +160,8 @@ Returns an array of Departments:
 {
     name: string;
     creationDate: Date;
+    directorId?: number;
+    viceDirectorId?: number;
 }
 ```
 
