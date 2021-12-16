@@ -6,6 +6,7 @@ type ListContextType<T> = {
   done: boolean;
 
   retry: () => void;
+  refresh: () => void;
 
   onItemsCreated: (items: T[]) => void;
   onItemDeleted: (item: T) => void;

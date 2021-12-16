@@ -16,7 +16,14 @@ import {
 import DialogComponent from 'components/dialog/DialogComponent';
 import WithID from 'domain/entities/WithID';
 import ListContextType from 'providers/list/ListContextType';
-import { Context, Fragment, PropsWithChildren, useContext } from 'react';
+import {
+  Context,
+  Fragment,
+  PropsWithChildren,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 import TableEmptyWarningComponent from './TableEmptyWarning';
 
 type Props<T extends WithID> = {
@@ -35,8 +42,16 @@ function TableComponent<T extends WithID>({
   failedMessage,
   createForm,
 }: PropsWithChildren<Props<T>>) {
-  const { loading, done, items, failed, retry } = useContext(listContext);
+  const { loading, done, items, failed, retry, refresh } =
+    useContext(listContext);
+  const [load, setLoad] = useState(false);
   const emptyList = items.length === 0;
+
+  useEffect(() => {
+    if (load) return;
+    setLoad(true);
+    refresh();
+  }, [refresh, load]);
 
   return (
     <Grow in={true} exit={false}>
