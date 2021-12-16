@@ -29,6 +29,7 @@ const MembersAutocompleteComponent: FC<Props> = ({ member, setMember }) => {
       getOptionLabel={(option) => option.name}
       value={member}
       onChange={(_, member) => setMember(member)}
+      noOptionsText="Nenhum membro disponível"
     />
   );
 };

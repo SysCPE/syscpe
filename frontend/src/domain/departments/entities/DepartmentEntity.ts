@@ -5,6 +5,8 @@ type DepartmentEntity = {
   director: string;
   viceDirector: string;
   description: string;
+
+  creationDate: Date;
 };
 
 export default DepartmentEntity;
