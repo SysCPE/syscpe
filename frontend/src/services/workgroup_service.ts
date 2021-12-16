@@ -8,7 +8,9 @@ const workgroupsService = {
     const response = await axios.get('/workgroups');
     const workgroupsData = response.data.workgroups as WorkgroupData[];
 
-    return workgroupsData.map(mapWorkgroupDataToEntity);
+    return workgroupsData
+      .map(mapWorkgroupDataToEntity)
+      .filter((workgroup) => !workgroup.endDate);
   },
   createWorkgroup: async (
     name: string,
