@@ -1,11 +1,20 @@
 import { DialogContent, DialogTitle, Grid } from '@mui/material';
+import DatePickerComponent from 'components/date_picker/DatePickerComponent';
 import LoadingButtonComponent from 'components/LoadingButtonComponent';
 import TextFieldComponent from 'components/textfield/TextFieldComponent';
 import { Fragment } from 'react';
 import useDepartmentUpload from './useDepartmentUpload';
 
 const DepartmentUploadFormComponent = () => {
-  const { name, setName, onSubmit, error, loading } = useDepartmentUpload();
+  const {
+    name,
+    setName,
+    creationDate,
+    setCreationDate,
+    onSubmit,
+    error,
+    loading,
+  } = useDepartmentUpload();
 
   return (
     <Fragment>
@@ -19,6 +28,14 @@ const DepartmentUploadFormComponent = () => {
               value={name}
               onChange={setName}
               error={error}
+            />
+          </Grid>
+
+          <Grid item>
+            <DatePickerComponent
+              label="Data de criação do departamento"
+              date={creationDate}
+              setDate={setCreationDate}
             />
           </Grid>
 

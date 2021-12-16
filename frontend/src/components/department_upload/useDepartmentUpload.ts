@@ -7,6 +7,7 @@ import useSubmit from 'utils/useSubmit';
 
 const useDepartmentUpload = () => {
   const [name, setName] = useState('');
+  const [creationDate, setCreationDate] = useState<Date | null>(null);
   const [error, setError] = useState('');
   const { onItemsCreated, items } = useContext(
     DepartmentsContexts.withListContext
@@ -14,9 +15,13 @@ const useDepartmentUpload = () => {
   const { enqueueSnackbar } = useSnackbar();
   const itemNames = useMemo(() => items.map((item) => item.name), [items]);
   const { loading, submit } = useSubmit(
-    async () => delayed(createDepartmentUseCase(name)),
+    async () =>
+      delayed(
+        createDepartmentUseCase(name, creationDate ? creationDate : undefined)
+      ),
     (deparment) => {
       setName('');
+      setCreationDate(null);
       onItemsCreated([deparment]);
       enqueueSnackbar(`Departamento "${deparment.name}" criado com sucesso`, {
         variant: 'success',
@@ -48,7 +53,15 @@ const useDepartmentUpload = () => {
     submit();
   };
 
-  return { name, setName, onSubmit, error, loading };
+  return {
+    name,
+    setName,
+    creationDate,
+    setCreationDate,
+    onSubmit,
+    error,
+    loading,
+  };
 };
 
 export default useDepartmentUpload;

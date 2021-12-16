@@ -10,6 +10,7 @@ const mapDepartmentDataToEntity = (
     description: '',
     director: '',
     viceDirector: '',
+    creationDate: new Date(department.creationDate),
   };
 };
 

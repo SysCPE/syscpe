@@ -11,8 +11,11 @@ const departmentsService = {
 
     return departmentsData.map(mapDepartmentDataToEntity);
   },
-  createDepartment: async (name: string): Promise<DepartmentEntity> => {
-    await axios.post('/departments', { name });
+  createDepartment: async (
+    name: string,
+    creationDate?: Date
+  ): Promise<DepartmentEntity> => {
+    await axios.post('/departments', { name, creationDate });
 
     return {
       id: name,
@@ -20,6 +23,8 @@ const departmentsService = {
       description: '',
       director: '',
       viceDirector: '',
+      // TODO: make backend return creationDate in case it is null
+      creationDate: creationDate || new Date(),
     };
   },
   deleteDepartment: async (department: DepartmentEntity): Promise<void> => {
