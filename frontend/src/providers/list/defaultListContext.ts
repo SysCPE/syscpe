@@ -9,6 +9,7 @@ function defaultListContext<T>(): ListContextType<T> {
     done: false,
 
     retry: () => {},
+    refresh: () => {},
 
     onItemsCreated: () => {},
     onItemDeleted: () => {},
