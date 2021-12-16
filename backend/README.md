@@ -240,7 +240,7 @@ Updates a work group
 
 Body parameters:
 {
-    workgroupName: string;
+    name: string;
     changes?: {
         description?: string;
         creationDate?: Date;
