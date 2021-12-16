@@ -29,6 +29,9 @@ const workgroupsService = {
       creationDate: creationDate,
     };
   },
+  editWorkgroup: async (workgroup: WorkgroupEntity): Promise<void> => {
+    throw new Error('Not implemented');
+  },
   endWorkgroup: async (workgroup: WorkgroupEntity): Promise<void> => {
     await axios.post('/workgroups/end-workgroup', { name: workgroup.name });
   },
