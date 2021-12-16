@@ -9,11 +9,11 @@ type Props = {
 const DepartmentAssignMemberComponent: FC<Props> = ({ department }) => {
   return (
     <AssignMemberComponent
-      title={`Adicionar membros ao departamento "${department.name}"`}
+      title={`Adicionar membros ao departamento ${department.name}`}
       item={department}
       context={DepartmentsContexts.withMemberAssociation}
-      failMessage={`Houve um erro ao associar membro ao departamento "${department.name}"`}
-      successMessage={`Membro associado ao departamento "${department.name}" com sucesso`}
+      failMessage={`Houve um erro ao associar membro ao departamento ${department.name}`}
+      successMessage={`Membro associado ao departamento ${department.name} com sucesso`}
     />
   );
 };

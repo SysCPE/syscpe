@@ -1,5 +1,6 @@
 import { Fade, Grid, TableRow } from '@mui/material';
 import TableCell from 'components/table/TableCell';
+import WorkgroupAssignMemberComponent from 'components/workgroup_assign_member/WorkgroupAssignMemberComponent';
 import WorkgroupEndComponent from 'components/workgroup_end/WorkgroupEndComponent';
 import WorkgroupEntity from 'domain/workgroup/entities/WorkgroupEntity';
 import { FC } from 'react';
@@ -15,7 +16,7 @@ const WorkgroupsTableItemComponent: FC<Props> = ({ workgroup }) => {
         <TableCell width="60%">{workgroup.description}</TableCell>
         <TableCell width="20%" align="center">
           <Grid container justifyContent="center" spacing={0}>
-            {/* <DepartmentAssignMemberComponent department={department} /> */}
+            <WorkgroupAssignMemberComponent workgroup={workgroup} />
             <div style={{ margin: 8 }}></div>
             <WorkgroupEndComponent workgroup={workgroup} />
           </Grid>
