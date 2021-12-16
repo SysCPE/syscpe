@@ -1,0 +1,8 @@
+version: "3.9"
+services: 
+  runner:
+    build: 
+      context: ..
+      dockerfile: deploy/migrations-runner.local.dockerfile
+    stdin_open: true
+    tty: true
