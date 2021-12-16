@@ -12,6 +12,7 @@ type ListContextType<T> = {
   onItemEdited: (item: T) => void;
 
   deleteItem: (item: T) => Promise<void>;
+  editItem: (item: T) => Promise<void>;
 };
 
 export default ListContextType;

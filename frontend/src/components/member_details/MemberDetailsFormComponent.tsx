@@ -14,10 +14,12 @@ import MemberStatusEntity from 'domain/members/entities/MemberStatusEntity';
 import { FC } from 'react';
 
 type Props = {
-  member: MemberEntity;
+  item: MemberEntity;
   onChange: (member: MemberEntity) => void;
 };
-const MemberDetailsFormComponent: FC<Props> = ({ member, onChange }) => {
+const MemberDetailsFormComponent: FC<Props> = ({ item, onChange }) => {
+  const member = item;
+
   return (
     <Grid container direction="column">
       <Grid item container sx={{ marginBottom: 5 }} alignItems="center">
