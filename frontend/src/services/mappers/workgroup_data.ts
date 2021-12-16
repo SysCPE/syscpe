@@ -1,10 +1,10 @@
 type WorkgroupData = {
-    name: string;
-    members: number[];
+  name: string;
+  members: number[];
 
-    description?: string;
-    creationDate: Date;
-    endDate?: Date;
+  description?: string;
+  creationDate: Date;
+  endDate?: Date;
 };
 
 export default WorkgroupData;
