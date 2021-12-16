@@ -1,5 +1,11 @@
 import WithID from 'domain/entities/WithID';
-import { Context, PropsWithChildren, useEffect, useState } from 'react';
+import {
+  Context,
+  PropsWithChildren,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react';
 import delayed from 'utils/delayed';
 import useSubmit from 'utils/useSubmit';
 import ListContextType from './ListContextType';
@@ -35,6 +41,11 @@ function ListProvider<T extends WithID>({
     submit();
   };
 
+  const refresh = useCallback(() => {
+    if (loading) return;
+    submit();
+  }, [submit, loading]);
+
   const onItemsCreated = (createdItems: T[]) =>
     setItems((items) => createdItems.concat(items));
 
@@ -62,6 +73,7 @@ function ListProvider<T extends WithID>({
         onItemEdited,
         deleteItem,
         editItem,
+        refresh,
       }}
     >
       {children}
