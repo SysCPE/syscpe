@@ -57,7 +57,7 @@ function DetailsComponent<T>({
       onClose={() => setCurrentItem(item)}
       body={(closeDialog) => {
         return (
-          <DialogContent sx={{ height: '80vh', position: 'relative' }}>
+          <DialogContent sx={{ height: '80vh', paddingBottom: 10 }}>
             <IconButton
               onClick={closeDialog}
               sx={{ position: 'absolute', right: 0, top: 0, margin: 1 }}
