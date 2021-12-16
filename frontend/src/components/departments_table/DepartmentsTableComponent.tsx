@@ -1,13 +1,13 @@
 import DepartmentUploadFormComponent from 'components/department_upload/DepartmentUploadFormComponent';
 import TableComponent from 'components/table/TableComponent';
-import DepartmentsContext from 'providers/departments/DepartmentsContext';
+import DepartmentsContexts from 'providers/departments/DepartmentsContexts';
 import DepartmentsTableHeaderComponent from './DepartmentsTableHeaderComponent';
 import DepartmentsTableItemComponent from './DepartmentsTableItemComponent';
 
 const DepartmentsTableComponent = () => {
   return (
     <TableComponent
-      listContext={DepartmentsContext}
+      listContext={DepartmentsContexts.withListContext}
       emptyListWarning="Nenhum departamento criado"
       failedMessage="Carregamento de departamentos falhou"
       header={<DepartmentsTableHeaderComponent />}

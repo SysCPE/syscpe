@@ -1,14 +1,16 @@
 import createDepartmentUseCase from 'domain/departments/usecases/create_department_usecase';
 import { useSnackbar } from 'notistack';
-import useDepartments from 'providers/departments/useDepartments';
-import { useMemo, useState } from 'react';
+import DepartmentsContexts from 'providers/departments/DepartmentsContexts';
+import { useContext, useMemo, useState } from 'react';
 import delayed from 'utils/delayed';
 import useSubmit from 'utils/useSubmit';
 
 const useDepartmentUpload = () => {
   const [name, setName] = useState('');
   const [error, setError] = useState('');
-  const { onItemsCreated, items } = useDepartments();
+  const { onItemsCreated, items } = useContext(
+    DepartmentsContexts.withListContext
+  );
   const { enqueueSnackbar } = useSnackbar();
   const itemNames = useMemo(() => items.map((item) => item.name), [items]);
   const { loading, submit } = useSubmit(
