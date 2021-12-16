@@ -2,3 +2,8 @@
   base = "frontend/"
   publish = "build/"
   command = "npm run build"
+
+[[redirects]]
+  from = "/*"
+  to = "http://syscpe.herokuapp.com/:splat"
+  status = 200
