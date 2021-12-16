@@ -4,7 +4,7 @@
   command = "npm run build"
 
 [[redirects]]
-  from = "/*"
-  to = "http://syscpe.herokuapp.com/:splat"
-  status = 200
+  from = "https://syscpe.netlify.app"
+  to = "http://syscpe.herokuapp.com"
+  status = 301
   force = true
