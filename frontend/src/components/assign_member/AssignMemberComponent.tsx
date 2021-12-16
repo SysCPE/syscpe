@@ -1,6 +1,7 @@
 import { GroupsOutlined } from '@mui/icons-material';
 import { IconButton, Tooltip } from '@mui/material';
 import DialogComponent from 'components/dialog/DialogComponent';
+import MemberEntity from 'domain/members/entities/MemberEntity';
 import WithMemberAssociationContextType from 'providers/with_member_association/WithMemberAssociationContextType';
 import { Context } from 'react';
 import AssignMemberFormComponent from './AssignMemberForm';
@@ -9,6 +10,7 @@ type Props<T> = {
   context: Context<WithMemberAssociationContextType<T>>;
   title: string;
   item: T;
+  filterMembers: (member: MemberEntity, item: T) => boolean;
   failMessage: string;
   successMessage: string;
 };
@@ -18,6 +20,7 @@ function AssignMemberComponent<T>({
   context,
   failMessage,
   successMessage,
+  filterMembers,
 }: Props<T>) {
   return (
     <DialogComponent
@@ -28,6 +31,7 @@ function AssignMemberComponent<T>({
           item={item}
           failMessage={failMessage}
           successMessage={successMessage}
+          filterMembers={filterMembers}
         />
       }
       renderButton={(onOpen) => (

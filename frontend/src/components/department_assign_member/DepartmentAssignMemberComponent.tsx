@@ -14,6 +14,9 @@ const DepartmentAssignMemberComponent: FC<Props> = ({ department }) => {
       context={DepartmentsContexts.withMemberAssociation}
       failMessage={`Houve um erro ao associar membro ao departamento ${department.name}`}
       successMessage={`Membro associado ao departamento ${department.name} com sucesso`}
+      filterMembers={(member, department) =>
+        member.department === department.name
+      }
     />
   );
 };

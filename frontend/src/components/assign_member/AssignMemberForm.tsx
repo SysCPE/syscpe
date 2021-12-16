@@ -14,6 +14,7 @@ type Props<T> = {
   context: Context<WithMemberAssociationContextType<T>>;
   failMessage: string;
   successMessage: string;
+  filterMembers: (member: MemberEntity, item: T) => boolean;
 };
 function AssignMemberFormComponent<T>({
   title,
@@ -21,6 +22,7 @@ function AssignMemberFormComponent<T>({
   item,
   failMessage,
   successMessage,
+  filterMembers,
 }: Props<T>) {
   const { associateMember } = useContext(context);
   const { enqueueSnackbar } = useSnackbar();
@@ -46,7 +48,12 @@ function AssignMemberFormComponent<T>({
       <DialogTitle>{title}</DialogTitle>
       <DialogContent>
         <Grid container direction="column" sx={{ padding: 2 }}>
-          <MembersAutocompleteComponent member={member} setMember={setMember} />
+          <MembersAutocompleteComponent
+            member={member}
+            setMember={setMember}
+            item={item}
+            filterMembers={filterMembers}
+          />
 
           <Grid item sx={{ marginTop: 2 }} alignSelf="flex-end">
             <LoadingButtonComponent

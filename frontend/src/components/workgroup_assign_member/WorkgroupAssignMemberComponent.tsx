@@ -14,6 +14,7 @@ const WorkgroupAssignMemberComponent: FC<Props> = ({ workgroup }) => {
       context={WorkgroupsContexts.withMemberAssociation}
       failMessage={`Houve um erro ao associar membro ao departamento ${workgroup.name}`}
       successMessage={`Membro associado ao departamento ${workgroup.name} com sucesso`}
+      filterMembers={(member, workgroup) => false}
     />
   );
 };
