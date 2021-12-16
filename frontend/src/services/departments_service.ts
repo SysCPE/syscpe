@@ -29,6 +29,7 @@ const departmentsService = {
     member: MemberEntity,
     department: DepartmentEntity
   ) => {
+    // TODO: Add proper error handling
     await axios.post('/members/admin/change-department', {
       memberId: member.idCPE,
       departmentName: department.name,

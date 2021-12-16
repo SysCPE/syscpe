@@ -1,4 +1,5 @@
 import axios from 'axios';
+import MemberEntity from 'domain/members/entities/MemberEntity';
 import WorkgroupEntity from 'domain/workgroup/entities/WorkgroupEntity';
 import mapWorkgroupDataToEntity from './mappers/map_workgroup_data_to_entity';
 import WorkgroupData from './mappers/workgroup_data';
@@ -33,6 +34,16 @@ const workgroupsService = {
   },
   editWorkgroup: async (workgroup: WorkgroupEntity): Promise<void> => {
     throw new Error('Not implemented');
+  },
+  assignMember: async (
+    member: MemberEntity,
+    workgroup: WorkgroupEntity
+  ): Promise<void> => {
+    // TODO: Add proper error handling
+    await axios.post('/members/admin/assign-workgroup', {
+      memberId: member.idCPE,
+      workgroupName: workgroup.name,
+    });
   },
   endWorkgroup: async (workgroup: WorkgroupEntity): Promise<void> => {
     await axios.post('/workgroups/end-workgroup', { name: workgroup.name });
