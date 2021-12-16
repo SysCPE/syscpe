@@ -21,8 +21,6 @@ const departmentsService = {
       id: name,
       name,
       description: '',
-      director: '',
-      viceDirector: '',
       // TODO: make backend return creationDate in case it is null
       creationDate: creationDate || new Date(),
     };
@@ -43,6 +41,9 @@ const departmentsService = {
   editDepartment: async (department: DepartmentEntity) => {
     await axios.post('/departments/update-department', {
       name: department.name,
+      directorId: department.directorId,
+      viceDirectorId: department.viceDirectorId,
+      creationDate: department.creationDate,
     });
   },
 };

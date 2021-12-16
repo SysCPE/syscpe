@@ -2,8 +2,8 @@ type DepartmentEntity = {
   id: string;
 
   name: string;
-  director: string;
-  viceDirector: string;
+  directorId?: number;
+  viceDirectorId?: number;
   description: string;
 
   creationDate: Date;

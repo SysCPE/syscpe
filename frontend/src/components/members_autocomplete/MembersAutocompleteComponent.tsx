@@ -6,8 +6,13 @@ import { FC, HTMLAttributes } from 'react';
 type Props = {
   member: MemberEntity | null;
   setMember: (member: MemberEntity | null) => void;
+  includeLabel?: boolean;
 };
-const MembersAutocompleteComponent: FC<Props> = ({ member, setMember }) => {
+const MembersAutocompleteComponent: FC<Props> = ({
+  member,
+  setMember,
+  includeLabel = true,
+}) => {
   const { items } = useMembers();
 
   const _renderOption = (
@@ -24,7 +29,9 @@ const MembersAutocompleteComponent: FC<Props> = ({ member, setMember }) => {
   return (
     <Autocomplete
       options={items}
-      renderInput={(params) => <TextField {...params} label="Membro" />}
+      renderInput={(params) => (
+        <TextField {...params} label={includeLabel ? 'Membro' : ''} />
+      )}
       renderOption={(props, option) => _renderOption(props, option)}
       getOptionLabel={(option) => option.name}
       value={member}
