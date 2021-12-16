@@ -34,6 +34,11 @@ const departmentsService = {
       departmentName: department.name,
     });
   },
+  editDepartment: async (department: DepartmentEntity) => {
+    await axios.post('/departments/update-department', {
+      name: department.name,
+    });
+  },
 };
 
 export default departmentsService;

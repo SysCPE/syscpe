@@ -15,6 +15,7 @@ function defaultListContext<T>(): ListContextType<T> {
     onItemEdited: () => {},
 
     deleteItem: async () => {},
+    editItem: async () => {},
   };
 }
 
