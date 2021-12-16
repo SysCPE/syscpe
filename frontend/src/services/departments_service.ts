@@ -28,7 +28,12 @@ const departmentsService = {
   associateMember: async (
     member: MemberEntity,
     department: DepartmentEntity
-  ) => {},
+  ) => {
+    await axios.post('/members/admin/change-department', {
+      memberId: member.idCPE,
+      departmentName: department.name,
+    });
+  },
 };
 
 export default departmentsService;
