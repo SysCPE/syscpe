@@ -6,6 +6,11 @@ To install the front-end project, make this the active directory then run
 npm install
 ```
 
+## Running locally
+```bash
+npm run start
+```
+
 ## Configure user authentication
 The app is using Auth0 to handle user authencation. You need to have a *.env* 
 file in **frontend project root** with the following variables:
