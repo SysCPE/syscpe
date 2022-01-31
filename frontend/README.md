@@ -8,7 +8,7 @@ npm install
 
 ## Running locally
 ```bash
-npm run start
+npm start
 ```
 
 ## Configure user authentication
